@@ -3,6 +3,21 @@
 {% block titulo %} Jugar {% endblock %}
 
 {% block contenido %}
+
+
+{% for Pregunta in preguntas %}
+    {% if Pregunta.id == 1 %}
+
+        <textarea name="" id="" cols="30" rows="10">{{ Pregunta.pregunta }}</textarea>
+
+        <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcionCorrecta }}</a>
+        <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcion2 }}</a>
+        <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcion3 }}</a>
+        <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcion4 }}</a>
+    {% endif %}
+{% endfor %}
+
+
 <br>
 <div class="dropdown open">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -10,10 +25,13 @@
                 Seleccionar trivia
             </button>
     <div class="dropdown-menu" aria-labelledby="triggerId">
+
+
         {% for Trivia in trivias %}
         <button class="dropdown-item" href="#">{{ Trivia.nombre }}</button>
         <!-- <button class="dropdown-item disabled" href="#">Disabled action</button> -->
         {% endfor %}
+        
     </div>
 </div>
 

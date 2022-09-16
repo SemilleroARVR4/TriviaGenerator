@@ -7,10 +7,10 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def inicio(request):
-    return render(request, "usuario/inicio.html")
+    return render(request, "TGApp/inicio.html")
 
 def nosotros(request):
-    return render(request, "usuario/nosotros.html")
+    return render(request, "TGApp/nosotros.html")
 
 @login_required
 def crear(request):
@@ -20,7 +20,7 @@ def crear(request):
         'preguntas': Pregunta.objects.all(),
     }
     
-    return render(request, "usuario/index.html", context)
+    return render(request, "TGApp/index.html", context)
 
 
 def crearPregunta(request):
@@ -28,14 +28,17 @@ def crearPregunta(request):
     if formulario.is_valid():
         formulario.save()
         return redirect('/')
-    return render(request, "usuario/crear.html", {'formulario': formulario})
+    return render(request, "TGApp/crear.html", {'formulario': formulario})
 
 
 
 def editarPregunta(request):
-    return render(request, "usuario/editar.html")
+    return render(request, "TGApp/editar.html")
 
 def jugar(request):
-    trivias = Trivia.objects.all()
-    return render(request, "jugar/jugar.html", {'trivias': trivias})
+    context = {
+        'trivias': Trivia.objects.all(),
+        'preguntas': Pregunta.objects.all(),
+    }
+    return render(request, "jugar/jugar.html", context)
 
