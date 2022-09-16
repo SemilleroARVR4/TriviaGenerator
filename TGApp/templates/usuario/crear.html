@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+{% block titulo %} Agregar nueva pregunta {% endblock %}
+
+{% block contenido %}
+
+    <div class="card">
+        <div class="card-header">
+            Crear una pregunta
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">Enunciado</h4>
+            
+            {% include 'usuario/form.html' %}
+
+        </div>
+        <div class="card-footer text-muted">
+            
+        </div>
+    </div>                      
+
+{% endblock %}
+
+

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block titulo %} Registrar {% endblock %}
+
+
+{% block contenido %}
+    <h2>Has salido de tu cuenta</h2>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Ingresar de nuevo <a class="ml-2" href="{% url 'login' %}">Login</a>
+            </small>
+        </div>
+
+
+{% endblock %}
