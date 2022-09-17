@@ -35,6 +35,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th scope="col">tipo trivia</th>
                         <th scope="col">ID</th>
                         <th scope="col">PREGUNTA</th>
                         <th scope="col">OPCION CORRECTA</th>
@@ -49,6 +50,7 @@
                     {% for Pregunta in preguntas %}
 
                     <tr>
+                        <td>{{ Pregunta.Trivia }}</td>
                         <td>{{ Pregunta.id }}</td>
                         <td>{{ Pregunta.pregunta }}</td>
                         <td>{{ Pregunta.opcionCorrecta }}</td>
