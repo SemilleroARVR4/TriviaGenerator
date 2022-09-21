@@ -5,6 +5,23 @@
 {% block contenido %}
 
 
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+                Seleccionar trivia
+    </button>
+
+            
+    <div class="dropdown-menu" aria-labelledby="triggerId">
+        {% for Trivia in trivias %}  
+            <a class="dropdown-item" href="{% url 'crear' %}">{{ Trivia.nombre }}</a>
+        {% endfor %}
+                    
+    </div>
+            
+
+</div>
+
 {% for Pregunta in preguntas %}
     {% if Pregunta.id == 1 %}
 
@@ -17,26 +34,8 @@
     {% endif %}
 {% endfor %}
 
-{% for Trivia in trivias %}
-    <h1>{{ Trivia.nombre }}</h1>
-    <br>
-    <div class="dropdown open">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                    Seleccionar trivia
-                </button>
-        <div class="dropdown-menu" aria-labelledby="triggerId">
-
-            
-            <button class="dropdown-item" href="#">{{ Trivia.nombre }}</button>
-            <!-- <button class="dropdown-item disabled" href="#">Disabled action</button> -->
-            
-        
-            
-        </div>
-    </div>
-{% endfor %}
 
 
-<h1>{{ Trivia.nombre }}</h1>
+
+
 {% endblock %}

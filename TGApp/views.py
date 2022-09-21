@@ -22,13 +22,20 @@ def crear(request):
     
     return render(request, "TGApp/index.html", context)
 
+def crearPregunta(request, Trivia_id):
 
-def crearPregunta(request):
-    formulario = PreguntaForm(request.POST or None)
-    if formulario.is_valid():
-        formulario.save()
-        return redirect('/')
-    return render(request, "TGApp/crear.html", {'formulario': formulario})
+    trivias= Trivia.objects.get(id=Trivia_id)
+    preguntas = Pregunta.objects.filter(Trivia=trivias)
+    
+    return render(request, "TGApp/crear.html", {'trivias': trivias, 'preguntas':preguntas})
+
+
+# def crearPregunta(request):
+#     formulario = PreguntaForm(request.POST or None)
+#     if formulario.is_valid():
+#         formulario.save()
+#         return redirect('/')
+#     return render(request, "TGApp/crear.html", {'formulario': formulario})
 
 
 

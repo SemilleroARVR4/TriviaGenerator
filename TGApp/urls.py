@@ -12,7 +12,8 @@ urlpatterns = [
     # path('tablero', views.tablero, name='tablero'),
     path('nosotros', views.nosotros, name='nosotros'),
     path('crear', views.crear, name='crear'),
-    path('crear/agregar', views.crearPregunta, name='crearPregunta'),
+    # path('crear/agregar', views.crearPregunta, name='crearPregunta'),
+    path('crear/agregar/<int:Trivia_id>/', views.crearPregunta, name='crearPregunta'),
     path('crear/editar', views.editarPregunta, name='editarPregunta'),
     path('jugar', views.jugar, name='jugar'),
 ]
