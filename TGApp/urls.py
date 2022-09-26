@@ -14,6 +14,9 @@ urlpatterns = [
     path('crear', views.crear, name='crear'),
     # path('crear/agregar', views.crearPregunta, name='crearPregunta'),
     path('crear/agregar/<int:Trivia_id>/', views.crearPregunta, name='crearPregunta'),
+    path('crear/agregar/nuevo', views.crearNuevaPregunta, name='crearNuevaPregunta'),
     path('crear/editar', views.editarPregunta, name='editarPregunta'),
     path('jugar', views.jugar, name='jugar'),
+    
+    
 ]

@@ -1,7 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .models import Pregunta, Trivia, Admin
-from .forms import PreguntaForm
+from .forms import PreguntaForm, formTest
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -22,6 +22,8 @@ def crear(request):
     
     return render(request, "TGApp/index.html", context)
 
+
+@login_required
 def crearPregunta(request, Trivia_id):
 
     trivias= Trivia.objects.get(id=Trivia_id)
@@ -30,12 +32,19 @@ def crearPregunta(request, Trivia_id):
     return render(request, "TGApp/crear.html", {'trivias': trivias, 'preguntas':preguntas})
 
 
-# def crearPregunta(request):
-#     formulario = PreguntaForm(request.POST or None)
-#     if formulario.is_valid():
-#         formulario.save()
-#         return redirect('/')
-#     return render(request, "TGApp/crear.html", {'formulario': formulario})
+@login_required
+def crearNuevaPregunta(request):
+
+    formulario = formTest()  
+    if request.method=='POST':
+        formulario = formTest(data=request.POST) 
+        if formulario.is_valid():
+            nombre = request.POST.get("nombre")
+            
+            return redirect("/crear/agregar/nuevo?valido")
+            
+
+    return render(request, "TGApp/crearNuevop.html", {'formulario':formulario}) 
 
 
 
@@ -48,4 +57,5 @@ def jugar(request):
         'preguntas': Pregunta.objects.all(),
     }
     return render(request, "jugar/jugar.html", context)
+
 

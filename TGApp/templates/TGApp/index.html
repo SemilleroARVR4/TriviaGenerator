@@ -16,7 +16,7 @@
 
             
     <div class="dropdown-menu" aria-labelledby="triggerId">
-        <a class="dropdown-item" href="{% url 'jugar' %}">Nueva trivia</a>
+        <a class="dropdown-item" href="{% url 'crearNuevaPregunta' %}">Nueva trivia</a>
         {% for Trivia in trivias %}  
             <a class="dropdown-item" href="{% url 'crearPregunta' Trivia.id %}">{{ Trivia.Tipo }}</a>
         {% endfor %}
