@@ -6,20 +6,18 @@
 
 {% block contenido %}
 
-    <div class="card">
-        <div class="card-header">
-            Crear una pregunta
-        </div>
-        <div class="card-body">
-            <h4 class="card-title">Enunciado</h4>
-            
-            {% include 'TGApp/form.html' %}
-
-        </div>
-        <div class="card-footer text-muted">
-            
-        </div>
-    </div>                      
+    
+    
+    <div class="container">
+        <form method="POST">
+          <fieldset>
+            <legend>Form</legend>
+            {% csrf_token %}
+            {{ formulario.as_p }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </fieldset>
+        </form>
+    </div>
 
 {% endblock %}
 

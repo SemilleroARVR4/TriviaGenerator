@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .models import Pregunta, Trivia, Admin
-from .forms import PreguntaForm, formTest
+from .forms import PreguntaForm, formTest, formularioTest
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -25,26 +25,49 @@ def crear(request):
 
 @login_required
 def crearPregunta(request, Trivia_id):
-
     trivias= Trivia.objects.get(id=Trivia_id)
     preguntas = Pregunta.objects.filter(Trivia=trivias)
     
-    return render(request, "TGApp/crear.html", {'trivias': trivias, 'preguntas':preguntas})
+    if request.method=='POST':
+        formulario = formularioTest(request.POST) 
+        if formulario.is_valid():
+            formulario.save()
+    else:
+        formulario = formularioTest()
+    return render(request, "TGApp/crear.html", {'trivias': trivias, 'preguntas':preguntas, 'formulario': formulario})      
+    # return redirect("nosotros")
+    # return redirect("TGApp/crear.html", {'trivias': trivias, 'preguntas':preguntas, 'formulario': formulario})
+
+# return render(request, "TGApp/crear.html", {'trivias': trivias, 'preguntas':preguntas, 'formulario': formulario})
+
+
+# ABRE LA VISTA CON EL ID
+# @login_required
+# def crearPregunta(request, Trivia_id):
+
+#     trivias= Trivia.objects.get(id=Trivia_id)
+#     preguntas = Pregunta.objects.filter(Trivia=trivias)
+    
+    
+
+#     return render(request, "TGApp/crear.html", {'trivias': trivias, 'preguntas':preguntas})
+# ABRE LA VISTA CON EL ID
+
+
 
 
 @login_required
 def crearNuevaPregunta(request):
 
-    formulario = formTest()  
     if request.method=='POST':
-        formulario = formTest(data=request.POST) 
-        if formulario.is_valid():
-            nombre = request.POST.get("nombre")
-            
-            return redirect("/crear/agregar/nuevo?valido")
-            
+        form = formularioTest(request.POST) 
+        if form.is_valid():
+            form.save()
+    else:
+        form = formularioTest()
 
-    return render(request, "TGApp/crearNuevop.html", {'formulario':formulario}) 
+    return render(request, 'TGApp/form.html', {'form': form})
+            
 
 
 

@@ -1,4 +1,4 @@
-<form enctype="multipart/form-data" method="post">
+<!-- <form enctype="multipart/form-data" method="post">
   {% csrf_token %}
 
   {% for campo in formulario %}
@@ -20,4 +20,18 @@
 
   <input name="" id="" class="btn btn-success" type="submit" value="Enviar información">
 
-</form>
+</form> -->
+
+ 
+<h1>aaaaaaaaaa</h1>
+
+<div class="container">
+  <form method="POST">
+    <fieldset>
+      <legend>Form</legend>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </fieldset>
+  </form>
+</div>
