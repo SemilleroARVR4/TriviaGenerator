@@ -1,3 +1,4 @@
+from cProfile import label
 from pyexpat import model
 from django import forms
 from django.forms import ModelForm
@@ -26,25 +27,14 @@ class PreguntaForm(forms.ModelForm):
 #             'password2',
 #         ]
 
-class formularioTest(forms.ModelForm):
+class formPregunta(forms.ModelForm):
     class Meta:
         model = Pregunta
-        # fields = ["Trivia", "pregunta", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
-        # labels = {'Trivia': "Nombre Trivia", 'pregunta': "Pregunta",'opcionCorrecta': "Opcion correcta",'opcion2': "Opcion 2",'opcion3': "Opcion 3",'opcion4': "Opcion 4",}
         fields = ["Trivia", "pregunta", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
         labels = {'Trivia': "Nombre Trivia", 'pregunta': "Pregunta",'opcionCorrecta': "Opcion correcta",'opcion2': "Opcion 2",'opcion3': "Opcion 3",'opcion4': "Opcion 4",}
-    # enunciado = forms.CharField(max_length=200)
 
-
-# class formTrivia(ModelForm):
-#     class Meta:
-#         model = Trivia
-#         fields = ['autor', 'nombre', 'Tipo']
-    # autor = forms.ModelChoiceField(queryset=Trivia.objects.all())
-    # nombre = forms.CharField(max_length=100)
-    # Tipo = forms.CharField(max_length=100)
-
-
-class formTest(forms.Form):
-    nombre = forms.CharField(label="Etiqueta", required=True)
-    email = forms.EmailField(label="Correo")
+class formTrivia(forms.ModelForm):
+    class Meta:
+        model = Trivia
+        fields = ['nombre', 'Tipo']
+        labels = {'nombre' : "Nombre Trivia", 'Tipo' : "Tipo Trivia"}

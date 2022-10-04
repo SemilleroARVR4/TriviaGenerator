@@ -18,6 +18,5 @@ urlpatterns = [
 
     path('crear/editar', views.editarPregunta, name='editarPregunta'),
     path('jugar', views.jugar, name='jugar'),
-    
-    
+       
 ]
