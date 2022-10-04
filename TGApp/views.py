@@ -25,15 +25,28 @@ def crear(request):
 
 @login_required
 def crearPregunta(request, Trivia_id):
+
     trivias= Trivia.objects.get(id=Trivia_id)
     preguntas = Pregunta.objects.filter(Trivia=trivias)
     
+    initial_data = {
+
+        'Trivia': trivias,
+        'pregunta': 'Prueba de que funciona',
+        'opcionCorrecta' : 'opcion correcta',
+        'opcion2' : 'opcion incorrecta',
+        'opcion3' : 'opcion incorrecta',
+        'opcion4' : 'opcion incorrecta',
+    }
+    
     if request.method=='POST':
-        formulario = formularioTest(request.POST) 
+        formulario = formularioTest(request.POST, initial=initial_data) 
+        # form.fields["Email"].initial = GetEmailString()
         if formulario.is_valid():
             formulario.save()
+            return redirect("/crear")
     else:
-        formulario = formularioTest()
+        formulario = formularioTest(initial=initial_data)
     return render(request, "TGApp/crear.html", {'trivias': trivias, 'preguntas':preguntas, 'formulario': formulario})      
     # return redirect("nosotros")
     # return redirect("TGApp/crear.html", {'trivias': trivias, 'preguntas':preguntas, 'formulario': formulario})

@@ -4,12 +4,6 @@
 
 {% block contenido %}
 
-    {% if "valido" in request.GET %}
-
-        <p>Informacion enviada correctamente</p>
-
-    {% endif %}
-
     <form action="" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         {{ formulario.as_p }}

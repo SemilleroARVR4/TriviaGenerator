@@ -35,6 +35,7 @@ class formularioTest(forms.ModelForm):
         labels = {'Trivia': "Nombre Trivia", 'pregunta': "Pregunta",'opcionCorrecta': "Opcion correcta",'opcion2': "Opcion 2",'opcion3': "Opcion 3",'opcion4': "Opcion 4",}
     # enunciado = forms.CharField(max_length=200)
 
+
 # class formTrivia(ModelForm):
 #     class Meta:
 #         model = Trivia

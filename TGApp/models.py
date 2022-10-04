@@ -1,3 +1,4 @@
+from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -24,13 +25,13 @@ class Trivia(models.Model):
         return self.Tipo
 
 class Pregunta(models.Model):
-    Trivia = models.ForeignKey(Trivia, related_name='TipoTrivia', on_delete=models.CASCADE, null=True)
+    Trivia = models.ForeignKey(Trivia, on_delete=models.CASCADE, null=True)
     id = models.AutoField(primary_key=True)
     pregunta = models.TextField(verbose_name='Enunciado de la pregunta')
     opcionCorrecta = models.CharField(max_length=1000, verbose_name='Opcion correcta de la pregunta')
     opcion2 = models.TextField(verbose_name='Opcion falsa de la pregunta')
     opcion3 = models.TextField(verbose_name='Opcion falsa de la pregunta')
-    opcion4 = models.TextField(verbose_name='Opcion falsa de la pregunta')
+    opcion4 = models.TextField(verbose_name='Opcion falsa de la pregunta',)
 
     def __str__(self):
         return self.pregunta
