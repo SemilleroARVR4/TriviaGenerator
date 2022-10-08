@@ -36,5 +36,6 @@ class formPregunta(forms.ModelForm):
 class formTrivia(forms.ModelForm):
     class Meta:
         model = Trivia
-        fields = ['nombre', 'Tipo']
-        labels = {'nombre' : "Nombre Trivia", 'Tipo' : "Tipo Trivia"}
+        fields = ['autor', 'nombre', 'Tipo']
+        labels = {'autor' : "Creador", 'nombre' : "Nombre Trivia", 'Tipo' : "Tipo Trivia"}
+    

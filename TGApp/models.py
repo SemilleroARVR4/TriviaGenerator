@@ -1,3 +1,4 @@
+from enum import unique
 from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import User
@@ -18,7 +19,7 @@ class Admin(models.Model):
 class Trivia(models.Model):
     autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     id = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100, unique=True)
     Tipo = models.CharField(max_length=100)
 
     def __str__(self):

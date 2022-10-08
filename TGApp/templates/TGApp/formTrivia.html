@@ -1,3 +1,26 @@
+{% extends "base.html" %}
+
+{% block titulo %} Agregar nueva trivia {% endblock %}
+
+{% block contenido %}
+
+
+
+<div class="container">
+  <form method="POST">
+    <fieldset>
+      <legend>Form</legend>
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <button type="submit" class="btn btn-success">Registrar</button>
+    </fieldset>
+  </form>
+</div>
+
+
+
+
 <!-- <form enctype="multipart/form-data" method="post">
   {% csrf_token %}
 
@@ -22,16 +45,4 @@
 
 </form> -->
 
- 
-<h1>aaaaaaaaaa</h1>
-
-<div class="container">
-  <form method="POST">
-    <fieldset>
-      <legend>Form</legend>
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </fieldset>
-  </form>
-</div>
+{% endblock %}
