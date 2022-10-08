@@ -4,7 +4,6 @@ from .models import Pregunta, Trivia, Admin
 from .forms import formPregunta, formTrivia
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -55,22 +54,31 @@ def crearPregunta(request, Trivia_id):
 @login_required
 def crearNuevaPregunta(request):
 
-    # trivias= Trivia.objects.all()
+    # trivias= Trivia.objects.get(id=Trivia_id)
     # preguntas = Pregunta.objects.filter(Trivia=trivias)
     initial_data = {
-    'nombre': 'nombre trivia', 
 
+    'autor': request.user,
+    'nombre': 'nombre trivia', 
+    'Tipo': 'nombre trivia', 
     }
+
     if request.method=='POST':
         form = formTrivia(request.POST) 
         if form.is_valid():
             form.save()
-            messages.success(request, f'¡Tu trivia ha sido registrada, ya puedes agregar preguntas!')
+            messages.success(request, f'¡Tu trivia  ha sido registrada, ya puedes agregar preguntas!')
             return redirect("/crear")
     else:
         form = formTrivia(initial=initial_data)
 
     return render(request, 'TGApp/formTrivia.html', {'form': form})
+
+
+
+
+
+
             
 
 

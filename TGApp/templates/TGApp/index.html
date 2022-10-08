@@ -3,27 +3,27 @@
 {% block titulo %} Crear {% endblock %}
 
 {% block contenido %}
+    <br>
+    <h1> Hola: {{ user.username }}</h1>
+    <h2>Seleccione una trivia o cree una nueva para empezar a crear</h2>
 
-<h1> Hola: {{ user.username }}</h1>
-<h2>Seleccione una trivia o cree una nueva para empezar a crear</h2>
+    <br>           
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                    Seleccionar trivia
+        </button>
 
-                   
-<div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-                Seleccionar trivia
-    </button>
-
+                
+        <div class="dropdown-menu" aria-labelledby="triggerId">
+            <a class="dropdown-item" href="{% url 'crearNuevaPregunta' %}">Nueva trivia</a>
             
-    <div class="dropdown-menu" aria-labelledby="triggerId">
-        <a class="dropdown-item" href="{% url 'crearNuevaPregunta' %}">Nueva trivia</a>
-        
-        {% for Trivia in trivias %}  
-            <a class="dropdown-item" href="{% url 'crearPregunta' Trivia.id %}">{{ Trivia.Tipo }}</a>
-        {% endfor %}
-                    
-    </div>  
+            {% for Trivia in trivias %}  
+                <a class="dropdown-item" href="{% url 'crearPregunta' Trivia.id %}">{{ Trivia.Tipo }}</a>
+            {% endfor %}
+                        
+        </div>  
 
-</div>
+    </div>
 
 {% endblock %}
