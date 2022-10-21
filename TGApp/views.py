@@ -33,11 +33,7 @@ def crearPregunta(request, Trivia_id):
     initial_data = {
 
         'Trivia': trivias,
-        'pregunta': 'Enunciado de la pregunta',
-        'opcionCorrecta' : 'opcion correcta',
-        'opcion2' : 'opcion incorrecta 1',
-        'opcion3' : 'opcion incorrecta 2',
-        'opcion4' : 'opcion incorrecta 3',
+ 
     }
     
     if request.method=='POST':
@@ -59,8 +55,7 @@ def crearNuevaPregunta(request):
     initial_data = {
 
     'autor': request.user,
-    'nombre': 'nombre trivia', 
-    'Tipo': 'nombre trivia', 
+
     }
 
     if request.method=='POST':
