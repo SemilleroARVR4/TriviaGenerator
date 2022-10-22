@@ -1,4 +1,4 @@
-# TriviaGenerato
+# TriviaGenerator
 Para el correcto funcionamiento del proyecto instalar extensiones usando los comandos:
 
 pip install PyMySQL
