@@ -27,7 +27,17 @@
 
         <textarea name="" id="" cols="30" rows="10">{{ Pregunta.pregunta }}</textarea>
 
-        <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcionCorrecta }}</a>
+        <a name="" id="" class="btn btn-primary" href="{% url 'correcto' %}" role="button">{{ Pregunta.opcionCorrecta }}</a>
+        <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcion2 }}</a>
+        <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcion3 }}</a>
+        <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcion4 }}</a>
+    {% endif %}
+<br>
+    {% if Pregunta.id == 2 %}
+
+        <textarea name="" id="" cols="30" rows="10">{{ Pregunta.pregunta }}</textarea>
+
+        <a name="" id="" class="btn btn-primary" href="{% url 'correcto' %}" role="button">{{ Pregunta.opcionCorrecta }}</a>
         <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcion2 }}</a>
         <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcion3 }}</a>
         <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcion4 }}</a>

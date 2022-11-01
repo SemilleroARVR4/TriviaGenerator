@@ -71,7 +71,8 @@ def crearNuevaPregunta(request):
 
 
 
-
+def correcto(request):
+    return render(request, "TGApp/correcto.html")
 
 
             

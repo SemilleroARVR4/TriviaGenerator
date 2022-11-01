@@ -19,7 +19,7 @@ class Admin(models.Model):
 class Trivia(models.Model):
     autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     id = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=100, unique=True)
+    nombre = models.CharField(max_length=100)
     Tipo = models.CharField(max_length=100)
 
     def __str__(self):
@@ -37,5 +37,5 @@ class Pregunta(models.Model):
     def __str__(self):
         return self.pregunta
 
-
-
+class PreguntasRespondidas(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
