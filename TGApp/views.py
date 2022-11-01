@@ -4,6 +4,7 @@ from .models import Pregunta, Trivia, Admin
 from .forms import formPregunta, formTrivia
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.views.generic import ListView
 
 # Create your views here.
 
