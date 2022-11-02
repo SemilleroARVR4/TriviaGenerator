@@ -2,6 +2,7 @@ from enum import unique
 from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
 # El modelo da las pautas de lo que se va a crear en el admin
@@ -25,6 +26,9 @@ class Trivia(models.Model):
     def __str__(self):
         return self.Tipo
 
+    def get_absolute_url(self):
+        return reverse('crear')
+
 class Pregunta(models.Model):
     Trivia = models.ForeignKey(Trivia, on_delete=models.CASCADE, null=True)
     id = models.AutoField(primary_key=True)
@@ -36,6 +40,9 @@ class Pregunta(models.Model):
 
     def __str__(self):
         return self.pregunta
+
+    def get_absolute_url(self):
+        return reverse('crear')
 
 class PreguntasRespondidas(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)

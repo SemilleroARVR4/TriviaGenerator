@@ -9,11 +9,11 @@
 <div class="container">
   <form method="POST">
     <fieldset>
-      <legend>Form</legend>
+      <legend>Crear nueva trivia</legend>
       {% csrf_token %}
       {{ form.as_p }}
 
-      <button type="submit" class="btn btn-success">Registrar</button>
+      <button type="submit" class="btn btn-success">Crear</button>
     </fieldset>
   </form>
 </div>

@@ -1,10 +1,12 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from .models import Pregunta, Trivia, Admin
+from .models import Pregunta, Trivia
 from .forms import formPregunta, formTrivia
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView, UpdateView
+from django.contrib.messages.views import SuccessMessageMixin
+
 
 # Create your views here.
 
@@ -48,27 +50,48 @@ def crearPregunta(request, Trivia_id):
     return render(request, "TGApp/crear.html", {'trivias': trivias, 'preguntas':preguntas, 'formulario': formulario})      
 
 
-@login_required
-def crearNuevaPregunta(request):
+class CrearPregunta(SuccessMessageMixin, CreateView):
+    model = Trivia
+    template_name = 'TGApp/formTrivia.html'
+    fields = ['nombre', 'Tipo']
+    success_message = "¡Tu trivia ha sido registrada, ya puedes agregar preguntas!"
 
-    # trivias= Trivia.objects.get(id=Trivia_id)
-    # preguntas = Pregunta.objects.filter(Trivia=trivias)
-    initial_data = {
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
 
-    'autor': request.user,
+        form = super(CrearPregunta, self).get_form(form_class)
+        form.fields['nombre'].widget.attrs ={'placeholder': 'Nombre de la trivia'}
+        form.fields['Tipo'].widget.attrs ={'placeholder': 'Tipo de trivia'}
+        return form
+    
+    def form_valid(self, form):
+        form.instance.autor = self.request.user
+        return super().form_valid(form)
 
-    }
 
-    if request.method=='POST':
-        form = formTrivia(request.POST) 
-        if form.is_valid():
-            form.save()
-            messages.success(request, f'¡Tu trivia  ha sido registrada, ya puedes agregar preguntas!')
-            return redirect("/crear")
-    else:
-        form = formTrivia(initial=initial_data)
+class EditarPregunta(SuccessMessageMixin, UpdateView):
+    model = Pregunta
+    template_name = 'TGApp/editarPregunta.html'
+    fields = ["pregunta", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
+    success_message = "¡Tu pregunta ha sido actualizada correctamente!"
 
-    return render(request, 'TGApp/formTrivia.html', {'form': form})
+    # def get_form(self, form_class=None):
+    #     if form_class is None:
+    #         form_class = self.get_form_class()
+
+    #     form = super(CrearPregunta, self).get_form(form_class)
+    #     form.fields['pregunta'].widget.attrs ={'placeholder': 'Texto de la pregunta'}
+    #     form.fields['opcionCorrecta'].widget.attrs ={'placeholder': 'Opcion correcta'}
+    #     form.fields['opcion2'].widget.attrs ={'placeholder': 'Opcion incorrecta 1'}
+    #     form.fields['opcion3'].widget.attrs ={'placeholder': 'Opcion incorrecta 1'}
+    #     form.fields['opcion4'].widget.attrs ={'placeholder': 'Opcion incorrecta 1'}
+    #     return form
+    
+    # def form_valid(self, form):
+    #     form.instance.autor = self.request.user
+    #     return super().form_valid(form)
+
 
 
 
@@ -76,11 +99,8 @@ def correcto(request):
     return render(request, "TGApp/correcto.html")
 
 
-            
-
-
-def editarPregunta(request):
-    return render(request, "TGApp/editar.html")
+# def editarPregunta(request):
+#     return render(request, "TGApp/editar.html")
 
 def jugar(request):
     context = {
