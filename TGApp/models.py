@@ -25,6 +25,13 @@ class Trivia(models.Model):
 
     def __str__(self):
         return self.Tipo
+        
+    # def __str__(self):
+    #     return '%s %s' % (self.nombre, self.Tipo)
+
+    # def __str__(self):
+    #     fila = "Nombre: " + self.nombre + "-" + "Tipo: " + self.Tipo
+    #     return fila
 
     def get_absolute_url(self):
         return reverse('crear')
@@ -35,9 +42,9 @@ class Pregunta(models.Model):
     id = models.AutoField(primary_key=True)
     pregunta = models.TextField(verbose_name='Enunciado de la pregunta')
     opcionCorrecta = models.CharField(max_length=1000, verbose_name='Opcion correcta de la pregunta')
-    opcion2 = models.TextField(verbose_name='Opcion falsa de la pregunta')
-    opcion3 = models.TextField(verbose_name='Opcion falsa de la pregunta')
-    opcion4 = models.TextField(verbose_name='Opcion falsa de la pregunta',)
+    opcion2 = models.CharField(max_length=1000, verbose_name='Opcion falsa de la pregunta')
+    opcion3 = models.CharField(max_length=1000, verbose_name='Opcion falsa de la pregunta')
+    opcion4 = models.CharField(max_length=1000, verbose_name='Opcion falsa de la pregunta',)
 
     def __str__(self):
         return self.pregunta

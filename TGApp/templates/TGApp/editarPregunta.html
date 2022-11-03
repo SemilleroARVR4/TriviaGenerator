@@ -7,15 +7,16 @@
 {% block contenido %}
 
 
-<h1> Tipo de Trivia: {{trivias}} </h1>
+<h1> Edita tu pregunta </h1>
     
     <div class="container">
         <form method="POST">
           <fieldset>
-            <legend>Form</legend>
+            <!-- <legend>Form</legend> -->
                 {% csrf_token %}
-                    {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                    {{ form|crispy }}
+                    
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
           </fieldset>
         </form>
     </div>

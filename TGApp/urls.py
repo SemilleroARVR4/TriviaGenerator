@@ -11,7 +11,6 @@ urlpatterns = [
     # path('tablero', views.tablero, name='tablero'),
     path('nosotros', views.nosotros, name='nosotros'),
     path('crear', views.crear, name='crear'),
-    # path('crear/agregar', views.crearPregunta, name='crearPregunta'),
     path('crear/agregar/<int:Trivia_id>/', views.crearPregunta, name='crearPregunta'),  #aqui dirige el index
     path('crear/agregar/nuevo', login_required(CrearPregunta.as_view()), name='crearNuevaPregunta'),
     path('pregunta/<int:pk>/editar/', login_required(EditarPregunta.as_view()), name='EditarPregunta'),

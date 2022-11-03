@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block titulo %} Agregar nueva pregunta {% endblock %}
 
 {% block contenido %}
 
     <form action="" enctype="multipart/form-data" method="post">
         {% csrf_token %}
-        {{ formulario.as_p }}
+            {{ form|crispy }}
         <input name="" id="" class="btn btn-primary" type="submit" value="Registrar">
         
     </form>

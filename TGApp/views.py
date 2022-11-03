@@ -74,7 +74,7 @@ class CrearPregunta(SuccessMessageMixin, CreateView):
 class EditarPregunta(SuccessMessageMixin, UserPassesTestMixin, UpdateView):
     model = Pregunta
     template_name = 'TGApp/editarPregunta.html'
-    fields = ["pregunta", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
+    fields = ["Trivia", "pregunta", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
     success_message = "¡Tu pregunta ha sido actualizada correctamente!"
 
     def form_valid(self, form):
@@ -86,6 +86,8 @@ class EditarPregunta(SuccessMessageMixin, UserPassesTestMixin, UpdateView):
         if self.request.user == Pregunta.autor:
             return True
         return False
+
+    
 
 
 def correcto(request):
