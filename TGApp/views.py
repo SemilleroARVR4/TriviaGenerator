@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.generic import ListView, CreateView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 
 # Create your views here.
@@ -70,37 +71,26 @@ class CrearPregunta(SuccessMessageMixin, CreateView):
         return super().form_valid(form)
 
 
-class EditarPregunta(SuccessMessageMixin, UpdateView):
+class EditarPregunta(SuccessMessageMixin, UserPassesTestMixin, UpdateView):
     model = Pregunta
     template_name = 'TGApp/editarPregunta.html'
     fields = ["pregunta", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
     success_message = "¡Tu pregunta ha sido actualizada correctamente!"
 
-    # def get_form(self, form_class=None):
-    #     if form_class is None:
-    #         form_class = self.get_form_class()
+    def form_valid(self, form):
+        form.instance.autor = self.request.user
+        return super().form_valid(form)
 
-    #     form = super(CrearPregunta, self).get_form(form_class)
-    #     form.fields['pregunta'].widget.attrs ={'placeholder': 'Texto de la pregunta'}
-    #     form.fields['opcionCorrecta'].widget.attrs ={'placeholder': 'Opcion correcta'}
-    #     form.fields['opcion2'].widget.attrs ={'placeholder': 'Opcion incorrecta 1'}
-    #     form.fields['opcion3'].widget.attrs ={'placeholder': 'Opcion incorrecta 1'}
-    #     form.fields['opcion4'].widget.attrs ={'placeholder': 'Opcion incorrecta 1'}
-    #     return form
-    
-    # def form_valid(self, form):
-    #     form.instance.autor = self.request.user
-    #     return super().form_valid(form)
-
-
+    def test_func(self):
+        Pregunta = self.get_object()
+        if self.request.user == Pregunta.autor:
+            return True
+        return False
 
 
 def correcto(request):
     return render(request, "TGApp/correcto.html")
 
-
-# def editarPregunta(request):
-#     return render(request, "TGApp/editar.html")
 
 def jugar(request):
     context = {
@@ -108,5 +98,12 @@ def jugar(request):
         'preguntas': Pregunta.objects.all(),
     }
     return render(request, "jugar/jugar.html", context)
+
+def preguntas(request):
+    context = {
+        'trivias': Trivia.objects.all(),
+        'preguntas': Pregunta.objects.all(),
+    }
+    return render(request, "TGApp/preguntas.html", context)
 
 

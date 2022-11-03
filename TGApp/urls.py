@@ -14,10 +14,9 @@ urlpatterns = [
     # path('crear/agregar', views.crearPregunta, name='crearPregunta'),
     path('crear/agregar/<int:Trivia_id>/', views.crearPregunta, name='crearPregunta'),  #aqui dirige el index
     path('crear/agregar/nuevo', login_required(CrearPregunta.as_view()), name='crearNuevaPregunta'),
-    
     path('pregunta/<int:pk>/editar/', login_required(EditarPregunta.as_view()), name='EditarPregunta'),
 
-    # path('crear/editar', views.editarPregunta, name='editarPregunta'),
     path('jugar', views.jugar, name='jugar'),
     path('correcto', views.correcto, name='correcto'),
+    path('preguntas', views.preguntas, name='preguntas'),
 ]

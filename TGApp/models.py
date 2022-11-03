@@ -30,6 +30,7 @@ class Trivia(models.Model):
         return reverse('crear')
 
 class Pregunta(models.Model):
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     Trivia = models.ForeignKey(Trivia, on_delete=models.CASCADE, null=True)
     id = models.AutoField(primary_key=True)
     pregunta = models.TextField(verbose_name='Enunciado de la pregunta')

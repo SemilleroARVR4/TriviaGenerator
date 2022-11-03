@@ -5,6 +5,12 @@
 {% block contenido %}
 
 
+<h2>
+    Para empezar a jugar selecciona la trivia de tu agrado
+</h2>
+
+
+
 <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -14,7 +20,7 @@
             
     <div class="dropdown-menu" aria-labelledby="triggerId">
         {% for Trivia in trivias %}  
-            <a class="dropdown-item" href="{% url 'crear' %}">{{ Trivia.nombre }}</a>
+            <a class="dropdown-item" href="{% url 'nosotros' %}">{{ Trivia.nombre }}</a>
         {% endfor %}
                     
     </div>
@@ -23,7 +29,7 @@
 </div>
 
 {% for Pregunta in preguntas %}
-    {% if Pregunta.id == 1 %}
+    {% if Pregunta.id == 17 %}
 
         <textarea name="" id="" cols="30" rows="10">{{ Pregunta.pregunta }}</textarea>
 

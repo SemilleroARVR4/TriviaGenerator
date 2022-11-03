@@ -12,8 +12,8 @@ class PreguntaForm(forms.ModelForm):
 class formPregunta(forms.ModelForm):
     class Meta:
         model = Pregunta
-        fields = ["Trivia", "pregunta", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
-        labels = {'Trivia': "Tipo Trivia", 'pregunta': "Pregunta",'opcionCorrecta': "Opcion correcta",'opcion2': "Opcion 2",'opcion3': "Opcion 3",'opcion4': "Opcion 4",}
+        fields = ["autor", "Trivia", "pregunta", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
+        labels = {'autor' : "Creador", 'Trivia': "Tipo Trivia", 'pregunta': "Pregunta",'opcionCorrecta': "Opcion correcta",'opcion2': "Opcion 2",'opcion3': "Opcion 3",'opcion4': "Opcion 4",}
         
         widgets = {
             'pregunta': forms.Textarea(attrs={'placeholder':'Enunciado de la pregunta'}),
