@@ -16,8 +16,10 @@
                 {% csrf_token %}
                     {{ form|crispy }}
                     
-                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                        <button type="submit" class="btn btn-success">Actualizar</button>
+                        <a name="" id="" class="btn btn-primary" href="{% url 'preguntas' %}" role="button">Cancelar</a>
           </fieldset>
+          <br>
         </form>
     </div>
 

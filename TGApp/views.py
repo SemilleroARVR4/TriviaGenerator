@@ -4,9 +4,10 @@ from .models import Pregunta, Trivia
 from .forms import formPregunta, formTrivia
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -51,7 +52,31 @@ def crearPregunta(request, Trivia_id):
     return render(request, "TGApp/crear.html", {'trivias': trivias, 'preguntas':preguntas, 'formulario': formulario})      
 
 
-class CrearPregunta(SuccessMessageMixin, CreateView):
+
+
+# class CrearPregunta(SuccessMessageMixin, UserPassesTestMixin, CreateView):
+#     model = Pregunta
+#     template_name = 'TGApp/crear.html'
+#     fields = ["Trivia", "pregunta", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
+#     success_message = "¡Tu pregunta ha sido actualizada correctamente!"
+
+#     def form_valid(self, form):
+#         form.instance.autor = self.request.user
+#         return super().form_valid(form)
+
+#     #funcion que usa el usuario para poder modificar cosas solo creadas por el 
+#     def test_func(self):
+#         Pregunta = self.get_object()
+#         if self.request.user == Pregunta.autor:
+#             return True
+#         return False
+
+
+
+
+
+
+class CrearNuevaTrivia(SuccessMessageMixin, CreateView):
     model = Trivia
     template_name = 'TGApp/formTrivia.html'
     fields = ['nombre', 'Tipo']
@@ -61,7 +86,7 @@ class CrearPregunta(SuccessMessageMixin, CreateView):
         if form_class is None:
             form_class = self.get_form_class()
 
-        form = super(CrearPregunta, self).get_form(form_class)
+        form = super(CrearNuevaTrivia, self).get_form(form_class)
         form.fields['nombre'].widget.attrs ={'placeholder': 'Nombre de la trivia'}
         form.fields['Tipo'].widget.attrs ={'placeholder': 'Tipo de trivia'}
         return form
@@ -81,13 +106,29 @@ class EditarPregunta(SuccessMessageMixin, UserPassesTestMixin, UpdateView):
         form.instance.autor = self.request.user
         return super().form_valid(form)
 
+    #funcion que usa el usuario para poder modificar cosas solo creadas por el 
     def test_func(self):
         Pregunta = self.get_object()
         if self.request.user == Pregunta.autor:
             return True
         return False
 
-    
+
+class EliminarPregunta(SuccessMessageMixin, UserPassesTestMixin, DeleteView):
+    model = Pregunta
+    template_name = 'TGApp/eliminarPregunta.html'
+    success_url = reverse_lazy('preguntas')
+    success_message = "¡Tu pregunta ha sido eliminada correctamente!"
+
+    # def form_valid(self, form):
+    #     form.instance.autor = self.request.user
+    #     return super().form_valid(form)
+
+    def test_func(self):
+        Pregunta = self.get_object()
+        if self.request.user == Pregunta.autor:
+            return True
+        return False
 
 
 def correcto(request):

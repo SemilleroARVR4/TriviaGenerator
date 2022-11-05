@@ -9,50 +9,56 @@
     <div class="card-header">
         <h4 class="card-title">Mis preguntas</h4>
     </div>
+
+    
     <div class="card-body">
         <!-- <h4 class="card-title">Title</h4> -->
         
         {% for Pregunta in preguntas %}  
-                    
-        <div class="table-responsive">
-            <table class="table table-primary">
+            {% if Pregunta.autor == user %}     
+                <div class="table-responsive">
+                    <table class="table table-primary">
 
-                <thead>
-                    <tr>
-                        <th >Trivia</th>
-                        <th scope="col">Enunciado</th>
-                        <th scope="col">Opcion correcta</th>
-                        <th scope="col">Opcion 1</th>
-                        <th scope="col">Opcion 2</th>
-                        <th scope="col">Opcion 3</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
+                        <thead>
+                            <tr>
+                                <th >Trivia</th>
+                                <th scope="col">Enunciado</th>
+                                <th scope="col">Opcion correcta</th>
+                                <th scope="col">Opcion 1</th>
+                                <th scope="col">Opcion 2</th>
+                                <th scope="col">Opcion 3</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
 
-                <tbody>
-                    <tr class="">
-                        <td scope="row">{{ Pregunta.Trivia }}</td>
-                        <td>{{ Pregunta.pregunta }}</td>
-                        <td>{{ Pregunta.opcionCorrecta }}</td>
-                        <td>{{ Pregunta.opcion2 }}</td>
-                        <td>{{ Pregunta.opcion3 }}</td>
-                        <td>{{ Pregunta.opcion4 }}</td>
-                        <td> <a name="" id="" class="btn btn-info" href="{% url 'EditarPregunta' Pregunta.id %}" role="button">Editar</a> <button type="button" class="btn btn-danger">Borrar</button></td>
-                        
-                    </tr>
-                    <!-- <tr class="">
-                        <td scope="row">Item</td>
-                        <td>Item</td>
-                        <td>Item</td>
-                    </tr> -->
-                </tbody>
+                        <tbody>
+                            <tr class="">
+                                <td scope="row">{{ Pregunta.Trivia }}</td>
+                                <td>{{ Pregunta.pregunta }}</td>
+                                <td>{{ Pregunta.opcionCorrecta }}</td>
+                                <td>{{ Pregunta.opcion2 }}</td>
+                                <td>{{ Pregunta.opcion3 }}</td>
+                                <td>{{ Pregunta.opcion4 }}</td>
 
-            </table>
-        </div>
+                                
+                                <td> <a name="" id="" class="btn btn-info" href="{% url 'EditarPregunta' Pregunta.id %}" role="button">Editar</a> <a name="" id="" class="btn btn-danger" href="{% url 'EliminarPregunta' Pregunta.id %}" role="button">Borrar</a></td>
+                                
 
+                            </tr>
+                            <!-- <tr class="">
+                                <td scope="row">Item</td>
+                                <td>Item</td>
+                                <td>Item</td>
+                            </tr> -->
+                        </tbody>
+
+                    </table>
+                </div>
+            {% endif %}
         {% endfor %}
         
     </div>
+    
 
 </div>
 

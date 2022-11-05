@@ -5,7 +5,7 @@
 {% block contenido %}
     <br>
     <h1> Hola: {{ user.username }}</h1>
-    <h2>Seleccione una trivia o cree una nueva para empezar a crear</h2>
+    <h2>Seleccione una trivia o cree una nueva para empezar a agregar preguntas</h2>
 
     <br>           
     <div class="dropdown">
@@ -16,10 +16,10 @@
 
                 
         <div class="dropdown-menu" aria-labelledby="triggerId">
-            <a class="dropdown-item" href="{% url 'crearNuevaPregunta' %}">Nueva trivia</a>
+            <a class="dropdown-item" href="{% url 'crearNuevaTrivia' %}">Nueva trivia</a>
             
             {% for Trivia in trivias %}  
-                <a class="dropdown-item" href="{% url 'crearPregunta' Trivia.id %}">{{ Trivia.Tipo }}</a>
+                <a class="dropdown-item" href="#">{{ Trivia.Tipo }}</a>
             {% endfor %}
                         
         </div>  

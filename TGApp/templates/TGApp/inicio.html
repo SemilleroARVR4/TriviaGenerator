@@ -8,7 +8,13 @@
     <div class="container-fluid py-5">
       <h1 class="display-5 fw-bold">Trivia Generator</h1>
       <p class="col-md-8 fs-4">Aplicacion web que permite jugar y/o crear una trivia, para crear una trivia debes registrarte e ingresar con tu cuenta</p>
-      <button class="btn btn-primary btn-lg" type="button">Empezar</button>
+
+      {% if user.is_authenticated %}
+        <a class="btn btn-primary btn-lg" href="{% url 'crear' %}">Empezar</a>
+      {% else %}
+        <a class="btn btn-primary btn-lg" href="{% url 'login' %}">Empezar</a>
+      {% endif %}
+      
     </div>
 </div>
 

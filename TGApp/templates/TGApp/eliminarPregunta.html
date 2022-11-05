@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block titulo %} Eliminar pregunta {% endblock %}
+
+{% block contenido %}
+<BR></BR>
+<form method="post">{% csrf_token %}
+    
+    <h2>¿Seguro que quieres borrar de forma permanente la pregunta: "{{ object }}"?</h2>
+    {{ form }}
+    <br>
+    <input class="btn btn-danger" type="submit" value="Si, Borrar">
+    <a name="" id="" class="btn btn-primary" href="{% url 'preguntas' %}" role="button">Cancelar</a>
+   
+</form>
+
+{% endblock %}
+

@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import CrearPregunta, EditarPregunta
+from .views import CrearNuevaTrivia, EditarPregunta, EliminarPregunta
 from django.contrib.auth.decorators import login_required, permission_required
 
 urlpatterns = [
@@ -12,10 +12,12 @@ urlpatterns = [
     path('nosotros', views.nosotros, name='nosotros'),
     path('crear', views.crear, name='crear'),
     path('crear/agregar/<int:Trivia_id>/', views.crearPregunta, name='crearPregunta'),  #aqui dirige el index
-    path('crear/agregar/nuevo', login_required(CrearPregunta.as_view()), name='crearNuevaPregunta'),
+
+    path('crear/agregar/nuevo', login_required(CrearNuevaTrivia.as_view()), name='crearNuevaTrivia'),
     path('pregunta/<int:pk>/editar/', login_required(EditarPregunta.as_view()), name='EditarPregunta'),
 
     path('jugar', views.jugar, name='jugar'),
     path('correcto', views.correcto, name='correcto'),
     path('preguntas', views.preguntas, name='preguntas'),
+    path('pregunta/<int:pk>/eliminar/', login_required(EliminarPregunta.as_view()), name='EliminarPregunta'),
 ]
