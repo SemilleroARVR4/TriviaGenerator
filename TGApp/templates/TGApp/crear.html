@@ -7,15 +7,24 @@
 {% block contenido %}
 
 
-<h1> Tipo de Trivia: {{trivias}} </h1>
-    
+
+
+<br>
+  
+<!-- <h1> Tipo de Trivia: "{{ Pregunta.auto }}" </h1> -->
+  
     <div class="container">
         <form method="POST">
           <fieldset>
-            <legend>Form</legend>
+
             {% csrf_token %}
+            <!-- {{ form.as_p }} -->
+
+            <!-- {{ formulario.autor.as_hidden }} -->
             {{ formulario.as_p }}
-            <button type="submit" class="btn btn-primary">Submit</button>
+
+
+            <button type="submit" class="btn btn-primary">Crear</button>
           </fieldset>
         </form>
     </div>

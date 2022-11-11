@@ -19,7 +19,7 @@
             <a class="dropdown-item" href="{% url 'crearNuevaTrivia' %}">Nueva trivia</a>
             
             {% for Trivia in trivias %}  
-                <a class="dropdown-item" href="#">{{ Trivia.Tipo }}</a>
+                <a class="dropdown-item" href="{% url 'crearPregunta' Trivia.id %}">{{ Trivia.Tipo }}</a>
             {% endfor %}
                         
         </div>  

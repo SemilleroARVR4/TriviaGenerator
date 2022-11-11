@@ -38,7 +38,7 @@ class Trivia(models.Model):
 
 class Pregunta(models.Model):
     autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    Trivia = models.ForeignKey(Trivia, on_delete=models.CASCADE, null=True)
+    trivia = models.ForeignKey(Trivia, on_delete=models.CASCADE, null=True)
     id = models.AutoField(primary_key=True)
     pregunta = models.TextField(verbose_name='Enunciado de la pregunta')
     opcionCorrecta = models.CharField(max_length=1000, verbose_name='Opcion correcta de la pregunta')

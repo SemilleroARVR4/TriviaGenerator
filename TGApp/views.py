@@ -8,6 +8,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 
 
 # Create your views here.
@@ -33,43 +34,83 @@ def crear(request):
 def crearPregunta(request, Trivia_id):
 
     trivias= Trivia.objects.get(id=Trivia_id)
-    preguntas = Pregunta.objects.filter(Trivia=trivias)
+    preguntas = Pregunta.objects.filter(trivia=trivias)
     
     initial_data = {
 
-        'Trivia': trivias,
+        'trivia': trivias,
+        'autor': request.user,
  
-    }
-    
+    }   
+
     if request.method=='POST':
         formulario = formPregunta(request.POST, initial=initial_data) 
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, f'¡Tu pregunta ha sido registrada!')
+            messages.success(request, f'¡Tu pregunta ha sido registrada!' )
             return redirect("/crear")
     else:
         formulario = formPregunta(initial=initial_data)
-    return render(request, "TGApp/crear.html", {'trivias': trivias, 'preguntas':preguntas, 'formulario': formulario})      
+    return render(request, "TGApp/crear.html", {'trivias': trivias, 'preguntas':preguntas, 'formulario': formulario}) 
+
+       
 
 
 
 
-# class CrearPregunta(SuccessMessageMixin, UserPassesTestMixin, CreateView):
+# class CrearPregunta(SuccessMessageMixin, CreateView):
 #     model = Pregunta
 #     template_name = 'TGApp/crear.html'
-#     fields = ["Trivia", "pregunta", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
-#     success_message = "¡Tu pregunta ha sido actualizada correctamente!"
+#     fields = ["pregunta", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
+#     success_message = "¡Tu trivia ha sido creada, ya puedes empezar a agregar preguntas!"
 
 #     def form_valid(self, form):
 #         form.instance.autor = self.request.user
-#         return super().form_valid(form)
+#         # trivia = get_object_or_404(Trivia, trivia=self.kwargs['trivia'])
+#         # form.instance.trivia = trivia
+#         return super(CrearPregunta, self).form_valid(form)
 
+
+
+
+
+
+
+
+    # def get_object(self):
+    #     return super().get_object(queryset)
+    # def get_initial(self):
+    #     trivia = get_object_or_404(Trivia, Tipo=self.kwargs.get('Tipo'))
+    #     return super().get_initial()
+
+    # def get_initial(self):
+    #     trivia = get_object_or_404(Trivia, Tipo=self.kwargs.get('Tipo'))
+    #     return {
+    #         'trivia':trivia,
+    #     }
+        
+        # form.instance.Trivia = Trivia
+        # form.instance.pTrivia = self.kwargs.get('pk')
+        # Trivia = get_object_or_404(Trivia, slug=self.kwargs['Trivia'])
+        
+    # def get_initial(self):
+    #     Trivia = get_object_or_404(Trivia, Tipo=self.kwargs['Tipo'])
+    #     return {
+    #         'Trivia':Trivia,
+    #     }
+
+    # def get_initial(self):
+    #     trivia = get_object_or_404(Trivia, Tipo=self.kwargs.get('Tipo'))
+    #     return {
+    #         'trivia':Trivia,
+    #     }
 #     #funcion que usa el usuario para poder modificar cosas solo creadas por el 
 #     def test_func(self):
 #         Pregunta = self.get_object()
 #         if self.request.user == Pregunta.autor:
 #             return True
 #         return False
+
 
 
 
