@@ -37,10 +37,8 @@ def crearPregunta(request, Trivia_id):
     preguntas = Pregunta.objects.filter(trivia=trivias)
     
     initial_data = {
-
         'trivia': trivias,
         'autor': request.user,
- 
     }   
 
     if request.method=='POST':
@@ -48,7 +46,7 @@ def crearPregunta(request, Trivia_id):
         if formulario.is_valid():
             formulario.save()
             messages.success(request, f'¡Tu pregunta ha sido registrada!' )
-            return redirect("/crear")
+            return redirect("/preguntas")
     else:
         formulario = formPregunta(initial=initial_data)
     return render(request, "TGApp/crear.html", {'trivias': trivias, 'preguntas':preguntas, 'formulario': formulario}) 
@@ -140,8 +138,9 @@ class CrearNuevaTrivia(SuccessMessageMixin, CreateView):
 class EditarPregunta(SuccessMessageMixin, UserPassesTestMixin, UpdateView):
     model = Pregunta
     template_name = 'TGApp/editarPregunta.html'
-    fields = ["Trivia", "pregunta", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
+    fields = ["trivia", "pregunta", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
     success_message = "¡Tu pregunta ha sido actualizada correctamente!"
+    success_url = reverse_lazy('preguntas')
 
     def form_valid(self, form):
         form.instance.autor = self.request.user
@@ -185,8 +184,8 @@ def jugar(request):
 
 def preguntas(request):
     context = {
-        'trivias': Trivia.objects.all(),
-        'preguntas': Pregunta.objects.all(),
+        'trivias': Trivia.objects.all().order_by('-id'),
+        'preguntas': Pregunta.objects.all().order_by('-id'),
     }
     return render(request, "TGApp/preguntas.html", context)
 
