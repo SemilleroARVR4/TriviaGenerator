@@ -7,6 +7,7 @@
 
 <h2>
     Para empezar a jugar selecciona la trivia de tu agrado
+    El juego consiste en selecconar una opcion correcta de las 4 que se muestran
 </h2>
 
 
@@ -19,10 +20,17 @@
 
             
     <div class="dropdown-menu" aria-labelledby="triggerId">
-        {% for Trivia in trivias %}  
-            <a class="dropdown-item" href="{% url 'nosotros' %}">{{ Trivia.nombre }}</a>
-        {% endfor %}
+        
                     
+        {% for Pregunta in preguntas %}  
+
+            <a class="dropdown-item" href="{% url 'jugarQuizz' Pregunta.id %}">{{ Pregunta.trivia.nombre }}</a>
+
+            
+        {% endfor %}
+
+        
+
     </div>
             
 

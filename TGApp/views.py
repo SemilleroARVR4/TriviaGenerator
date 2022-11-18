@@ -4,7 +4,7 @@ from .models import Pregunta, Trivia
 from .forms import formPregunta, formTrivia
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse_lazy
@@ -174,14 +174,6 @@ class EliminarPregunta(SuccessMessageMixin, UserPassesTestMixin, DeleteView):
 def correcto(request):
     return render(request, "TGApp/correcto.html")
 
-
-def jugar(request):
-    context = {
-        'trivias': Trivia.objects.all(),
-        'preguntas': Pregunta.objects.all(),
-    }
-    return render(request, "jugar/jugar.html", context)
-
 def preguntas(request):
     context = {
         'trivias': Trivia.objects.all().order_by('-id'),
@@ -189,4 +181,25 @@ def preguntas(request):
     }
     return render(request, "TGApp/preguntas.html", context)
 
+ 
+def jugar(request):
+    context = {
+        'trivias': Trivia.objects.all(),
+        'preguntas': Pregunta.objects.all(),
+    }
+    return render(request, "jugar/jugar.html", context)
+
+class Quizz(DetailView):
+    model = Pregunta
+
+# def jugarQuizz(request, Pregunta_id):
+
+#     context = {
+#         'trivias': Trivia.objects.all(),
+#         'preguntas': Pregunta.objects.all(),
+#         # 'preguntas': Pregunta.objects.get(id=Pregunta_id)
+#     }
+#     return render(request, "TGApp/jugarQuizz.html", context)
+
+    
 
