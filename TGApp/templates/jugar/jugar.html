@@ -22,11 +22,14 @@
     <div class="dropdown-menu" aria-labelledby="triggerId">
         
                     
+        
+
+        
+
         {% for Pregunta in preguntas %}  
-
-            <a class="dropdown-item" href="{% url 'jugarQuizz' Pregunta.id %}">{{ Pregunta.trivia.nombre }}</a>
-
-            
+                
+                    <a class="dropdown-item" href="{% url 'jugarPrueba' Pregunta.id %}">{{ Pregunta.trivia.nombre }}</a>
+                
         {% endfor %}
 
         

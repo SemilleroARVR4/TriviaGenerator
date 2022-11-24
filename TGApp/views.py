@@ -189,17 +189,17 @@ def jugar(request):
     }
     return render(request, "jugar/jugar.html", context)
 
-class Quizz(DetailView):
-    model = Pregunta
+# class Quizz(DetailView):
+#     model = Pregunta
 
-# def jugarQuizz(request, Pregunta_id):
+def jugarQuizz(request, Pregunta_id):
 
-#     context = {
-#         'trivias': Trivia.objects.all(),
-#         'preguntas': Pregunta.objects.all(),
-#         # 'preguntas': Pregunta.objects.get(id=Pregunta_id)
-#     }
-#     return render(request, "TGApp/jugarQuizz.html", context)
+    context = {
+        'trivias': Trivia.objects.all(),
+        'preguntas': Pregunta.objects.all(),
+        # 'preguntas': Pregunta.objects.get(id=Pregunta_id)
+    }
+    return render(request, "TGApp/jugarQuizz.html", context)
 
     
 

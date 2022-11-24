@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import CrearNuevaTrivia, EditarPregunta, EliminarPregunta, Quizz
+from .views import CrearNuevaTrivia, EditarPregunta, EliminarPregunta
 from django.contrib.auth.decorators import login_required, permission_required
 
 urlpatterns = [
@@ -23,11 +23,11 @@ urlpatterns = [
     path('jugar', views.jugar, name='jugar'),
     
     
-    # path('jugar/quizz/<int:Pregunta_id>', views.jugarQuizz, name='jugarPrueba'),
+    path('jugar/quizz/<int:Pregunta_id>', views.jugarQuizz, name='jugarPrueba'),
     # path('jugar/quizz/<int:Pregunta_id>', views.jugarQuizz, name='jugarPrueba'),
 
 
-    path('quizz/<int:pk>', Quizz.as_view(), name='jugarQuizz'),
+    # path('quizz/<int:pk>', Quizz.as_view(), name='jugarQuizz'),
     path('correcto', views.correcto, name='correcto'),
     
     
