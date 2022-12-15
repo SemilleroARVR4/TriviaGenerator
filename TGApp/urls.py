@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import CrearNuevaTrivia, EditarPregunta, EliminarPregunta
+from .views import CrearNuevaTrivia, EditarPregunta, EliminarPregunta#, Quizz#, crearPreguntaTest
 from django.contrib.auth.decorators import login_required, permission_required
 
 urlpatterns = [
@@ -16,6 +16,8 @@ urlpatterns = [
     path('crear/agregar/<int:Trivia_id>/', views.crearPregunta, name='crearPregunta'),  #aqui dirige el index
     
     path('crear/agregar/nuevo', login_required(CrearNuevaTrivia.as_view()), name='crearNuevaTrivia'),
+
+    
     path('preguntas', views.preguntas, name='preguntas'),
     path('pregunta/<int:pk>/editar/', login_required(EditarPregunta.as_view()), name='EditarPregunta'),
     path('pregunta/<int:pk>/eliminar/', login_required(EliminarPregunta.as_view()), name='EliminarPregunta'),
@@ -23,12 +25,35 @@ urlpatterns = [
     path('jugar', views.jugar, name='jugar'),
     
     
-    path('jugar/quizz/<int:Pregunta_id>', views.jugarQuizz, name='jugarPrueba'),
+    path('jugar/quizz/<int:Trivia_id>', views.jugarTrivia, name='jugarTrivia'),
+
+
+    # path('jugar/quizz/<int:Trivia_id>', views.jugarQuizz, name='jugarPrueba'),
     # path('jugar/quizz/<int:Pregunta_id>', views.jugarQuizz, name='jugarPrueba'),
 
 
-    # path('quizz/<int:pk>', Quizz.as_view(), name='jugarQuizz'),
+    
     path('correcto', views.correcto, name='correcto'),
+    
+
+
+    # path('quizz/<int:pk>', Quizz.as_view(), name='jugarQuizz'),
+
+
+
+    # path('home', views.home, name='home'),
+    # path('addQuestion', views.addQuestion, name='addQuestion'),
+
+
+
+
+
+
+    path('jugar/trivia', views.jugarQuiz, name='jugarQuizTrivia'),
+    path('resultado/<int:pregunta_respondida_pk>', views.resultado_pregunta, name='resultado'),
+    path('tablero', views.tablero, name='tablero'),
+
+
     
     
 ]

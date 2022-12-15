@@ -1,7 +1,7 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
-from .models import Pregunta, Trivia
-from .forms import formPregunta, formTrivia
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Pregunta, Trivia, QuizUsuario, QuizUsuarioTrivia, PreguntaQuiz, PreguntasRespondidasTrivia, ElegirRespuesta, PreguntasConOpciones
+from .forms import formPregunta, formTrivia, ElegirRespuestaTest, formTrivia, OtroModelo
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
@@ -9,6 +9,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
+
 
 
 # Create your views here.
@@ -28,6 +30,8 @@ def crear(request):
     }
     
     return render(request, "TGApp/index.html", context)
+
+
 
 
 @login_required
@@ -50,69 +54,6 @@ def crearPregunta(request, Trivia_id):
     else:
         formulario = formPregunta(initial=initial_data)
     return render(request, "TGApp/crear.html", {'trivias': trivias, 'preguntas':preguntas, 'formulario': formulario}) 
-
-       
-
-
-
-
-# class CrearPregunta(SuccessMessageMixin, CreateView):
-#     model = Pregunta
-#     template_name = 'TGApp/crear.html'
-#     fields = ["pregunta", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
-#     success_message = "¡Tu trivia ha sido creada, ya puedes empezar a agregar preguntas!"
-
-#     def form_valid(self, form):
-#         form.instance.autor = self.request.user
-#         # trivia = get_object_or_404(Trivia, trivia=self.kwargs['trivia'])
-#         # form.instance.trivia = trivia
-#         return super(CrearPregunta, self).form_valid(form)
-
-
-
-
-
-
-
-
-    # def get_object(self):
-    #     return super().get_object(queryset)
-    # def get_initial(self):
-    #     trivia = get_object_or_404(Trivia, Tipo=self.kwargs.get('Tipo'))
-    #     return super().get_initial()
-
-    # def get_initial(self):
-    #     trivia = get_object_or_404(Trivia, Tipo=self.kwargs.get('Tipo'))
-    #     return {
-    #         'trivia':trivia,
-    #     }
-        
-        # form.instance.Trivia = Trivia
-        # form.instance.pTrivia = self.kwargs.get('pk')
-        # Trivia = get_object_or_404(Trivia, slug=self.kwargs['Trivia'])
-        
-    # def get_initial(self):
-    #     Trivia = get_object_or_404(Trivia, Tipo=self.kwargs['Tipo'])
-    #     return {
-    #         'Trivia':Trivia,
-    #     }
-
-    # def get_initial(self):
-    #     trivia = get_object_or_404(Trivia, Tipo=self.kwargs.get('Tipo'))
-    #     return {
-    #         'trivia':Trivia,
-    #     }
-#     #funcion que usa el usuario para poder modificar cosas solo creadas por el 
-#     def test_func(self):
-#         Pregunta = self.get_object()
-#         if self.request.user == Pregunta.autor:
-#             return True
-#         return False
-
-
-
-
-
 
 
 class CrearNuevaTrivia(SuccessMessageMixin, CreateView):
@@ -171,9 +112,6 @@ class EliminarPregunta(SuccessMessageMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
-def correcto(request):
-    return render(request, "TGApp/correcto.html")
-
 def preguntas(request):
     context = {
         'trivias': Trivia.objects.all().order_by('-id'),
@@ -181,25 +119,157 @@ def preguntas(request):
     }
     return render(request, "TGApp/preguntas.html", context)
 
- 
-def jugar(request):
+
+def correcto(request):
     context = {
-        'trivias': Trivia.objects.all(),
         'preguntas': Pregunta.objects.all(),
     }
-    return render(request, "jugar/jugar.html", context)
+    return render(request, "TGApp/correcto.html", context)
 
-# class Quizz(DetailView):
-#     model = Pregunta
 
-def jugarQuizz(request, Pregunta_id):
 
-    context = {
-        'trivias': Trivia.objects.all(),
-        'preguntas': Pregunta.objects.all(),
-        # 'preguntas': Pregunta.objects.get(id=Pregunta_id)
-    }
-    return render(request, "TGApp/jugarQuizz.html", context)
+
+
+class Quizz(DetailView):
+    model = Pregunta
+
+
 
     
+
+#VIDEO
+
+def jugarQuiz(request):
+    QuizUser, created = QuizUsuarioTrivia.objects.get_or_create(usuario=request.user)
+
+    if request.method == 'POST':
+        pregunta_pk = request.POST.get('pregunta_pk')
+        pregunta_respondida = QuizUser.intentos.select_related('pregunta').get(pregunta__pk=pregunta_pk)
+        respuesta_pk = request.POST.get('respuesta_pk')
+
+        try:
+            opcion_selecionada = pregunta_respondida.pregunta.opciones.get(pk=respuesta_pk)
+        
+        except ObjectDoesNotExist:
+            raise Http404
+		
+        QuizUser.validar_intento(pregunta_respondida, opcion_selecionada)
+        return redirect('resultado', pregunta_respondida.pk)
+
+    else:
+  
+        pregunta = QuizUser.obtener_nuevas_preguntas()
+        if pregunta is not None:
+            QuizUser.crear_intentos(pregunta)
+
+        context = {
+            'pregunta':pregunta
+        }
+
+    return render(request, 'jugar/jugarPrueba.html', context)
+
+
+def resultado_pregunta(request, pregunta_respondida_pk):
+    respondida = get_object_or_404(PreguntasRespondidasTrivia, pk=pregunta_respondida_pk)
+
+    context = {
+        'respondida':respondida
+    }
+
+    return render(request, 'jugar/resultados.html', context)
+
+def tablero(request):
+    total_usuarios_quiz = QuizUsuarioTrivia.objects.order_by('-puntaje_total')[:10]
+    contador = total_usuarios_quiz.count()
+
+    context = {
+        'usuario_quiz':total_usuarios_quiz,
+        'contar_user':contador
+    }
+
+    return render(request, 'jugar/tablero.html', context)
+
+
+
+
+
+@login_required
+def jugar(request):
+    if request.method == 'POST':
+        print(request.POST)
+        preguntas = Pregunta.objects.all()
+        trivias= Trivia.objects.all()
+        puntaje = 0
+        incorrecta = 0
+        correcta = 0
+        total = 0
+        for pregunta in preguntas:
+            total += 1
+            print(request.POST.get(pregunta.pregunta))
+            # print(pregunta.respuesta)
+            print()
+            if pregunta.opcionCorrecta == request.POST.get("opcion1"):
+                puntaje += 10
+                correcta += 1
+            elif pregunta.opcion2 == request.POST.get("opcion1"):
+                incorrecta += 1
+            elif pregunta.opcion3 == request.POST.get("opcion1"):
+                incorrecta += 1
+            elif pregunta.opcion4 == request.POST.get("opcion1"):
+                incorrecta += 1
+            # if request.POST.get("opcionCorrecta") == pregunta.opcionCorrecta:
+            #     puntaje += 10
+            #     correcta += 1
+            
+            # if preg.opcionCorrecta == request.POST.get(preg.pregunta):
+            #     puntaje += 10
+            #     correcta += 1
+            else:
+                incorrecta += 1        
+        percent = puntaje/(total*10) * 100
+        context = {
+            'trivias':trivias,
+            'puntaje':puntaje,
+            'time':request.POST.get('timer'),
+            'correcta':correcta,
+            'incorrecta':incorrecta,
+            'percent':percent,
+            'total':total
+        }
+        return render(request, 'TGApp/result.html', context)
+    else:
+        preguntas = Pregunta.objects.all()
+        trivias= Trivia.objects.all()
+        context = {
+            'trivias':trivias,
+            'preguntas':preguntas
+        }
+        return render (request, 'jugar/jugar.html', context)
+
+def jugarTrivia(request, Trivia_id):
+    # trivias= Trivia.objects.all()
+    trivias= Trivia.objects.get(id=Trivia_id) 
+    preguntas = Pregunta.objects.all()
+
+    context = {
+        'trivias':trivias,
+        'preguntas':preguntas
+    }
+    return render(request, 'jugar/jugarTrivia.html', context)
+
+
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
 

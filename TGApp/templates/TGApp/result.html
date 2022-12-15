@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block titulo %} nosotros {% endblock %}
+
+{% block contenido %}
+
+<br>
+<P>
+    Puntaje: {{puntaje}}
+</P>
+
+<P>
+    Porcentaje: {{ percent }}
+</P>
+
+<P>
+    Respondidas correctas: {{ correcta }}
+</P>
+
+<P>
+    Respondidas incorrectas: {{ incorrecta }}
+</P>
+
+<P>
+   Preguntas totales: {{ total }}
+</P>    
+
+{% endblock %}

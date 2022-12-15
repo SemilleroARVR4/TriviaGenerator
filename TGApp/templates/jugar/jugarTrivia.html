@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block titulo %} Jugar2 {% endblock %}
+
+{% block contenido %}
+
+{% for pregunta in preguntas %}
+
+
+        {% if pregunta.trivia.id == trivias.id  %}
+
+        
+
+        <form method="POST">
+
+            {% csrf_token %}
+            {% for pregunta in preguntas %}
+                
+                <h3>
+                    <br>
+                    {{ pregunta.pregunta }}    
+                </h3>
+                
+                
+                
+                
+                <div class="form-check">    
+                    <input type="radio" name="opcion1" value="{{ pregunta.opcionCorrecta }}" id="gridRadios1">
+                    <label class="form-check-label" for="gridRadios1">
+                        {{ pregunta.opcionCorrecta }}    
+                    </label>                
+                </div>            
+    
+                <div class="form-check">
+                    <input type="radio" name="opcion2" value="{{ pregunta.opcion2 }}" id="gridRadios2">
+                    <label class="form-check-label" for="gridRadios2">
+                        {{ pregunta.opcion2 }} 
+                    </label>   
+                </div>
+    
+                <div class="form-check">
+                    <input type="radio" name="opcion3" value="{{ pregunta.opcion3 }}" id="gridRadios3">
+                    <label class="form-check-label" for="gridRadios3">
+                        {{ pregunta.opcion3 }} 
+                    </label>   
+                </div>
+    
+                <div class="form-check">
+                    <input type="radio" name="opcion4" value="{{ pregunta.opcion4 }}" id="gridRadios4">
+                    <label class="form-check-label" for="gridRadios4">
+                        {{ pregunta.opcion4 }}    
+                    </label>
+                </div>
+    
+    
+                
+    
+            {% endfor %}
+        <p>
+            <br>
+            <button type="submit" class="btn btn-success">Enviar</button>
+        </p>
+        
+    
+        </form>
+
+
+
+
+
+        {% else %}
+
+            <h2>El ID no coincide</h2>
+
+        {% endif %}
+
+{% endfor %}
+
+
+
+{% endblock %}

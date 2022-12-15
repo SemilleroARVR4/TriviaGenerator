@@ -1,1 +1,6 @@
-<h1>Respuesta correcta</h1>
+{% for Pregunta in preguntas %}  
+
+    
+        <a class="dropdown-item" href="{% url 'jugarQuizz' Pregunta.id %}">siguiente</a>
+                
+{% endfor %}

@@ -6,63 +6,85 @@
 
 
 <h2>
-    Para empezar a jugar selecciona la trivia de tu agrado
-    El juego consiste en selecconar una opcion correcta de las 4 que se muestran
+    Para empezar a jugar selecciona la trivia de tu agrado.
+    El juego consiste en seleccionar una opcion correcta de las 4 que se muestran
 </h2>
 
 
 
-<div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-                Seleccionar trivia
-    </button>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                    Seleccionar trivia
+        </button>
 
-            
-    <div class="dropdown-menu" aria-labelledby="triggerId">
-        
-                    
-        
-
-        
-
-        {% for Pregunta in preguntas %}  
                 
-                    <a class="dropdown-item" href="{% url 'jugarPrueba' Pregunta.id %}">{{ Pregunta.trivia.nombre }}</a>
-                
-        {% endfor %}
+        <div class="dropdown-menu" aria-labelledby="triggerId">
 
-        
+            {% for Trivia in trivias %}  
+
+                <a class="dropdown-item" href="{% url 'jugarTrivia' Trivia.id %}">{{ Trivia.Tipo }}</a>
+
+            {% endfor %}     
+
+        </div>
+                
 
     </div>
+
+
+    <form method="POST">
+
+        {% csrf_token %}
+        {% for pregunta in preguntas %}
+            
+            <h3>
+                <br>
+                {{ pregunta.pregunta }}    
+            </h3>
+            
+            
+            
+            
+            <div class="form-check">    
+                <input type="radio" name="opcion1" value="{{ pregunta.opcionCorrecta }}" id="gridRadios1">
+                <label class="form-check-label" for="gridRadios1">
+                    {{ pregunta.opcionCorrecta }}    
+                </label>                
+            </div>            
+
+            <div class="form-check">
+                <input type="radio" name="opcion2" value="{{ pregunta.opcion2 }}" id="gridRadios2">
+                <label class="form-check-label" for="gridRadios2">
+                    {{ pregunta.opcion2 }} 
+                </label>   
+            </div>
+
+            <div class="form-check">
+                <input type="radio" name="opcion3" value="{{ pregunta.opcion3 }}" id="gridRadios3">
+                <label class="form-check-label" for="gridRadios3">
+                    {{ pregunta.opcion3 }} 
+                </label>   
+            </div>
+
+            <div class="form-check">
+                <input type="radio" name="opcion4" value="{{ pregunta.opcion4 }}" id="gridRadios4">
+                <label class="form-check-label" for="gridRadios4">
+                    {{ pregunta.opcion4 }}    
+                </label>
+            </div>
+
+
             
 
-</div>
+        {% endfor %}
+    <p>
+        <br>
+        <button type="submit" class="btn btn-success">Enviar</button>
+    </p>
+    
 
-{% for Pregunta in preguntas %}
-    {% if Pregunta.id == 17 %}
-
-        <textarea name="" id="" cols="30" rows="10">{{ Pregunta.pregunta }}</textarea>
-
-        <a name="" id="" class="btn btn-primary" href="{% url 'correcto' %}" role="button">{{ Pregunta.opcionCorrecta }}</a>
-        <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcion2 }}</a>
-        <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcion3 }}</a>
-        <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcion4 }}</a>
-    {% endif %}
-<br>
-    {% if Pregunta.id == 2 %}
-
-        <textarea name="" id="" cols="30" rows="10">{{ Pregunta.pregunta }}</textarea>
-
-        <a name="" id="" class="btn btn-primary" href="{% url 'correcto' %}" role="button">{{ Pregunta.opcionCorrecta }}</a>
-        <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcion2 }}</a>
-        <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcion3 }}</a>
-        <a name="" id="" class="btn btn-primary" href="#" role="button">{{ Pregunta.opcion4 }}</a>
-    {% endif %}
-{% endfor %}
-
-
-
-
-
+    </form>
+       
 {% endblock %}
+
