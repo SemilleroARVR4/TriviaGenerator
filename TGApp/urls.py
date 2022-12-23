@@ -25,14 +25,8 @@ urlpatterns = [
     path('jugar', views.jugar, name='jugar'),
     
     
-    path('jugar/quizz/<int:Trivia_id>', views.jugarTrivia, name='jugarTrivia'),
+    path('jugar/trivia/<int:Trivia_id>', views.jugarTrivia, name='jugarTrivia'),
 
-
-    # path('jugar/quizz/<int:Trivia_id>', views.jugarQuizz, name='jugarPrueba'),
-    # path('jugar/quizz/<int:Pregunta_id>', views.jugarQuizz, name='jugarPrueba'),
-
-
-    
     path('correcto', views.correcto, name='correcto'),
     
 

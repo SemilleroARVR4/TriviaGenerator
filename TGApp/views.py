@@ -12,7 +12,6 @@ from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 
 
-
 # Create your views here.
 
 def inicio(request):
@@ -30,8 +29,6 @@ def crear(request):
     }
     
     return render(request, "TGApp/index.html", context)
-
-
 
 
 @login_required
@@ -129,13 +126,10 @@ def correcto(request):
 
 
 
-
 class Quizz(DetailView):
     model = Pregunta
 
 
-
-    
 
 #VIDEO
 
@@ -189,16 +183,23 @@ def tablero(request):
 
     return render(request, 'jugar/tablero.html', context)
 
+@login_required
+def jugar(request):
+    trivias = Trivia.objects.all()
 
-
+    context = {
+        'trivias':trivias,
+    }
+    return render(request, 'jugar/jugar.html', context)
 
 
 @login_required
-def jugar(request):
+def jugarTrivia(request, Trivia_id):
     if request.method == 'POST':
         print(request.POST)
         preguntas = Pregunta.objects.all()
-        trivias= Trivia.objects.all()
+        trivias= Trivia.objects.get(id=Trivia_id)
+
         puntaje = 0
         incorrecta = 0
         correcta = 0
@@ -228,6 +229,7 @@ def jugar(request):
                 incorrecta += 1        
         percent = puntaje/(total*10) * 100
         context = {
+            'preguntas':preguntas,
             'trivias':trivias,
             'puntaje':puntaje,
             'time':request.POST.get('timer'),
@@ -239,23 +241,14 @@ def jugar(request):
         return render(request, 'TGApp/result.html', context)
     else:
         preguntas = Pregunta.objects.all()
-        trivias= Trivia.objects.all()
+        # trivias= Trivia.objects.all()
+        trivias= Trivia.objects.get(id=Trivia_id)
         context = {
             'trivias':trivias,
             'preguntas':preguntas
         }
-        return render (request, 'jugar/jugar.html', context)
+        return render (request, 'jugar/jugarTrivia.html', context)
 
-def jugarTrivia(request, Trivia_id):
-    # trivias= Trivia.objects.all()
-    trivias= Trivia.objects.get(id=Trivia_id) 
-    preguntas = Pregunta.objects.all()
-
-    context = {
-        'trivias':trivias,
-        'preguntas':preguntas
-    }
-    return render(request, 'jugar/jugarTrivia.html', context)
 
 
 

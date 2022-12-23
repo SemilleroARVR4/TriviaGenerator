@@ -4,20 +4,21 @@
 
 {% block contenido %}
 
-
+<br>
 <h2>
     Para empezar a jugar selecciona la trivia de tu agrado.
-    El juego consiste en seleccionar una opcion correcta de las 4 que se muestran
+    <br>
+    Se mostraran todas las preguntas relacionadas, cada pregunta tiene una opcion correcta, selecciona la 
+    opcion correcta para sumar puntos.
+    
 </h2>
 
-
-
     <div class="dropdown">
+        
         <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
                     Seleccionar trivia
         </button>
-
                 
         <div class="dropdown-menu" aria-labelledby="triggerId">
 
@@ -27,64 +28,9 @@
 
             {% endfor %}     
 
-        </div>
-                
+        </div>               
 
     </div>
-
-
-    <form method="POST">
-
-        {% csrf_token %}
-        {% for pregunta in preguntas %}
-            
-            <h3>
-                <br>
-                {{ pregunta.pregunta }}    
-            </h3>
-            
-            
-            
-            
-            <div class="form-check">    
-                <input type="radio" name="opcion1" value="{{ pregunta.opcionCorrecta }}" id="gridRadios1">
-                <label class="form-check-label" for="gridRadios1">
-                    {{ pregunta.opcionCorrecta }}    
-                </label>                
-            </div>            
-
-            <div class="form-check">
-                <input type="radio" name="opcion2" value="{{ pregunta.opcion2 }}" id="gridRadios2">
-                <label class="form-check-label" for="gridRadios2">
-                    {{ pregunta.opcion2 }} 
-                </label>   
-            </div>
-
-            <div class="form-check">
-                <input type="radio" name="opcion3" value="{{ pregunta.opcion3 }}" id="gridRadios3">
-                <label class="form-check-label" for="gridRadios3">
-                    {{ pregunta.opcion3 }} 
-                </label>   
-            </div>
-
-            <div class="form-check">
-                <input type="radio" name="opcion4" value="{{ pregunta.opcion4 }}" id="gridRadios4">
-                <label class="form-check-label" for="gridRadios4">
-                    {{ pregunta.opcion4 }}    
-                </label>
-            </div>
-
-
-            
-
-        {% endfor %}
-    <p>
-        <br>
-        <button type="submit" class="btn btn-success">Enviar</button>
-    </p>
-    
-
-    </form>
-       
+   
 {% endblock %}
 
