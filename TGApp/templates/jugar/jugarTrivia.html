@@ -4,9 +4,14 @@
 
 {% block contenido %}
 
-    {% for pregunta in preguntas %}
 
-        {% if pregunta.trivia.id == trivias.id  %}       
+    
+    {% for pregunta in preguntas %}
+    
+        
+        {% if pregunta.trivia.id == trivias.id  %}  
+             
+
 
         <form method="POST">
 

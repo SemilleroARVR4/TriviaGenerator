@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
+import random
 
 
 # Create your views here.
@@ -193,41 +194,44 @@ def jugar(request):
     return render(request, 'jugar/jugar.html', context)
 
 
+
 @login_required
 def jugarTrivia(request, Trivia_id):
     if request.method == 'POST':
         print(request.POST)
-        preguntas = Pregunta.objects.all()
-        trivias= Trivia.objects.get(id=Trivia_id)
+        preguntas = Pregunta.objects.order_by('?').fisrt()
+        trivias = Trivia.objects.get(id=Trivia_id)
 
         puntaje = 0
         incorrecta = 0
         correcta = 0
         total = 0
+        # random.shuffle(preguntas)
         for pregunta in preguntas:
-            total += 1
-            print(request.POST.get(pregunta.pregunta))
-            # print(pregunta.respuesta)
-            print()
-            # if pregunta.opcionCorrecta == request.POST.get("opcion1"):
-            #     puntaje += 10
-            #     correcta += 1
-            # elif pregunta.opcion2 == request.POST.get("opcion1"):
-            #     incorrecta += 1
-            # elif pregunta.opcion3 == request.POST.get("opcion1"):
-            #     incorrecta += 1
-            # elif pregunta.opcion4 == request.POST.get("opcion1"):
-            #     incorrecta += 1
-            
-            # if request.POST.get("opcionCorrecta") == pregunta.opcionCorrecta:
-            #     puntaje += 10
-            #     correcta += 1
-            
-            if pregunta.respuesta == request.POST.get(pregunta.pregunta):
-                puntaje += 10
-                correcta += 1
-            else:
-                incorrecta += 1        
+            if pregunta.trivia.id == trivias.id: 
+                total += 1
+                print(request.POST.get(pregunta.pregunta))
+                print(pregunta.respuesta)
+                print()
+                if pregunta.opcionCorrecta == request.POST.get("opcion1"):
+                    puntaje += 10
+                    correcta += 1
+                elif pregunta.opcion2 == request.POST.get("opcion1"):
+                    incorrecta += 1
+                elif pregunta.opcion3 == request.POST.get("opcion1"):
+                    incorrecta += 1
+                elif pregunta.opcion4 == request.POST.get("opcion1"):
+                    incorrecta += 1
+                
+                if request.POST.get("opcionCorrecta") == pregunta.opcionCorrecta:
+                    puntaje += 10
+                    correcta += 1
+                
+                # if pregunta.respuesta == request.POST.get(pregunta.pregunta):
+                #     puntaje += 10
+                #     correcta += 1
+                # else:
+                #     incorrecta += 1        
         percent = puntaje/(total*10) * 100
         context = {
             'preguntas':preguntas,
@@ -239,7 +243,8 @@ def jugarTrivia(request, Trivia_id):
             'percent':percent,
             'total':total
         }
-        return render(request, 'TGApp/result.html', context)
+        random_values = random.sample(list(preguntas), len(preguntas))
+        return render(request, 'TGApp/result.html', context, random_values)
     else:
         preguntas = Pregunta.objects.all()
         # trivias= Trivia.objects.all()
