@@ -1,6 +1,6 @@
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Pregunta, Trivia, QuizUsuario, QuizUsuarioTrivia, PreguntaQuiz, PreguntasRespondidasTrivia, ElegirRespuesta, PreguntasConOpciones
+from .models import Pregunta, Trivia, QuizUsuario, QuizUsuarioTrivia, PreguntaQuiz, PreguntasRespondidasTrivia, ElegirRespuesta, PreguntasConOpciones, PreguntaModelo
 from .forms import formPregunta, formTrivia, ElegirRespuestaTest, formTrivia, OtroModelo
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -209,22 +209,23 @@ def jugarTrivia(request, Trivia_id):
             print(request.POST.get(pregunta.pregunta))
             # print(pregunta.respuesta)
             print()
-            if pregunta.opcionCorrecta == request.POST.get("opcion1"):
-                puntaje += 10
-                correcta += 1
-            elif pregunta.opcion2 == request.POST.get("opcion1"):
-                incorrecta += 1
-            elif pregunta.opcion3 == request.POST.get("opcion1"):
-                incorrecta += 1
-            elif pregunta.opcion4 == request.POST.get("opcion1"):
-                incorrecta += 1
+            # if pregunta.opcionCorrecta == request.POST.get("opcion1"):
+            #     puntaje += 10
+            #     correcta += 1
+            # elif pregunta.opcion2 == request.POST.get("opcion1"):
+            #     incorrecta += 1
+            # elif pregunta.opcion3 == request.POST.get("opcion1"):
+            #     incorrecta += 1
+            # elif pregunta.opcion4 == request.POST.get("opcion1"):
+            #     incorrecta += 1
+            
             # if request.POST.get("opcionCorrecta") == pregunta.opcionCorrecta:
             #     puntaje += 10
             #     correcta += 1
             
-            # if preg.opcionCorrecta == request.POST.get(preg.pregunta):
-            #     puntaje += 10
-            #     correcta += 1
+            if pregunta.respuesta == request.POST.get(pregunta.pregunta):
+                puntaje += 10
+                correcta += 1
             else:
                 incorrecta += 1        
         percent = puntaje/(total*10) * 100
