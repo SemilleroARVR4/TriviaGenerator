@@ -199,7 +199,7 @@ def jugar(request):
 def jugarTrivia(request, Trivia_id):
     if request.method == 'POST':
         print(request.POST)
-        preguntas = Pregunta.objects.order_by('?').fisrt()
+        preguntas = Pregunta.objects.all()
         trivias = Trivia.objects.get(id=Trivia_id)
 
         puntaje = 0
@@ -233,6 +233,7 @@ def jugarTrivia(request, Trivia_id):
                 # else:
                 #     incorrecta += 1        
         percent = puntaje/(total*10) * 100
+        incorrecta += incorrecta
         context = {
             'preguntas':preguntas,
             'trivias':trivias,
@@ -241,10 +242,12 @@ def jugarTrivia(request, Trivia_id):
             'correcta':correcta,
             'incorrecta':incorrecta,
             'percent':percent,
-            'total':total
+            'total':total,
+            'random_values': random.sample(list(preguntas), len(preguntas))
         }
-        random_values = random.sample(list(preguntas), len(preguntas))
-        return render(request, 'TGApp/result.html', context, random_values)
+        
+        
+        return render(request, 'TGApp/result.html', context)
     else:
         preguntas = Pregunta.objects.all()
         # trivias= Trivia.objects.all()

@@ -1,15 +1,21 @@
+
+
 {% extends "base.html" %}
+
 
 {% block titulo %} Jugar2 {% endblock %}
 
 {% block contenido %}
-
-
     
+
+{{ pregunta.trivia.id }}
+{{ preguntas.count }}
     {% for pregunta in preguntas %}
     
         
         {% if pregunta.trivia.id == trivias.id  %}  
+
+        
              
 
 
@@ -19,7 +25,9 @@
                            
                 <h3>
                     <br>
-                    {{ pregunta.pregunta }}    
+                    {{ forloop.counter }}.
+                    {{ pregunta.pregunta }}  
+                    {{ random_values }}  
                 </h3>                
                 
                 <div class="form-check">    
@@ -61,6 +69,7 @@
     </p>        
 
     </form>
+ 
 
 
 {% endblock %}
