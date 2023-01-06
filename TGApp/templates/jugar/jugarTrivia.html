@@ -9,14 +9,13 @@
     
 
 {{ pregunta.trivia.id }}
-{{ preguntas.count }}
+There are {{ count }} objects with a foreign key.
+
     {% for pregunta in preguntas %}
     
-        
-        {% if pregunta.trivia.id == trivias.id  %}  
+           
 
-        
-             
+        {% if pregunta.trivia == trivias %}           
 
 
         <form method="POST">

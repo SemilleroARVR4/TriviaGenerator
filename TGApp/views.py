@@ -1,7 +1,7 @@
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Pregunta, Trivia, QuizUsuario, QuizUsuarioTrivia, PreguntaQuiz, PreguntasRespondidasTrivia, ElegirRespuesta, PreguntasConOpciones, PreguntaModelo
-from .forms import formPregunta, formTrivia, ElegirRespuestaTest, formTrivia, OtroModelo
+from .forms import formPregunta, formTrivia, ElegirRespuestaTest, OtroModelo
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
@@ -197,19 +197,63 @@ def jugar(request):
 
 @login_required
 def jugarTrivia(request, Trivia_id):
+
+    # trivias = Trivia.objects.get(id=Trivia_id)
+    # preguntas = Pregunta.objects.all() 
+
+    # if request.method == 'POST':
+
+    #     puntaje = 0
+    #     incorrecta = 0
+    #     correcta = 0
+    #     total = 0
+    #     count = 0
+    #     opcion_seleccionada = request.POST['preguntas']
+
+    #     if opcion_seleccionada == 'opcionCorrecta':
+    #         puntaje += 10
+    #         correcta += 1
+    #     elif opcion_seleccionada == 'opcion2':
+    #         incorrecta += 1
+    #     elif opcion_seleccionada == 'opcion3':
+    #         incorrecta += 1
+    #     elif opcion_seleccionada == 'opcion4':
+    #         incorrecta += 1
+
+    #     else:
+    #         return HttpResponse(400, 'Invalid Form')
+    
+    # # percent = puntaje/(total*10) * 100
+    # # incorrecta += incorrecta
+
+    # context = {
+    #     'trivias': trivias,
+    #     'preguntas': preguntas,
+    #     # 'puntaje':puntaje,
+    #     'time':request.POST.get('timer'),
+    #     'correcta':correcta,
+    #     'incorrecta':incorrecta,
+    #     # 'percent':percent,
+    #     'total':total,
+    #     'count': count,
+    # }
+
+    # return render(request, 'TGApp/result.html', context)
     if request.method == 'POST':
         print(request.POST)
-        preguntas = Pregunta.objects.all()
         trivias = Trivia.objects.get(id=Trivia_id)
+        preguntas = Pregunta.objects.all()         
 
         puntaje = 0
         incorrecta = 0
         correcta = 0
         total = 0
+        count = 0
         # random.shuffle(preguntas)
         for pregunta in preguntas:
-            if pregunta.trivia.id == trivias.id: 
+            if pregunta.trivia == trivias: 
                 total += 1
+                count +=1
                 print(request.POST.get(pregunta.pregunta))
                 print(pregunta.respuesta)
                 print()
@@ -227,51 +271,55 @@ def jugarTrivia(request, Trivia_id):
                     puntaje += 10
                     correcta += 1
                 
+
+
+
+
+                
                 # if pregunta.respuesta == request.POST.get(pregunta.pregunta):
                 #     puntaje += 10
                 #     correcta += 1
                 # else:
-                #     incorrecta += 1        
+                #     incorrecta += 1 
+        
+        
+
+
+
+
+
         percent = puntaje/(total*10) * 100
         incorrecta += incorrecta
         context = {
-            'preguntas':preguntas,
-            'trivias':trivias,
+            'preguntas': Pregunta.objects.order_by('?'),
+            'trivias':Trivia.objects.order_by('?'),
             'puntaje':puntaje,
             'time':request.POST.get('timer'),
             'correcta':correcta,
             'incorrecta':incorrecta,
             'percent':percent,
             'total':total,
+            'count': count,
             'random_values': random.sample(list(preguntas), len(preguntas))
         }
         
         
         return render(request, 'TGApp/result.html', context)
+
+
+
     else:
-        preguntas = Pregunta.objects.all()
-        # trivias= Trivia.objects.all()
+        count = 0
+        index = 1
+        preguntas = Pregunta.objects.order_by('?')      
         trivias= Trivia.objects.get(id=Trivia_id)
+               
         context = {
+            'preguntas': preguntas,
             'trivias':trivias,
-            'preguntas':preguntas
+            'count': count,
+            'preguntas':preguntas,
+            # 'preguntas': preguntas,
+            # 'trivias':Trivia.objects.order_by('?'),
         }
         return render (request, 'jugar/jugarTrivia.html', context)
-
-
-
-
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
