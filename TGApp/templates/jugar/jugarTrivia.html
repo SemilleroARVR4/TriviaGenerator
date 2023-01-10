@@ -29,29 +29,31 @@ There are {{ count }} objects with a foreign key.
                     {{ random_values }}  
                 </h3>                
                 
-                <div class="form-check">    
-                    <input type="radio" name="opcion1" value="{{ pregunta.opcionCorrecta }}" id="gridRadios1">
+                <div class="form-check">  
+                     
+                    <input type="radio" name="opcion" value="{{ pregunta.opcionCorrecta }}" id="gridRadios1">
                     <label class="form-check-label" for="gridRadios1">
                         {{ pregunta.opcionCorrecta }}    
-                    </label>                
+                    </label> 
+                                    
                 </div>            
     
                 <div class="form-check">
-                    <input type="radio" name="opcion2" value="{{ pregunta.opcion2 }}" id="gridRadios2">
+                    <input type="radio" name="opcion" value="{{ pregunta.opcion2 }}" id="gridRadios2">
                     <label class="form-check-label" for="gridRadios2">
                         {{ pregunta.opcion2 }} 
                     </label>   
                 </div>
     
                 <div class="form-check">
-                    <input type="radio" name="opcion3" value="{{ pregunta.opcion3 }}" id="gridRadios3">
+                    <input type="radio" name="opcion" value="{{ pregunta.opcion3 }}" id="gridRadios3">
                     <label class="form-check-label" for="gridRadios3">
                         {{ pregunta.opcion3 }} 
                     </label>   
                 </div>
     
                 <div class="form-check">
-                    <input type="radio" name="opcion4" value="{{ pregunta.opcion4 }}" id="gridRadios4">
+                    <input type="radio" name="opcion" value="{{ pregunta.opcion4 }}" id="gridRadios4">
                     <label class="form-check-label" for="gridRadios4">
                         {{ pregunta.opcion4 }}    
                     </label>

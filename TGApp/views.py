@@ -1,6 +1,6 @@
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Pregunta, Trivia, QuizUsuario, QuizUsuarioTrivia, PreguntaQuiz, PreguntasRespondidasTrivia, ElegirRespuesta, PreguntasConOpciones, PreguntaModelo
+from .models import Pregunta, Trivia, QuizUsuario, QuizUsuarioTrivia, PreguntaQuiz, PreguntasRespondidasTrivia, ElegirRespuesta, PreguntasConOpciones, PreguntaModelo, Poll
 from .forms import formPregunta, formTrivia, ElegirRespuestaTest, OtroModelo
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -194,132 +194,72 @@ def jugar(request):
     return render(request, 'jugar/jugar.html', context)
 
 
+def vote(request, poll_id):
+    poll = Poll.objects.get(pk=poll_id)
+
+    if request.method == 'POST':
+
+        selected_option = request.POST['poll']
+        if selected_option == 'option1':
+            poll.option_one_count += 1
+        elif selected_option == 'option2':
+            poll.option_two_count += 1
+        elif selected_option == 'option3':
+            poll.option_three_count += 1
+        else:
+            return HttpResponse(400, 'Invalid form')
+
+        poll.save()
+
+        return redirect('results', poll.id)
+
+    context = {
+        'poll' : poll
+    }
+    return render(request, 'TGApp/vote.html', context)
+
 
 @login_required
 def jugarTrivia(request, Trivia_id):
 
-    # trivias = Trivia.objects.get(id=Trivia_id)
-    # preguntas = Pregunta.objects.all() 
-
-    # if request.method == 'POST':
-
-    #     puntaje = 0
-    #     incorrecta = 0
-    #     correcta = 0
-    #     total = 0
-    #     count = 0
-    #     opcion_seleccionada = request.POST['preguntas']
-
-    #     if opcion_seleccionada == 'opcionCorrecta':
-    #         puntaje += 10
-    #         correcta += 1
-    #     elif opcion_seleccionada == 'opcion2':
-    #         incorrecta += 1
-    #     elif opcion_seleccionada == 'opcion3':
-    #         incorrecta += 1
-    #     elif opcion_seleccionada == 'opcion4':
-    #         incorrecta += 1
-
-    #     else:
-    #         return HttpResponse(400, 'Invalid Form')
-    
-    # # percent = puntaje/(total*10) * 100
-    # # incorrecta += incorrecta
-
-    # context = {
-    #     'trivias': trivias,
-    #     'preguntas': preguntas,
-    #     # 'puntaje':puntaje,
-    #     'time':request.POST.get('timer'),
-    #     'correcta':correcta,
-    #     'incorrecta':incorrecta,
-    #     # 'percent':percent,
-    #     'total':total,
-    #     'count': count,
-    # }
-
-    # return render(request, 'TGApp/result.html', context)
     if request.method == 'POST':
-        print(request.POST)
+        preguntas = Pregunta.objects.all()
         trivias = Trivia.objects.get(id=Trivia_id)
-        preguntas = Pregunta.objects.all()         
 
         puntaje = 0
         incorrecta = 0
         correcta = 0
         total = 0
         count = 0
-        # random.shuffle(preguntas)
+
         for pregunta in preguntas:
-            if pregunta.trivia == trivias: 
+            if pregunta.trivia.id == trivias.id: 
                 total += 1
-                count +=1
-                print(request.POST.get(pregunta.pregunta))
-                print(pregunta.respuesta)
-                print()
-                if pregunta.opcionCorrecta == request.POST.get("opcion1"):
+                if pregunta.opcionCorrecta == request.POST.get("opcion"):
                     puntaje += 10
-                    correcta += 1
-                elif pregunta.opcion2 == request.POST.get("opcion1"):
-                    incorrecta += 1
-                elif pregunta.opcion3 == request.POST.get("opcion1"):
-                    incorrecta += 1
-                elif pregunta.opcion4 == request.POST.get("opcion1"):
-                    incorrecta += 1
+                    correcta +=1
+                else:
+                    incorrecta +=1
                 
-                if request.POST.get("opcionCorrecta") == pregunta.opcionCorrecta:
-                    puntaje += 10
-                    correcta += 1
                 
 
-
-
-
-                
-                # if pregunta.respuesta == request.POST.get(pregunta.pregunta):
-                #     puntaje += 10
-                #     correcta += 1
-                # else:
-                #     incorrecta += 1 
-        
-        
-
-
-
-
-
-        percent = puntaje/(total*10) * 100
-        incorrecta += incorrecta
         context = {
-            'preguntas': Pregunta.objects.order_by('?'),
-            'trivias':Trivia.objects.order_by('?'),
+            'preguntas':preguntas,
+            'trivias':trivias,
             'puntaje':puntaje,
-            'time':request.POST.get('timer'),
-            'correcta':correcta,
             'incorrecta':incorrecta,
-            'percent':percent,
+            'correcta':correcta,
             'total':total,
-            'count': count,
-            'random_values': random.sample(list(preguntas), len(preguntas))
+            'count':count,
         }
-        
-        
         return render(request, 'TGApp/result.html', context)
 
-
-
     else:
-        count = 0
-        index = 1
-        preguntas = Pregunta.objects.order_by('?')      
-        trivias= Trivia.objects.get(id=Trivia_id)
-               
+        
         context = {
-            'preguntas': preguntas,
-            'trivias':trivias,
-            'count': count,
-            'preguntas':preguntas,
-            # 'preguntas': preguntas,
-            # 'trivias':Trivia.objects.order_by('?'),
+            'preguntas':Pregunta.objects.order_by('?'),
+            'trivias':Trivia.objects.get(id=Trivia_id),
         }
+
         return render (request, 'jugar/jugarTrivia.html', context)
+        

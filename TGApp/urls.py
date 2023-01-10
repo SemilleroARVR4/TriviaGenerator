@@ -20,5 +20,8 @@ urlpatterns = [
     path('jugar/trivia', views.jugarQuiz, name='jugarQuizTrivia'),
     path('resultado/<int:pregunta_respondida_pk>', views.resultado_pregunta, name='resultado'),
     path('tablero', views.tablero, name='tablero'),
+
+
+    path('vote/<poll_id>/', views.vote, name='vote'),
    
 ]
