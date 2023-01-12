@@ -11,6 +11,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 import random
+from random import shuffle
 
 
 # Create your views here.
@@ -195,13 +196,87 @@ def jugar(request):
 
 
 
+# @login_required
+# def jugarTrivia(request, Trivia_id):
+    
+#     if request.method == 'POST':
+#         trivias = Trivia.objects.get(id=Trivia_id)
+#         preguntas = Pregunta.objects.all()
+        
+#         puntaje = 0
+#         incorrecta = 0
+#         correcta = 0
+#         total = 0
+#         count = 0
+        
+#         for pregunta in preguntas:
+#             if pregunta.trivia.id == trivias.id: 
+#                 opcion_seleccionada = request.POST.get(str(pregunta.pk))
+#                 total += 1
+
+#                 if opcion_seleccionada == pregunta.opcionCorrecta:
+#                     puntaje += 10
+#                     correcta +=1
+#                 else:
+#                     incorrecta +=1
+                
+#         percent = puntaje/(total*10) *100                    
+
+#         context = {
+#             'preguntas':preguntas,
+#             'trivias':trivias,
+#             'puntaje':puntaje,
+#             'incorrecta':incorrecta,
+#             'correcta':correcta,
+#             'total':total,
+#             'count':count,
+#             'percent':percent,
+#         }
+#         return render(request, 'TGApp/result.html', context)
+
+#     else:
+        
+#         preguntas = Pregunta.objects.order_by('?')
+#         trivias = Trivia.objects.get(id=Trivia_id)
+        
+#         for pregunta in preguntas:
+#             if pregunta.trivia.id == trivias.id:
+#                 options = [pregunta.opcionCorrecta, pregunta.opcion2, pregunta.opcion3, pregunta.opcion4]
+#         shuffle(options)
+
+#         context = {
+#             'preguntas':preguntas,
+#             'options': options,
+#             'trivias':trivias,
+#         }
+#         return render (request, 'jugar/jugarTrivia.html', context)
+        # trivia = Trivia.objects.get(id=Trivia_id)
+        # preguntas = Pregunta.objects.filter(trivia=trivia).order_by('?')
+        # preguntas_options = []
+        # for pregunta in preguntas:
+        #     options = [pregunta.opcionCorrecta, pregunta.opcion2, pregunta.opcion3, pregunta.opcion4]
+        #     shuffle(options)
+        #     pregunta_options = {'pregunta': pregunta, 'options': options}
+        #     preguntas_options.append(pregunta_options)
+
+        # context = {'preguntas_options': preguntas_options}
+        # return render(request, 'jugar/jugarTriviaCopy.html', context)
+        
+
 @login_required
 def jugarTrivia(request, Trivia_id):
 
     if request.method == 'POST':
-        
-        trivias = Trivia.objects.get(id=Trivia_id)
-        preguntas = Pregunta.objects.all()
+        # trivias = Trivia.objects.get(id=Trivia_id)
+        # preguntas = Pregunta.objects.all()
+        trivia = Trivia.objects.get(id=Trivia_id)
+        preguntas = Pregunta.objects.filter(trivia=trivia).order_by('?')
+        preguntas_options = []
+        for pregunta in preguntas:
+            options = [pregunta.opcionCorrecta, pregunta.opcion2, pregunta.opcion3, pregunta.opcion4]
+            shuffle(options)
+            pregunta_options = {'pregunta': pregunta, 'options': options}
+            preguntas_options.append(pregunta_options)
 
         puntaje = 0
         incorrecta = 0
@@ -209,22 +284,25 @@ def jugarTrivia(request, Trivia_id):
         total = 0
         count = 0
         
-        for pregunta in preguntas:
-            if pregunta.trivia.id == trivias.id: 
-                opcion_seleccionada = request.POST.get(str(pregunta.pk))
+        for pregunta_options in preguntas_options:
+            # if pregunta.trivia.id == trivias.id: 
+                opcion_seleccionada = request.POST.get(str(pregunta_options['pregunta'].id))
                 total += 1
 
-                if opcion_seleccionada == pregunta.opcionCorrecta:
+                # if opcion_seleccionada == pregunta_options.pregunta.opcionCorrecta:
+                if opcion_seleccionada == pregunta_options['pregunta'].opcionCorrecta:
+                    
                     puntaje += 10
                     correcta +=1
                 else:
                     incorrecta +=1
-
+                
         percent = puntaje/(total*10) *100                    
 
         context = {
             'preguntas':preguntas,
-            'trivias':trivias,
+            'preguntas_options': preguntas_options,
+            'trivia':trivia,
             'puntaje':puntaje,
             'incorrecta':incorrecta,
             'correcta':correcta,
@@ -236,10 +314,17 @@ def jugarTrivia(request, Trivia_id):
 
     else:
 
-        context = {
-            'preguntas':Pregunta.objects.order_by('?'),
-            'trivias':Trivia.objects.get(id=Trivia_id),
-        }
+        trivia = Trivia.objects.get(id=Trivia_id)
+        preguntas = Pregunta.objects.filter(trivia=trivia).order_by('?')
+        preguntas_options = []
+        for pregunta in preguntas:
+            options = [pregunta.opcionCorrecta, pregunta.opcion2, pregunta.opcion3, pregunta.opcion4]
+            shuffle(options)
+            pregunta_options = {'pregunta': pregunta, 'options': options}
+            preguntas_options.append(pregunta_options)
 
-        return render (request, 'jugar/jugarTrivia.html', context)
-        
+        print(pregunta_options.get('pregunta'))
+        print(pregunta_options['pregunta'].id)
+        print(pregunta_options['pregunta'].opcionCorrecta)
+        context = {'preguntas_options': preguntas_options}
+        return render(request, 'jugar/jugarTrivia.html', context)

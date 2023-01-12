@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import CrearNuevaTrivia, EditarPregunta, EliminarPregunta#, Quizz#, crearPreguntaTest
+from .views import CrearNuevaTrivia, EditarPregunta, EliminarPregunta
 from django.contrib.auth.decorators import login_required, permission_required
 
 urlpatterns = [
@@ -18,6 +18,6 @@ urlpatterns = [
     path('correcto', views.correcto, name='correcto'),   
     path('jugar/trivia', views.jugarQuiz, name='jugarQuizTrivia'),
     path('resultado/<int:pregunta_respondida_pk>', views.resultado_pregunta, name='resultado'),
-    path('tablero', views.tablero, name='tablero')
+    path('tablero', views.tablero, name='tablero'),
    
 ]
