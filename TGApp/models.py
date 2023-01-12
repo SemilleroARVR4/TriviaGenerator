@@ -8,16 +8,6 @@ from django.urls import reverse
 # Create your models here.
 # El modelo da las pautas de lo que se va a crear en el admin
 
-class Admin(models.Model):
-    id = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=100)
-    codigo = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.nombre
-
-
-
 class Trivia(models.Model):
     autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     id = models.AutoField(primary_key=True)
@@ -60,21 +50,6 @@ class Pregunta(models.Model):
     def respuesta_unica(self):
         pass
 
-class PreguntaModelo(models.Model):
-
-    autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    trivia = models.ForeignKey(Trivia, on_delete=models.CASCADE, null=True)
-    id = models.AutoField(primary_key=True)
-    pregunta = models.TextField(verbose_name='Enunciado de la pregunta', null=True)
-    opcionCorrecta = models.CharField(max_length=1000, verbose_name='Opcion correcta de la pregunta', null=True)
-    opcion2 = models.CharField(max_length=1000, verbose_name='Opcion falsa de la pregunta', null=True)
-    opcion3 = models.CharField(max_length=1000, verbose_name='Opcion falsa de la pregunta', null=True)
-    opcion4 = models.CharField(max_length=1000, verbose_name='Opcion falsa de la pregunta', null=True)
-    respuesta = models.CharField(max_length=1000, verbose_name='respuesta', null=True)
-    puntaje = models.DecimalField(verbose_name='Puntaje obtenido', default=0, decimal_places=2, max_digits=10)    
-
-    def __str__(self):
-        return self.pregunta
 
 class QuizUsuario(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -164,66 +139,3 @@ class PreguntasRespondidasTrivia(models.Model):
     respuesta = models.ForeignKey(ElegirRespuesta, on_delete=models.CASCADE, null=True)
     correcta = models.BooleanField(verbose_name='Es esta la respuesta correcta?', default=False, null=False)
     puntaje_obtenido = models.DecimalField(verbose_name='Puntaje Obtenido', default=0, decimal_places=2, max_digits=10)
-
-
-
-
-
-
-
-
-
-#COMO LAS OPCIONES DEBEN TENER UN ID PUEDO HACER ESTO   
-
-class PreguntasConOpciones(models.Model):
-    pregunta = models.TextField(max_length=100, null=True)
-    opcion1 = models.TextField(max_length=100, null=True)
-    opcion2 = models.TextField(max_length=100, null=True)
-    opcion3 = models.TextField(max_length=100, null=True)
-    opcion4 = models.TextField(max_length=100, null=True)
-    res = models.CharField(max_length=100, null=True)#entre 1 y 4(# opciones)
-
-    def __str__(self):
-        return self.pregunta
-# HAY QUE AÑADIR UN CAMPO NO IMPLICITO QUE IDENTFIQUE CUAL ES LA OPCION CORRECTA
-# La idea es verificar si la opcion es correcta si el numero coincide con nuestra respuesta
-
-
-
-# CORRECT_BONUS CUANTO PUNTAJE DA LA OPCION CORRECTA
-
-    # def starGame():
-    #     questionCounter = 0
-    #     Score = 0
-    #     availableQuestions = PreguntasConOpciones.pregunta.count()
-
-    # def getNewQuestion():
-    #     questionCounter = questionCounter + 1
-    #     questionIndex = random.randint(0,PreguntasConOpciones.pregunta.count())
-
-
-
-
-
-# PREGUNTA ACTUAL 
-# NECESITAMOS UNA VARIABLE SCORE =0
-# POSIBLE PREGUNTA_ACTUAL
-# BOOLEANO ACEPTAR_O_NO_RESPUESTAS PARECIDO A RESPUESTA_CORRECTA O NUM_DE_INTENTOS
-# CONTADOR DE PREGUNTAS = 0
-# PREGUNTAS DISPONIBLES PARECIDO A PREGUNTA ACTUAL 
-
-
-
-
-class Poll(models.Model):
-    question = models.TextField()
-    option_one = models.CharField(max_length=30)
-    option_two = models.CharField(max_length=30)
-    option_three = models.CharField(max_length=30)
-    option_one_count = models.IntegerField(default=0)
-    option_two_count = models.IntegerField(default=0)
-    option_three_count = models.IntegerField(default=0)
-
-    def total(self):
-        return self.option_one_count + self.option_two_count + self.option_three_count
-

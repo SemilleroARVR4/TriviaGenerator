@@ -1,6 +1,6 @@
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Pregunta, Trivia, QuizUsuario, QuizUsuarioTrivia, PreguntaQuiz, PreguntasRespondidasTrivia, ElegirRespuesta, PreguntasConOpciones, PreguntaModelo, Poll
+from .models import Pregunta, Trivia, QuizUsuario, QuizUsuarioTrivia, PreguntaQuiz, PreguntasRespondidasTrivia, ElegirRespuesta
 from .forms import formPregunta, formTrivia, ElegirRespuestaTest, OtroModelo
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -194,54 +194,33 @@ def jugar(request):
     return render(request, 'jugar/jugar.html', context)
 
 
-def vote(request, poll_id):
-    poll = Poll.objects.get(pk=poll_id)
-
-    if request.method == 'POST':
-
-        selected_option = request.POST['poll']
-        if selected_option == 'option1':
-            poll.option_one_count += 1
-        elif selected_option == 'option2':
-            poll.option_two_count += 1
-        elif selected_option == 'option3':
-            poll.option_three_count += 1
-        else:
-            return HttpResponse(400, 'Invalid form')
-
-        poll.save()
-
-        return redirect('results', poll.id)
-
-    context = {
-        'poll' : poll
-    }
-    return render(request, 'TGApp/vote.html', context)
-
 
 @login_required
 def jugarTrivia(request, Trivia_id):
 
     if request.method == 'POST':
-        preguntas = Pregunta.objects.all()
+        
         trivias = Trivia.objects.get(id=Trivia_id)
+        preguntas = Pregunta.objects.all()
 
         puntaje = 0
         incorrecta = 0
         correcta = 0
         total = 0
         count = 0
-
+        
         for pregunta in preguntas:
             if pregunta.trivia.id == trivias.id: 
+                opcion_seleccionada = request.POST.get(str(pregunta.pk))
                 total += 1
-                if pregunta.opcionCorrecta == request.POST.get("opcion"):
+
+                if opcion_seleccionada == pregunta.opcionCorrecta:
                     puntaje += 10
                     correcta +=1
                 else:
                     incorrecta +=1
-                
-                
+
+        percent = puntaje/(total*10) *100                    
 
         context = {
             'preguntas':preguntas,
@@ -251,11 +230,12 @@ def jugarTrivia(request, Trivia_id):
             'correcta':correcta,
             'total':total,
             'count':count,
+            'percent':percent,
         }
         return render(request, 'TGApp/result.html', context)
 
     else:
-        
+
         context = {
             'preguntas':Pregunta.objects.order_by('?'),
             'trivias':Trivia.objects.get(id=Trivia_id),

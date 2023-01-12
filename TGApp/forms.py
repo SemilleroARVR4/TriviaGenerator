@@ -2,7 +2,7 @@ from cProfile import label
 from pyexpat import model
 from django import forms
 from django.forms import ModelForm
-from .models import Pregunta, Trivia, PreguntaQuiz, ElegirRespuesta, PreguntasRespondidasTrivia, PreguntaQuiz, PreguntasConOpciones, Poll
+from .models import Pregunta, Trivia, PreguntaQuiz, ElegirRespuesta, PreguntasRespondidasTrivia, PreguntaQuiz
 
 class PreguntaForm(forms.ModelForm):
     class Meta:
@@ -101,7 +101,3 @@ class formQuiz(forms.ModelForm):
             'respuesta': forms.Textarea(attrs={'placeholder':'Respuesta a la pregunta'}), 
         }
 
-class CreatePollForm(ModelForm):
-    class Meta:
-        model = Poll
-        fields = ['question', 'option_one', 'option_two', 'option_three']

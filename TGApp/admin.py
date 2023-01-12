@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Pregunta, Trivia, PreguntasRespondidas, QuizUsuario, PreguntaQuiz, ElegirRespuesta, PreguntasRespondidasTrivia, QuizUsuarioTrivia, PreguntasConOpciones, PreguntaModelo, Poll
+from .models import Pregunta, Trivia, PreguntasRespondidas, QuizUsuario, PreguntaQuiz, ElegirRespuesta, PreguntasRespondidasTrivia, QuizUsuarioTrivia
 from .forms import ElegirInLineFormset
 
 
@@ -9,8 +9,6 @@ admin.site.register(Pregunta)
 admin.site.register(Trivia)
 admin.site.register(PreguntasRespondidas)
 admin.site.register(QuizUsuario)
-admin.site.register(PreguntaModelo)
-admin.site.register(Poll)
 
 
 
