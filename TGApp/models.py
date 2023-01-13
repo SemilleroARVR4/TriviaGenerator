@@ -16,13 +16,6 @@ class Trivia(models.Model):
 
     def __str__(self):
         return self.Tipo
-        
-    # def __str__(self):
-    #     return '%s %s' % (self.nombre, self.Tipo)
-
-    # def __str__(self):
-    #     fila = "Nombre: " + self.nombre + "-" + "Tipo: " + self.Tipo
-    #     return fila
 
     def get_absolute_url(self):
         return reverse('crear')
@@ -50,28 +43,20 @@ class Pregunta(models.Model):
     def respuesta_unica(self):
         pass
 
-
-class QuizUsuario(models.Model):
+class UsuarioTrivia(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    puntaje_total = models.DecimalField(verbose_name='Puntaje total', default=0, decimal_places=2, max_digits=10)
+    puntajeTotal = models.DecimalField(verbose_name='Puntaje Total', default=0, decimal_places=0, max_digits=10)
+    trivia = models.ForeignKey(Trivia, on_delete=models.CASCADE, null=False)
 
-
-class PreguntasRespondidas(models.Model):
-    usuario = models.ForeignKey(QuizUsuario, on_delete=models.CASCADE)
-    pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE, default=True)
-    puntaje_obtenido = models.DecimalField(verbose_name='Puntaje obtenido', default=0, decimal_places=2, max_digits=10)
-
-
-
-
-
+    def __str__(self):
+        return str(self.puntajeTotal)
 
 # Tutorial
 class PreguntaQuiz(models.Model):
 
     NUMERO_DE_RESPUESTAS_PERMITIDAS = 1
     texto = models.TextField(verbose_name='Texto de la pregunta')
-    max_puntaje = models.DecimalField(verbose_name='Maximo puntaje', default=3, decimal_places=2, max_digits=10)
+    max_puntaje = models.DecimalField(verbose_name='Maximo puntaje', default=3, decimal_places=0, max_digits=10)
 
     def __str__(self):
         return self.texto
@@ -86,9 +71,6 @@ class ElegirRespuesta(models.Model):
 
     def __str__(self):
         return self.texto
-
-
-
 
 
 
