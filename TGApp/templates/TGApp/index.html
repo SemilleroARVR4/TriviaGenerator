@@ -2,31 +2,38 @@
 
 {% block titulo %} Crear {% endblock %}
 
-{% block contenido %}
-    <br>
-    <h1> Hola: {{ user.username }}</h1>
-    <h2>Seleccione una trivia o cree una nueva para empezar a agregar preguntas</h2>
+{% block contenido %}                 
 
-    <br>           
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                    Seleccionar trivia
-        </button>
-
+    <div class="container">
+        <div class="mt-4 p-3 bg-light text-body rounded">
+            <h2>
+                Seleccione una trivia o cree una nueva para empezar a agregar preguntas.   
+            </h2>   
+    
+            <div class="dropdown">
                 
-        <div class="dropdown-menu" aria-labelledby="triggerId">
-            <a class="dropdown-item" href="{% url 'crearNuevaTrivia' %}">Nueva trivia</a>
-           
-            {% for Trivia in trivias %}  
-                {% if Trivia.autor == user %} 
-                    <a class="dropdown-item" href="{% url 'crearPregunta' Trivia.id %}">{{ Trivia.Tipo }}</a>
-                {% endif %}
-            {% endfor %}
-        
+                <button class="btn btn-secondary dropdown-toggle mt-3" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                            Seleccionar trivia
+                </button>
                         
-        </div>  
-
+                <div class="dropdown-menu  mt-2" aria-labelledby="triggerId">
+                    <a class="dropdown-item" href="{% url 'crearNuevaTrivia' %}">Nueva trivia</a>
+            
+                    {% for Trivia in trivias %}  
+            
+                        {% if Trivia.autor == user %} 
+                            <a class="dropdown-item" href="{% url 'crearPregunta' Trivia.id %}">{{ Trivia.Tipo }}</a>
+                        {% endif %}
+            
+                    {% endfor %}     
+            
+                </div>               
+            
+            </div>
+    
+        </div>
+    
     </div>
 
 {% endblock %}

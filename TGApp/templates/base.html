@@ -11,21 +11,25 @@
 
     <title>{% block titulo %} {% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+
+
     
 </head>
 <body>
 
 <nav class="navbar navbar-expand navbar-light bg-light">
     <div class="nav navbar-nav">
-        <a class="nav-item nav-link active" href="{% url 'inicio' %}">Inicio</a>
-        <!-- <a class="nav-item nav-link active" href="{% url 'jugar' %}">Jugar</a> -->
+        <a class="nav-item nav-link active" href="{% url 'inicio' %}">Inicio</a>        
         {% if user.is_authenticated %}
           
           <a class="nav-item nav-link active" href="{% url 'jugar' %}">Jugar</a>
           <a class="nav-item nav-link active" href="{% url 'crear' %}">Crear</a>
           <a class="nav-item nav-link active" href="{% url 'preguntas' %}">Mis preguntas</a>
-          <a class="nav-item nav-link active" href="{% url 'tablero' %}">Puntuaciones</a>
+          
           <a class="nav-item nav-link active" href="{% url 'logout' %}">Salir</a>
+
+          
 
         {% else %}
 
@@ -34,6 +38,11 @@
         
         {% endif %}
         <a class="nav-item nav-link active" href="{% url 'nosotros' %}">Nosotros</a>
+
+        
+        <!-- <a class="nav-item nav-link active" href="{% url 'test' %}">Bienvenido {{ request.user }}</a> -->
+
+
     </div>
 </nav>
 
@@ -49,7 +58,7 @@
           </div>
         {% endfor %}
       {% endif %}
-      {% block contenido %} {% endblock %}
+      {% block contenido %}  {% endblock %}
     </div> 
   </div>
 </div>

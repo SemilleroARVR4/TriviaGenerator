@@ -7,10 +7,6 @@
 <br>
 
 <P>
-    Puntaje usuario: {{ puntajeUsuario }}
-</P> 
-
-<P>
     Puntaje: {{puntaje}}
 </P>
 
@@ -29,5 +25,7 @@
 <P>
    Preguntas totales: {{ total }}
 </P>    
+
+<a name="" id="" class="btn btn-primary" href="{% url 'tablero' trivia.id %}" role="button">Ver tabla de puntuaciones</a>
 
 {% endblock %}

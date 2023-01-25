@@ -116,37 +116,6 @@ def preguntas(request):
 
 
 
-#VIDEO
-
-def jugarQuiz(request):
-    QuizUser, created = QuizUsuarioTrivia.objects.get_or_create(usuario=request.user)
-
-    if request.method == 'POST':
-        pregunta_pk = request.POST.get('pregunta_pk')
-        pregunta_respondida = QuizUser.intentos.select_related('pregunta').get(pregunta__pk=pregunta_pk)
-        respuesta_pk = request.POST.get('respuesta_pk')
-
-        try:
-            opcion_selecionada = pregunta_respondida.pregunta.opciones.get(pk=respuesta_pk)
-        
-        except ObjectDoesNotExist:
-            raise Http404
-		
-        QuizUser.validar_intento(pregunta_respondida, opcion_selecionada)
-        return redirect('resultado', pregunta_respondida.pk)
-
-    else:
-  
-        pregunta = QuizUser.obtener_nuevas_preguntas()
-        if pregunta is not None:
-            QuizUser.crear_intentos(pregunta)
-
-        context = {
-            'pregunta':pregunta
-        }
-
-    return render(request, 'jugar/jugarPrueba.html', context)
-
 
 def resultado_pregunta(request, pregunta_respondida_pk):
     respondida = get_object_or_404(PreguntasRespondidasTrivia, pk=pregunta_respondida_pk)
@@ -252,24 +221,23 @@ def jugarTrivia(request, Trivia_id):
         return render(request, 'jugar/jugarTrivia.html', context)
 
 
-def tablero(request):
-    total_usuarios_quiz = UsuarioTrivia.objects.order_by('-puntajeTotal')
+def tablero(request, trivia_id):
+
+    trivia = Trivia.objects.get(id=trivia_id)
+    total_usuarios_quiz = UsuarioTrivia.objects.filter(trivia=trivia).order_by('-puntajeTotal')
     contador = total_usuarios_quiz.count()
 
-    if contador <= 10:
-        context = {
-            'usuario_quiz':total_usuarios_quiz,
-            'contar_user':contador
-        }
-
-    else:
-        context = {
+    context = {
+        'trivia':trivia,
         'usuario_quiz':total_usuarios_quiz[:10],
         'contar_user':contador
-        }
-    # for user_quiz in total_usuarios_quiz:
+    }
 
-    #     print(user_quiz.id)
     
 
     return render(request, 'jugar/tablero.html', context)
+
+
+def test(request):
+
+    return render(request, 'TGApp/test.html')

@@ -4,33 +4,37 @@
 
 {% block contenido %}
 
-<br>
-<h2>
-    Para empezar a jugar selecciona la trivia de tu agrado.
-    <br>
-    Se mostraran todas las preguntas relacionadas, cada pregunta tiene una opcion correcta, selecciona la 
-    opcion correcta para sumar puntos.
-    
-</h2>
+<div class="container">
+    <div class="mt-4 p-3 bg-light text-body rounded">
+        <h2>
+            Para empezar a jugar selecciona la trivia de tu agrado.
+            Se mostraran todas las preguntas relacionadas, cada pregunta tiene una opcion correcta, selecciona la 
+            opcion correcta para sumar puntos.   
+        </h2>   
 
-    <div class="dropdown">
+        <div class="dropdown">
+            
+            <button class="btn btn-secondary dropdown-toggle mt-3" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                        Seleccionar trivia
+            </button>
+                    
+            <div class="dropdown-menu  mt-2" aria-labelledby="triggerId">
         
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                    Seleccionar trivia
-        </button>
-                
-        <div class="dropdown-menu" aria-labelledby="triggerId">
-
-            {% for Trivia in trivias %}  
-
-                <a class="dropdown-item" href="{% url 'jugarTrivia' Trivia.id %}">{{ Trivia.Tipo }}</a>
-
-            {% endfor %}     
-
-        </div>               
+                {% for Trivia in trivias %}  
+        
+                    <a class="dropdown-item" href="{% url 'jugarTrivia' Trivia.id %}">{{ Trivia.Tipo }}</a>
+        
+                {% endfor %}     
+        
+            </div>               
+        
+        </div>
 
     </div>
+
+</div>
+
 
 {% endblock %}
 
