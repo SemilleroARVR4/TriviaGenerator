@@ -115,18 +115,6 @@ def preguntas(request):
     return render(request, "TGApp/preguntas.html", context)
 
 
-
-
-def resultado_pregunta(request, pregunta_respondida_pk):
-    respondida = get_object_or_404(PreguntasRespondidasTrivia, pk=pregunta_respondida_pk)
-
-    context = {
-        'respondida':respondida
-    }
-
-    return render(request, 'jugar/resultados.html', context)
-
-
 @login_required
 def jugar(request):
     trivias = Trivia.objects.all()

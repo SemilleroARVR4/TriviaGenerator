@@ -22,22 +22,22 @@
                         <thead>
                             <tr class="text-center">
                                 <th >Trivia</th>
-                                <th scope="col", class="col-sm-2 row-2">Enunciado</th>
-                                <th scope="col", class="col-sm-2 row-3">Opcion correcta</th>
-                                <th scope="col", class="col-sm-2 row-3">Opcion 1</th>
-                                <th scope="col", class="col-sm-2 row-3">Opcion 2</th>
-                                <th scope="col", class="col-sm-2 row-3">Opcion 3</th>
-                                <th scope="col", class="col-sm-2 row-3">Acciones</th>
+                                <th class="col-sm-2 row-2">Enunciado</th>
+                                <th class="col-sm-2 row-3">Opcion correcta</th>
+                                <th class="col-sm-2 row-3">Opcion 1</th>
+                                <th class="col-sm-2 row-3">Opcion 2</th>
+                                <th class="col-sm-2 row-3">Opcion 3</th>
+                                <th class="col-sm-2 row-3">Acciones</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             <tr class="text-center">
-                                <td scope="row", class="col-sm-2">{{ Pregunta.trivia }}</td>
-                                <td>{{ Pregunta.pregunta }}</td>
-                                <td>{{ Pregunta.opcionCorrecta }}</td>
-                                <td>{{ Pregunta.opcion2 }}</td>
-                                <td>{{ Pregunta.opcion3 }}</td>
+                                <td class="col-sm-2">{{ Pregunta.trivia }}</td>
+                                <td class="col-sm-2">{{ Pregunta.pregunta }}</td>
+                                <td class="col-sm-2">{{ Pregunta.opcionCorrecta }}</td>
+                                <td class="col-sm-2">{{ Pregunta.opcion2 }}</td>
+                                <td class="col-sm-2">{{ Pregunta.opcion3 }}</td>
                                 <td class="col-sm-2">{{ Pregunta.opcion4 }}</td>
                                 
                                 <td> <a name="" id="" class="btn btn-info col-sm" href="{% url 'EditarPregunta' Pregunta.id %}" role="button">Editar</a> <a name="" id="" class="btn btn-danger col-sm" href="{% url 'EliminarPregunta' Pregunta.id %}" role="button">Borrar</a></td>                               

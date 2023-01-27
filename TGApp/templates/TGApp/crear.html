@@ -5,30 +5,21 @@
 {% block titulo %} Agregar nueva pregunta {% endblock %}
 
 {% block contenido %}
-
-
-
-
-<br>
   
-                    
-    <h1> Tipo de Trivia: {{ trivias }} </h1>
-  
+<div class="container">
+    <h1 class="mt-2"> Tipo de Trivia: {{ trivias }} </h1>
+    <form method="POST">
+      <fieldset class="form-group" >
 
-  
-    <div class="container">
-        <form method="POST">
-          <fieldset>
+        {% csrf_token %}
 
-            {% csrf_token %}
-            
-            {{ formulario.as_p }}
+          {{ formulario|crispy }}
 
+          <button type="submit" class="btn btn-success mb-2">Crear</button>
 
-            <button type="submit" class="btn btn-primary">Crear</button>
-          </fieldset>
-        </form>
-    </div>
+      </fieldset>
+    </form>
+</div>
 
 {% endblock %}
 

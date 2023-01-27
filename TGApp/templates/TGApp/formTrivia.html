@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block titulo %} Agregar nueva trivia {% endblock %}
 
 {% block contenido %}
@@ -9,40 +11,14 @@
 <div class="container">
   <form method="POST">
     <fieldset>
-      <legend>Crear nueva trivia</legend>
+      <h1 class="mt-2"> Crear nueva trivia </h1>
       {% csrf_token %}
-      {{ form.as_p }}
+      {{ form|crispy }}
 
       <button type="submit" class="btn btn-success">Crear</button>
     </fieldset>
   </form>
 </div>
 
-
-
-
-<!-- <form enctype="multipart/form-data" method="post">
-  {% csrf_token %}
-
-  {% for campo in formulario %}
-
-    <div class="mb-3">
-      <label for="" class="form-label">{{ campo.label }}</label>
-      <input 
-        type="{{ campo.field.widget.input_type }}"
-        class="form-control" 
-        name="{{ campo.name }}" 
-        id="" 
-        aria-describedby="helpId" 
-        placeholder="{{ campo.label }}">
-      
-    </div>
-    <div class="col-12 help-text"> {{ campo.errors }} </div>
-
-  {% endfor %}
-
-  <input name="" id="" class="btn btn-success" type="submit" value="Enviar información">
-
-</form> -->
 
 {% endblock %}

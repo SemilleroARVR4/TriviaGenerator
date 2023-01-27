@@ -15,7 +15,6 @@ urlpatterns = [
     path('pregunta/<int:pk>/eliminar/', login_required(EliminarPregunta.as_view()), name='EliminarPregunta'),
     path('jugar', views.jugar, name='jugar'), 
     path('jugar/trivia/<int:Trivia_id>', views.jugarTrivia, name='jugarTrivia'),
-    path('resultado/<int:pregunta_respondida_pk>', views.resultado_pregunta, name='resultado'),
     path('tablero/<int:trivia_id>', views.tablero, name='tablero'),
 
     path('test', views.test, name='test'),
