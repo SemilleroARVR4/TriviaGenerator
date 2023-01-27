@@ -1,16 +1,14 @@
 from django.http import Http404, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Pregunta, Trivia, QuizUsuarioTrivia, PreguntasRespondidasTrivia, UsuarioTrivia
-from .forms import formPregunta, formTrivia, ElegirRespuestaTest, OtroModelo
+from django.shortcuts import render, redirect
+from .models import Pregunta, Trivia, UsuarioTrivia
+from .forms import formPregunta
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
-import random
 from random import shuffle
 
 
@@ -220,9 +218,6 @@ def tablero(request, trivia_id):
         'usuario_quiz':total_usuarios_quiz[:10],
         'contar_user':contador
     }
-
-    
-
     return render(request, 'jugar/tablero.html', context)
 
 
