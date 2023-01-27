@@ -104,7 +104,7 @@ class EliminarPregunta(SuccessMessageMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-
+@login_required
 def preguntas(request):
     context = {
         'trivias': Trivia.objects.all().order_by('-id'),
@@ -131,10 +131,9 @@ def jugarTrivia(request, Trivia_id):
     QuizUsuario, created = UsuarioTrivia.objects.get_or_create(usuario=request.user, trivia=trivia)
 
     if request.method == 'POST':
-
         trivia = Trivia.objects.get(id=Trivia_id)
         preguntas = Pregunta.objects.filter(trivia=trivia).order_by('?')
-        usuarios = UsuarioTrivia.objects.filter(trivia=trivia)
+        usuarios = UsuarioTrivia.objects.filter(trivia=trivia)        
 
         for usuario in usuarios:
             puntajeUsuario = int(usuario.puntajeTotal)
@@ -147,6 +146,7 @@ def jugarTrivia(request, Trivia_id):
             pregunta_options = {'pregunta': pregunta, 'options': options}
             preguntas_options.append(pregunta_options)
 
+        contador = 0
         puntaje = 0
         incorrecta = 0
         correcta = 0
@@ -186,9 +186,10 @@ def jugarTrivia(request, Trivia_id):
             'total':total,
             'count':count,
             'percent':percent,
-            'puntajeUsuario':puntajeUsuario
+            'puntajeUsuario':puntajeUsuario,
+            'contar_user':contador
         }
-        return render(request, 'TGApp/result.html', context)
+        return render(request, 'TGApp/resultados.html', context)
 
     else:
 
@@ -221,6 +222,11 @@ def tablero(request, trivia_id):
     return render(request, 'jugar/tablero.html', context)
 
 
-def test(request):
+def puntuaciones(request):
 
-    return render(request, 'TGApp/test.html')
+    trivias = Trivia.objects.all()
+    context = {
+        'trivias':trivias,
+    }
+
+    return render(request, 'TGApp/puntuaciones.html', context)

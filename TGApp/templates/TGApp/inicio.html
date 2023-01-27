@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "TGApp/base.html" %}
 
 {% block titulo %} Inicio {% endblock %}
 
@@ -7,14 +7,14 @@
 
 <div class="container mt-3">
 
-  <div class="mt-4 p-5 bg-light text-body rounded">
+  <div class="mt-4 p-5 text-body rounded bg-background">
     <h1 class="h1">Trivia Generator</h1> 
-    <p>Aplicacion web que permite jugar y/o crear una trivia, para crear una trivia debes registrarte e ingresar con tu cuenta</p>
+    <p>Aplicacion web que permite jugar y/o crear una trivia, para jugar/crear una trivia debes registrarte e ingresar con tu cuenta</p>
 
     {% if user.is_authenticated %}
-        <a class="btn btn-success btn-lg" href="{% url 'crear' %}">Empezar</a>
+        <a class="btn btn-outline-success btn-lg" href="{% url 'crear' %}">Empezar</a>
       {% else %}
-        <a class="btn btn-success btn-lg" href="{% url 'login' %}">Empezar</a>
+        <a class="btn btn-outline-success btn-lg" href="{% url 'login' %}">Empezar</a>
       {% endif %}
 
   </div>

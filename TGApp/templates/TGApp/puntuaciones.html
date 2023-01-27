@@ -7,9 +7,8 @@
 <div class="container">
     <div class="mt-2 p-3 bg-background text-body rounded">
         <h2>
-            Para empezar a jugar selecciona la trivia de tu agrado.
-            Se mostraran todas las preguntas relacionadas, cada pregunta tiene una opcion correcta, selecciona la 
-            opcion correcta para sumar puntos.   
+            Selecciona la trivia para ver su tablero de posiciones.
+            
         </h2>   
 
         <div class="dropdown">
@@ -23,7 +22,7 @@
         
                 {% for Trivia in trivias %}  
         
-                    <a class="dropdown-item" href="{% url 'jugarTrivia' Trivia.id %}">{{ Trivia.Tipo }}</a>
+                    <a class="dropdown-item" href="{% url 'tablero' Trivia.id %}">{{ Trivia.Tipo }}</a>
         
                 {% endfor %}     
         
@@ -37,4 +36,3 @@
 
 
 {% endblock %}
-

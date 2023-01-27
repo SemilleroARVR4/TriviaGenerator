@@ -22,16 +22,15 @@ class Trivia(models.Model):
 
 class Pregunta(models.Model):
 
-    numero_respuestas_permitidas = 1
     autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     trivia = models.ForeignKey(Trivia, on_delete=models.CASCADE, null=True)
     id = models.AutoField(primary_key=True)
     pregunta = models.TextField(verbose_name='Enunciado de la pregunta', null=True)
-    opcionCorrecta = models.CharField(max_length=1000, verbose_name='Opcion correcta de la pregunta', null=True)
-    opcion2 = models.CharField(max_length=1000, verbose_name='Opcion falsa de la pregunta', null=True)
-    opcion3 = models.CharField(max_length=1000, verbose_name='Opcion falsa de la pregunta', null=True)
-    opcion4 = models.CharField(max_length=1000, verbose_name='Opcion falsa de la pregunta', null=True)
-    respuesta = models.CharField(max_length=1000, verbose_name='respuesta', null=True)
+    opcionCorrecta = models.CharField(max_length=350, verbose_name='Opcion correcta de la pregunta', null=True)
+    opcion2 = models.CharField(max_length=350, verbose_name='Opcion falsa de la pregunta', null=True)
+    opcion3 = models.CharField(max_length=350, verbose_name='Opcion falsa de la pregunta', null=True)
+    opcion4 = models.CharField(max_length=350, verbose_name='Opcion falsa de la pregunta', null=True)
+    respuesta = models.CharField(max_length=350, verbose_name='respuesta', null=True)
     puntaje = models.DecimalField(verbose_name='Puntaje obtenido', default=0, decimal_places=2, max_digits=10)    
 
     def __str__(self):

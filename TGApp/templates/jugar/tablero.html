@@ -1,34 +1,47 @@
-{% extends 'base.html' %}
+{% extends "TGApp/base.html" %}
 
 {% block contenido %}
 
-<div class="container">
-	
-	<h2 class="mb-3 p-2 text-center bg-info text-white rounded">
-		Tabla de puntuaciones: {{ trivia }}
-	</h2>	
+{% if contar_user == 0 %}
+	<div class="container">
+		<div class="mt-2 p-3 bg-background text-body rounded">
+			<h2>
+				No hay puntuaciones registradas.				
+			</h2>  
+		</div>
+	</div>
 
-	<table class="table table-striped table-bodered">
-		<thead>
-			<tr class="text-center">
-				<th>Posicion</th>
-				<th>Usuario</th>
-				<th>Puntaje</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for user_quiz in usuario_quiz %}
-			
+{% else %}
+
+	<div class="container">
+		
+		<h2 class="mb-3 p-2 text-center bg-info text-white rounded">
+			Tabla de puntuaciones: {{ trivia }}
+		</h2>	
+
+		<table class="table table-striped table-bodered">
+			<thead>
 				<tr class="text-center">
-					<th>{{forloop.counter}}</th>
-					<th>{{user_quiz.usuario.username}}</th>
-					<th>{{user_quiz.puntajeTotal}}</th>
+					<th>Posicion</th>
+					<th>Usuario</th>
+					<th>Puntaje</th>
 				</tr>
-			
-			{% endfor %}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				{% for user_quiz in usuario_quiz %}
+				
+					<tr class="text-center">
+						<th>{{forloop.counter}}</th>
+						<th>{{user_quiz.usuario.username}}</th>
+						<th>{{user_quiz.puntajeTotal}}</th>
+					</tr>
+				
+				{% endfor %}
+			</tbody>
+		</table>
 
-</div>
+	</div>
+
+{% endif %}
 
 {% endblock %}

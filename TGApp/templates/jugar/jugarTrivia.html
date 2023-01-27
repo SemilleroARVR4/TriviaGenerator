@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "TGApp/base.html" %}
 
 {% block titulo %} Jugar {% endblock %}
 
@@ -8,8 +8,17 @@
 
 <div class="container">
 
+{% if contar_user == 0 %}
+	<div class="container">
+		<div class="mt-2 p-3 bg-background text-body rounded">
+			<h2>
+				Aun no hay preguntas registradas para esta trivia.				
+			</h2>  
+		</div>
+	</div>
 
-  <div class="mt-4 p-3 bg-light text-body rounded">
+{% else %}
+  <div class="mt-4 p-3 bg-background text-body rounded">
   
     {% for pregunta_options in preguntas_options %}
         <form method="POST">
@@ -55,6 +64,8 @@
         </form>    
 
     </div>
+
+{% endif %}
 
 {% endblock %}
 

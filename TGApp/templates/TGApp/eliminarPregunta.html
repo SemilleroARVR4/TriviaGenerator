@@ -1,18 +1,21 @@
-{% extends "base.html" %}
+{% extends "TGApp/base.html" %}
 
 {% block titulo %} Eliminar pregunta {% endblock %}
 
 {% block contenido %}
-<BR></BR>
-<form method="post">{% csrf_token %}
+
+<div class="mt-3 container">
+    <form method="post">{% csrf_token %}
     
-    <h2>¿Seguro que quieres borrar de forma permanente la pregunta: "{{ object }}"?</h2>
-    {{ form }}
-    <br>
-    <input class="btn btn-danger" type="submit" value="Si, Borrar">
-    <a name="" id="" class="btn btn-primary" href="{% url 'preguntas' %}" role="button">Cancelar</a>
-   
-</form>
+        <h2>¿Seguro que quieres borrar de forma permanente la pregunta: "{{ object }}"?</h2>
+        {{ form }}
+
+        <input class="mt-3 mr-2 btn btn-danger" type="submit" value="Si, Borrar">
+        <a name="" id="" class="mt-3 btn btn-primary" href="{% url 'preguntas' %}" role="button">Cancelar</a>
+       
+    </form>
+</div>
+
 
 {% endblock %}
 

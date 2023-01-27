@@ -17,6 +17,6 @@ urlpatterns = [
     path('jugar/trivia/<int:Trivia_id>', views.jugarTrivia, name='jugarTrivia'),
     path('tablero/<int:trivia_id>', views.tablero, name='tablero'),
 
-    path('test', views.test, name='test'),
+    path('puntuaciones', views.puntuaciones, name='puntuaciones'),
    
 ]
