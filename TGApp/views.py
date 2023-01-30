@@ -106,9 +106,13 @@ class EliminarPregunta(SuccessMessageMixin, UserPassesTestMixin, DeleteView):
 
 @login_required
 def preguntas(request):
+    
+    preguntas = Pregunta.objects.filter(autor=request.user).order_by('-id')
+    contador = preguntas.count()
+    print(contador)
     context = {
-        'trivias': Trivia.objects.all().order_by('-id'),
-        'preguntas': Pregunta.objects.all().order_by('-id'),
+        'preguntas': preguntas,
+        'contar_user':contador
     }
     return render(request, "TGApp/preguntas.html", context)
 
@@ -127,11 +131,10 @@ def jugar(request):
 
 @login_required
 def jugarTrivia(request, Trivia_id):
-    trivia = Trivia.objects.get(id=Trivia_id)
-    QuizUsuario, created = UsuarioTrivia.objects.get_or_create(usuario=request.user, trivia=trivia)
-
+    
     if request.method == 'POST':
         trivia = Trivia.objects.get(id=Trivia_id)
+        QuizUsuario, created = UsuarioTrivia.objects.get_or_create(usuario=request.user, trivia=trivia)
         preguntas = Pregunta.objects.filter(trivia=trivia).order_by('?')
         usuarios = UsuarioTrivia.objects.filter(trivia=trivia)        
 
@@ -146,7 +149,7 @@ def jugarTrivia(request, Trivia_id):
             pregunta_options = {'pregunta': pregunta, 'options': options}
             preguntas_options.append(pregunta_options)
 
-        contador = 0
+        
         puntaje = 0
         incorrecta = 0
         correcta = 0
@@ -187,7 +190,6 @@ def jugarTrivia(request, Trivia_id):
             'count':count,
             'percent':percent,
             'puntajeUsuario':puntajeUsuario,
-            'contar_user':contador
         }
         return render(request, 'TGApp/resultados.html', context)
 
@@ -195,6 +197,7 @@ def jugarTrivia(request, Trivia_id):
 
         trivia = Trivia.objects.get(id=Trivia_id)
         preguntas = Pregunta.objects.filter(trivia=trivia).order_by('?')
+        contador = preguntas.count()
         preguntas_options = []
         for pregunta in preguntas:
             options = [pregunta.opcionCorrecta, pregunta.opcion2, pregunta.opcion3, pregunta.opcion4]
@@ -204,6 +207,7 @@ def jugarTrivia(request, Trivia_id):
 
         context = {
             'preguntas_options': preguntas_options,
+            'contar_user':contador
         }
         return render(request, 'jugar/jugarTrivia.html', context)
 

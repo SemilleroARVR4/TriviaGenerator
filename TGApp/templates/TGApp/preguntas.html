@@ -4,6 +4,23 @@
 
 {% block contenido %}
 
+{% if contar_user == 0 %}
+<div class="mt-2 card mb-2">
+    <div class="card-header">
+        <h4 class="card-title">Mis preguntas</h4>
+    </div>
+    <div class="card-body">
+        <div class="container">
+            
+            <h3>Registra tus preguntas para que aparezcan aqui.</h3>
+            <a name="" id="" class="btn btn-primary mt-2" href="{% url 'crear' %}" role="button">Crear</a>
+            
+        </div>
+        
+    </div>
+    </div>
+
+{% else %}
 
 <div class="mt-2 card mb-2">
     <div class="card-header">
@@ -55,5 +72,7 @@
     
 
 </div>
+
+{% endif %}
 
 {% endblock %}
