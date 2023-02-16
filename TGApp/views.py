@@ -200,7 +200,7 @@ def jugarTrivia(request, Trivia_id):
         contador = preguntas.count()
         preguntas_options = []
         for pregunta in preguntas:
-            options = [pregunta.opcionCorrecta, pregunta.opcion2, pregunta.opcion3, pregunta.opcion4]
+            options = [pregunta.opcionCorrecta, pregunta.opcion2, pregunta.opcion3, pregunta.opcion4]#, pregunta.archivo]
             shuffle(options)
             pregunta_options = {'pregunta': pregunta, 'options': options}
             preguntas_options.append(pregunta_options)

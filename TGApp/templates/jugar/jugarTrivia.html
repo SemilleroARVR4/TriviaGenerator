@@ -29,7 +29,11 @@
             <div class="container">
                 <h4>
                     <span class="">{{forloop.counter}}.</span> {{ pregunta_options.pregunta.pregunta }}
-                  </h4>
+                    
+                </h4>
+                <h4>
+                    {{ pregunta_options.pregunta.archivo }}
+                </h4>
                 <div class="container mb-3">
                 {% for option in pregunta_options.options %}
 
