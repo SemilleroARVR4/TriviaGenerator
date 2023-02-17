@@ -1,13 +1,14 @@
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from .models import Pregunta, Trivia, UsuarioTrivia
-from .forms import formPregunta
+from django.template import RequestContext
+from .models import Pregunta, Trivia, UsuarioTrivia, test_file
+from .forms import formPregunta, test_form
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.core.exceptions import ObjectDoesNotExist
 from random import shuffle
 
@@ -43,7 +44,8 @@ def crearPregunta(request, Trivia_id):
     }   
 
     if request.method=='POST':
-        formulario = formPregunta(request.POST, initial=initial_data) 
+        formulario = formPregunta(request.POST, request.FILES, initial=initial_data) 
+        # file = request.FILES['file']
         if formulario.is_valid():
             formulario.save()
             messages.success(request, f'¡Tu pregunta ha sido registrada!' )
@@ -76,7 +78,7 @@ class CrearNuevaTrivia(SuccessMessageMixin, CreateView):
 class EditarPregunta(SuccessMessageMixin, UserPassesTestMixin, UpdateView):
     model = Pregunta
     template_name = 'TGApp/editarPregunta.html'
-    fields = ["trivia", "pregunta", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
+    fields = ["trivia", "pregunta", "archivo", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
     success_message = "¡Tu pregunta ha sido actualizada correctamente!"
     success_url = reverse_lazy('preguntas')
 
@@ -197,6 +199,7 @@ def jugarTrivia(request, Trivia_id):
 
         trivia = Trivia.objects.get(id=Trivia_id)
         preguntas = Pregunta.objects.filter(trivia=trivia).order_by('?')
+        #file = request.FILES['file']
         contador = preguntas.count()
         preguntas_options = []
         for pregunta in preguntas:
@@ -207,7 +210,8 @@ def jugarTrivia(request, Trivia_id):
 
         context = {
             'preguntas_options': preguntas_options,
-            'contar_user':contador
+            'contar_user':contador,
+            #'file':file,
         }
         return render(request, 'jugar/jugarTrivia.html', context)
 
@@ -234,3 +238,28 @@ def puntuaciones(request):
     }
 
     return render(request, 'TGApp/puntuaciones.html', context)
+
+
+
+def list(request):
+    # Handle file upload
+    if request.method == 'POST':
+        form = test_form(request.POST, request.FILES)
+        if form.is_valid():
+            newdoc = test_file(docfile = request.FILES['docfile'])
+            newdoc.save()
+
+            # Redirect to the document list after POST
+            return redirect('/test')
+    else:
+        form = test_form() # A empty, unbound form
+
+    # Load documents for the list page
+    documents = test_file.objects.all()
+
+    # Render list page with the documents and the form
+    context = {
+        'documents': documents, 
+        'form': form}
+    return render(request, 'TGApp/list.html', context)
+    

@@ -16,7 +16,8 @@ urlpatterns = [
     path('jugar', views.jugar, name='jugar'), 
     path('jugar/trivia/<int:Trivia_id>', views.jugarTrivia, name='jugarTrivia'),
     path('tablero/<int:trivia_id>', views.tablero, name='tablero'),
-
     path('puntuaciones', views.puntuaciones, name='puntuaciones'),
+
+    path('test', views.list, name='test'),
    
-]
+] 

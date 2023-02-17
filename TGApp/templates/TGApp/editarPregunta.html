@@ -10,7 +10,7 @@
 <h1> Edita tu pregunta </h1>
     
     <div class="container">
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
           <fieldset>
                 {% csrf_token %}
                     {{ form|crispy }}

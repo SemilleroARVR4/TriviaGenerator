@@ -2,7 +2,7 @@ from cProfile import label
 from pyexpat import model
 from django import forms
 from django.forms import ModelForm
-from .models import Pregunta, Trivia, PreguntaQuiz, ElegirRespuesta, PreguntasRespondidasTrivia, PreguntaQuiz
+from .models import Pregunta, Trivia, PreguntaQuiz, ElegirRespuesta, PreguntaQuiz, test_file
 
 class PreguntaForm(forms.ModelForm):
     class Meta:
@@ -13,19 +13,25 @@ class formPregunta(forms.ModelForm):
     class Meta:
         model = Pregunta
         fields = ["autor", "trivia", "pregunta", "archivo", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
-        labels = {'autor' : "Creador", 'trivia': "Tipo Trivia", 'pregunta': "Pregunta", 'archivo': 'Archivo', 'opcionCorrecta': "Opcion correcta",'opcion2': "Opcion 2",'opcion3': "Opcion 3",'opcion4': "Opcion 4",}        
+        labels = {'autor' : "Creador", 'trivia': "Tipo Trivia", 'pregunta': "Pregunta", 'archivo': 'Archivo (opcional)', 'opcionCorrecta': "Opcion correcta",'opcion2': "Opcion 2",'opcion3': "Opcion 3",'opcion4': "Opcion 4",}        
         
         widgets = {
             
             'autor': forms.HiddenInput(),
             'trivia': forms.HiddenInput(),
             'pregunta': forms.Textarea(attrs={'placeholder':'Enunciado de la pregunta'}),
-            #'archivo': forms.FileField()
+            #'archivo': forms.FileField(),forms.FileField(attrs={'placeholder':'Archivo'}),
             'opcionCorrecta': forms.Textarea(attrs={'placeholder':'Opcion correcta'}), 
             'opcion2': forms.Textarea(attrs={'placeholder':'Opcion incorrecta 1'}), 
             'opcion3': forms.Textarea(attrs={'placeholder':'Opcion incorrecta 2'}), 
             'opcion4': forms.Textarea(attrs={'placeholder':'Opcion incorrecta 3'}), 
         }
+
+class test_form(forms.Form):
+    docfile = forms.FileField(
+        label='select a file',
+        help_text='max. 1 gb'
+    )
 
 class ElegirRespuestaTest(forms.ModelForm):
     class Meta:

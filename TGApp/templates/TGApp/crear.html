@@ -8,7 +8,7 @@
   
 <div class="container">
     <h1 class="mt-2">Trivia: {{ trivias }} </h1>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
       <fieldset class="form-group" >
 
         {% csrf_token %}
