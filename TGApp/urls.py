@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from .views import CrearNuevaTrivia, EditarPregunta, EliminarPregunta
 from django.contrib.auth.decorators import login_required, permission_required
+from django.conf import settings
+from django.contrib.staticfiles.urls import static 
 
 urlpatterns = [
     
@@ -19,5 +21,6 @@ urlpatterns = [
     path('puntuaciones', views.puntuaciones, name='puntuaciones'),
 
     path('test', views.list, name='test'),
+    path('test2', views.show_items, name='test2'),
    
-] 
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

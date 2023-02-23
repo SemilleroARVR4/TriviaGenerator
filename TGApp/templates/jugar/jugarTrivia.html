@@ -31,16 +31,42 @@
                     <span class="">{{forloop.counter}}.</span> {{ pregunta_options.pregunta.pregunta }}
                     
                 </h4>
-                <h4>
-                    {{ pregunta_options.pregunta.archivo }}
+                <h4>                
+
+                    {% if pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'png' or pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'jpg' %}
+
+                    <img src="{{ pregunta_options.pregunta.archivo.url }}" alt="test" width="500" height="333">
+                        
+                        <!-- <video width="640" height="360" controls>
+                            <source src="{{ test.archivo.url }}" type="video/mp4">
+                        </video> -->            
+            
+                    {% elif pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'mp3' %}
+
+                        <audio controls>
+                            <source src="{{ pregunta_options.pregunta.archivo.url }}" type="audio/ogg">
+
+                        </audio>
+
+                    {% elif pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'mp4' %}
+
+                    <video width="320" height="240" controls>
+                        <source src="{{ pregunta_options.pregunta.archivo.url }}" type="video/mp4">
+                        <source src="movie.ogg" type="video/ogg">
+                      Your browser does not support the video tag.
+                      </video> 
+
+                    {% endif %}
+
+
                 </h4>
                 <div class="container mb-3">
                 {% for option in pregunta_options.options %}
 
                 
                     <div class="form-check">
-                        <input type="radio" class="form-check-input" name="{{ pregunta_options.pregunta.pk }}" value="{{ option }}" id="gridRadios{{ forloop.counter }}">
-                        <label class="form-check-label " for="gridRadios{{ forloop.counter }}">
+                        <input type="radio" class="form-check-input" name="{{ pregunta_options.pregunta.pk }}" value="{{ option }}" id="{{ option }}">
+                        <label class="form-check-label " for="{{ option }}">
                             {{ option }}
                     </label>
                     </div>

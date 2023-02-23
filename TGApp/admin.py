@@ -10,8 +10,6 @@ admin.site.register(Trivia)
 admin.site.register(UsuarioTrivia)
 admin.site.register(test_file)
 
-
-
 #VIDEO
 
 class ElegirRespuestaInLine(admin.TabularInline):

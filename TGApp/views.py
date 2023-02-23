@@ -13,8 +13,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from random import shuffle
 
 
-# Create your views here.
-
 def inicio(request):
     return render(request, "TGApp/inicio.html")
 
@@ -45,7 +43,7 @@ def crearPregunta(request, Trivia_id):
 
     if request.method=='POST':
         formulario = formPregunta(request.POST, request.FILES, initial=initial_data) 
-        # file = request.FILES['file']
+        
         if formulario.is_valid():
             formulario.save()
             messages.success(request, f'¡Tu pregunta ha sido registrada!' )
@@ -199,20 +197,27 @@ def jugarTrivia(request, Trivia_id):
 
         trivia = Trivia.objects.get(id=Trivia_id)
         preguntas = Pregunta.objects.filter(trivia=trivia).order_by('?')
+        
         #file = request.FILES['file']
         contador = preguntas.count()
+        print(preguntas)
         preguntas_options = []
+
         for pregunta in preguntas:
             options = [pregunta.opcionCorrecta, pregunta.opcion2, pregunta.opcion3, pregunta.opcion4]#, pregunta.archivo]
+            print(options)
             shuffle(options)
             pregunta_options = {'pregunta': pregunta, 'options': options}
+            print(type(pregunta_options))
+            print(pregunta_options)
             preguntas_options.append(pregunta_options)
-
+        
         context = {
             'preguntas_options': preguntas_options,
             'contar_user':contador,
-            #'file':file,
+            
         }
+ 
         return render(request, 'jugar/jugarTrivia.html', context)
 
 
@@ -246,7 +251,7 @@ def list(request):
     if request.method == 'POST':
         form = test_form(request.POST, request.FILES)
         if form.is_valid():
-            newdoc = test_file(docfile = request.FILES['docfile'])
+            newdoc = test_file(archivo = request.FILES['docfile'])
             newdoc.save()
 
             # Redirect to the document list after POST
@@ -263,3 +268,11 @@ def list(request):
         'form': form}
     return render(request, 'TGApp/list.html', context)
     
+def show_items(request):
+    testes = test_file.objects.all()
+
+    context = {
+        'testes': testes,
+    }
+    
+    return render(request, 'TGApp/test.html', context)

@@ -32,7 +32,7 @@ class Pregunta(models.Model):
     opcion4 = models.CharField(max_length=350, verbose_name='Opcion falsa de la pregunta', null=True)
     respuesta = models.CharField(max_length=350, verbose_name='respuesta', null=True)
     puntaje = models.DecimalField(verbose_name='Puntaje obtenido', default=0, decimal_places=2, max_digits=10)   
-    archivo = models.FileField(upload_to='archivos', verbose_name="Archivo a subir (opcional)", blank=True) 
+    archivo = models.FileField(upload_to='archivos', verbose_name="Archivo opcional (imagenes, audios y videos solamente)", blank=True) 
 
     def __str__(self):
         return f"{self.trivia} - {self.pregunta}"
@@ -43,6 +43,14 @@ class Pregunta(models.Model):
     def respuesta_unica(self):
         pass
 
+    
+    def delete(self, using=None, keep_parents=False):
+        if self.archivo.field.blank:
+            super().delete()
+        else:
+            self.archivo.storage.delete(self.archivo.name)
+            super().delete()
+        
 class UsuarioTrivia(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     puntajeTotal = models.DecimalField(verbose_name='Puntaje Total', default=0, decimal_places=0, max_digits=10)
@@ -53,6 +61,10 @@ class UsuarioTrivia(models.Model):
 
 class test_file(models.Model):
     archivo = models.FileField(upload_to='archivos', verbose_name="archivo_a_subir")
+
+    def delete(self, using=None, keep_parents=False):
+        self.archivo.storage.delete(self.archivo.name)
+        super().delete()
 
 # Tutorial
 class PreguntaQuiz(models.Model):

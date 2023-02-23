@@ -1,0 +1,36 @@
+<table>
+    <thead>
+      <tr>
+        <th>Archivo</th>
+      </tr>
+    </thead>
+    <tbody>
+
+
+      {% for test in testes %}                                 
+
+            
+        {% if test.archivo.name|lower|slice:'-3:' == 'mp4' %}
+
+            <h2> Archivo video</h2>
+              <!-- <video width="640" height="360" controls>
+                <source src="{{ test.archivo.url }}" type="video/mp4">
+              </video> -->
+            
+
+            
+            {% elif test.archivo.url|lower|slice:'-3:' == 'mp3' %}
+
+              <h2> Archivo audio</h2>
+
+            {% endif %}
+            
+                <tr>
+                <td><a href="{{ test.archivo.url }}">{{ test.archivo.name }}</a></td>
+                </tr>
+            
+      {% endfor %}
+    </tbody>
+  </table>
+
+

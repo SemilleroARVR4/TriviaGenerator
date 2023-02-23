@@ -13,14 +13,13 @@ class formPregunta(forms.ModelForm):
     class Meta:
         model = Pregunta
         fields = ["autor", "trivia", "pregunta", "archivo", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
-        labels = {'autor' : "Creador", 'trivia': "Tipo Trivia", 'pregunta': "Pregunta", 'archivo': 'Archivo (opcional)', 'opcionCorrecta': "Opcion correcta",'opcion2': "Opcion 2",'opcion3': "Opcion 3",'opcion4': "Opcion 4",}        
+        labels = {'autor' : "Creador", 'trivia': "Tipo Trivia", 'pregunta': "Pregunta", 'archivo': 'Archivo opcional (imagenes, audios y videos solamente)', 'opcionCorrecta': "Opcion correcta",'opcion2': "Opcion 2",'opcion3': "Opcion 3",'opcion4': "Opcion 4",}        
         
         widgets = {
             
             'autor': forms.HiddenInput(),
             'trivia': forms.HiddenInput(),
             'pregunta': forms.Textarea(attrs={'placeholder':'Enunciado de la pregunta'}),
-            #'archivo': forms.FileField(),forms.FileField(attrs={'placeholder':'Archivo'}),
             'opcionCorrecta': forms.Textarea(attrs={'placeholder':'Opcion correcta'}), 
             'opcion2': forms.Textarea(attrs={'placeholder':'Opcion incorrecta 1'}), 
             'opcion3': forms.Textarea(attrs={'placeholder':'Opcion incorrecta 2'}), 
