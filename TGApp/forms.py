@@ -1,8 +1,6 @@
 from cProfile import label
-from pyexpat import model
 from django import forms
-from django.forms import ModelForm
-from .models import Pregunta, Trivia, PreguntaQuiz, ElegirRespuesta, PreguntaQuiz, test_file
+from .models import Pregunta, Trivia, PreguntaQuiz, ElegirRespuesta, PreguntaQuiz
 
 class PreguntaForm(forms.ModelForm):
     class Meta:

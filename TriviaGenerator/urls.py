@@ -22,9 +22,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('registrar/', user_views.registrar, name='registrar'),
-    # path('registrarAdmin/', user_views.registrarAdmin, name='registrarAdmin'),
-    # path('registrarUsuario/', user_views.registrarUsuario, name='registrarUsuario'),
+    path('registrar/', user_views.registrar_admin, name='registrar'),
+    path('registrar/usuario', user_views.registrar_user, name='registrar_user'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('', include('TGApp.urls')),

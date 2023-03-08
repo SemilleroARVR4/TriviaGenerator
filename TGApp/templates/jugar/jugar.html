@@ -4,37 +4,43 @@
 
 {% block contenido %}
 
-<div class="container">
-    <div class="mt-2 p-3 bg-background text-body rounded">
-        <h2>
-            Para empezar a jugar selecciona la trivia de tu agrado.
-            Se mostraran todas las preguntas relacionadas, cada pregunta tiene una opcion correcta, selecciona la 
-            opcion correcta para sumar puntos.   
-        </h2>   
+{% if user.is_staff %}
 
-        <div class="dropdown">
+    <div class="container">
+        <div class="mt-2 p-3 bg-background text-body rounded">
+            <h2>
+                Para empezar a jugar selecciona la trivia de tu agrado.
+                Se mostraran todas las preguntas relacionadas, cada pregunta tiene una opcion correcta, selecciona la 
+                opcion correcta para sumar puntos.   
+            </h2>   
+
+            <div class="dropdown">
+                
+                <button class="btn btn-secondary dropdown-toggle mt-3" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                            Seleccionar trivia
+                </button>
+                        
+                <div class="dropdown-menu  mt-2" aria-labelledby="triggerId">
             
-            <button class="btn btn-secondary dropdown-toggle mt-3" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                        Seleccionar trivia
-            </button>
-                    
-            <div class="dropdown-menu  mt-2" aria-labelledby="triggerId">
-        
-                {% for Trivia in trivias %}  
-        
-                    <a class="dropdown-item" href="{% url 'jugarTrivia' Trivia.id %}">{{ Trivia.Tipo }}</a>
-        
-                {% endfor %}     
-        
-            </div>               
-        
+                    {% for Trivia in trivias %}  
+                        {% if Trivia.autor == user %}
+                            <a class="dropdown-item" href="{% url 'jugarTrivia' Trivia.id %}">{{ Trivia.Tipo }}</a>
+                        {% endif %}
+            
+                    {% endfor %}     
+            
+                </div>               
+            
+            </div>
+
         </div>
 
     </div>
 
-</div>
-
+{% else %}
+    <h1>No tienes permiso para acceder </h1>
+{% endif %}
 
 {% endblock %}
 

@@ -6,20 +6,26 @@
 
 {% block contenido %}
   
-<div class="container">
-    <h1 class="mt-2">Trivia: {{ trivias }} </h1>
-    <form method="POST" enctype="multipart/form-data">
-      <fieldset class="form-group" >
+{% if user.is_staff %}
 
-        {% csrf_token %}
+  <div class="container">
+      <h1 class="mt-2">Trivia: {{ trivias }} </h1>
+      <form method="POST" enctype="multipart/form-data">
+        <fieldset class="form-group" >
 
-          {{ formulario|crispy }}
+          {% csrf_token %}
 
-          <button type="submit" class="btn btn-success mb-2">Crear</button>
+            {{ formulario|crispy }}
 
-      </fieldset>
-    </form>
-</div>
+            <button type="submit" class="btn btn-success mb-2">Crear</button>
+
+        </fieldset>
+      </form>
+  </div>
+
+{% else %}
+  <h1>No tienes permiso para acceder </h1>
+{% endif %}
 
 {% endblock %}
 

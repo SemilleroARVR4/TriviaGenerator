@@ -7,10 +7,17 @@
 
 
 <div class="container">
+{% if trivia_lista in request.path %}
+
+
+
+
+
+
 
 {% for usuario in usuarios %}   
     {% if usuario.usuario == request.user %}
-{% if user.is_staff or trivia_lista in usuario.trivia_acceso %}
+{% if trivia_lista in usuario.trivia_acceso %}
 
 <h1>Grupo: administradores</h1>
 
@@ -109,6 +116,12 @@
 {% endif %}
 {% endif %}
 {% endfor %}
+
+{% else %}
+
+    <h1>No puedes acceder a esta trivia</h1>
+
+{% endif %}
 
 {% endblock %}
 

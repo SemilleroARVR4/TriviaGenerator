@@ -1,0 +1,30 @@
+{% extends "TGApp/base.html" %}
+
+{% block contenido %}
+
+
+{% for trivial in trivia_lista %}
+
+   {% for trivia in trivias %}
+ 
+         {% if trivia.id == trivial %}            
+            <div class="container">
+               <a name="" id="" class="btn btn-outline-warning" href="{% url 'jugarTrivia' trivial %}" role="button">Jugar {{trivia.nombre}}</a>
+            </div>
+
+         {% endif %}
+
+   {% endfor %}   
+
+{% endfor %} 
+
+
+<div class="container mt-2">
+   <a class="btn btn-outline-primary" href="">configuraciones</a>
+</div>
+   
+<div class="container mt-2">
+   <a class="btn btn-outline-danger" href="{% url 'logout' %}">Salir</a>
+</div>
+
+{% endblock%}

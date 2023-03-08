@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 # Create your models here.
-# El modelo da las pautas de lo que se va a crear en el admin
 
 class Trivia(models.Model):
     autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -30,7 +29,6 @@ class Pregunta(models.Model):
     opcion2 = models.CharField(max_length=350, verbose_name='Opcion falsa de la pregunta', null=True)
     opcion3 = models.CharField(max_length=350, verbose_name='Opcion falsa de la pregunta', null=True)
     opcion4 = models.CharField(max_length=350, verbose_name='Opcion falsa de la pregunta', null=True)
-    respuesta = models.CharField(max_length=350, verbose_name='respuesta', null=True)
     puntaje = models.DecimalField(verbose_name='Puntaje obtenido', default=0, decimal_places=2, max_digits=10)   
     archivo = models.FileField(upload_to='archivos', verbose_name="Archivo opcional (imagenes, audios y videos solamente)", blank=True) 
 
@@ -40,16 +38,11 @@ class Pregunta(models.Model):
     def get_absolute_url(self):
         return reverse('crear')
 
-    def respuesta_unica(self):
-        pass
 
-    
     def delete(self, using=None, keep_parents=False):
-        if self.archivo.field.blank:
-            super().delete()
-        else:
+        if bool(self.archivo):
             self.archivo.storage.delete(self.archivo.name)
-            super().delete()
+        super().delete()
         
 class UsuarioTrivia(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -65,6 +58,20 @@ class test_file(models.Model):
     def delete(self, using=None, keep_parents=False):
         self.archivo.storage.delete(self.archivo.name)
         super().delete()
+
+class user_acceso(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    acceso = models.BooleanField(verbose_name='Acceso', default=False)
+
+class user_inicio(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    acceso = models.BooleanField(verbose_name='Acceso', default=False)
+    trivia = models.DecimalField(verbose_name='trivias', default=0, decimal_places=0, max_digits=10)
+    trivia_acceso = models.CharField(verbose_name='trivia', max_length=100, blank=True)
+
+    def __str__(self):
+        return str(self.usuario)
+
 
 # Tutorial
 class PreguntaQuiz(models.Model):

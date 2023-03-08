@@ -1,11 +1,28 @@
-<!DOCTYPE html>
-<html>
-<title>Wrong address</title>
-<body>
+{% extends "TGApp/base.html" %}
 
-<h1>Ooops!</h1>
+{% block titulo %} Mis preguntas {% endblock %}
 
-<h2>I cannot find the file you requested!</h2>
+{% block contenido %}
 
-</body>
-</html> 
+<form method="POST">
+    {% csrf_token %}
+  {% for Trivia in trivias %}  
+
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="{{ Trivia.Tipo }}" name="trivia_seleccionada" value="{{ Trivia.id }}">
+      <label for="{{ Trivia.Tipo }}" class="form-check-label"> 
+        {{ Trivia.Tipo }}
+      </label>
+    </div>
+
+
+  {% endfor %}
+
+<button type="submit" class="btn btn-success btn-block">Enviar</button>
+
+</form>
+
+{% endblock %}
+
+
+

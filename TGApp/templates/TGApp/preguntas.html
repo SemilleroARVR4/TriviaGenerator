@@ -4,10 +4,14 @@
 
 {% block contenido %}
 
+
+{% if user.is_staff %}
+
 {% if contar_user == 0 %}
-<div class="mt-2 card mb-2">
+<div class="card mb-2">
     <div class="card-header">
-        <h4 class="card-title">Mis preguntas</h4>
+        <h2 class="card-title">Mis preguntas</h2>
+        
     </div>
     <div class="card-body">
         <div class="container">
@@ -22,10 +26,10 @@
 
 {% else %}
 
-<div class="mt-2 card mb-2">
+<div class="card mb-2">
     <div class="card-header">
-        <h4 class="card-title">Mis preguntas</h4>
-    </div>
+        <h2 class="card-title">Mis preguntas <a class="btn btn-dark ml-2" href="{% url 'acceso_test' %}" role="button">Compartir preguntas</a></h2>
+        
 
     
     <div class="card-body">
@@ -37,26 +41,39 @@
 
                         <thead>
                             <tr class="text-center">
-                                <th >Trivia</th>
-                                <th class="col-sm-2 row-2">Enunciado</th>
-                                <th class="col-sm-2 row-3">Opcion correcta</th>
-                                <th class="col-sm-2 row-3">Opcion 1</th>
-                                <th class="col-sm-2 row-3">Opcion 2</th>
-                                <th class="col-sm-2 row-3">Opcion 3</th>
-                                <th class="col-sm-2 row-3">Acciones</th>
+                                <th class="col-sm-1 row-3 align-middle" >Trivia</th>
+                                <th class="align-middle">Enunciado</th>
+                                <th class="align-middle" scope="col">Archivo</th>
+                                <th class="col-sm-2 row-3 align-middle">Opcion correcta</th>
+                                <th class="align-middle">Opcion 1</th>
+                                <th class="col-sm-2 row-3 align-middle">Opcion 2</th>
+                                <th class="col-sm-2 row-3 align-middle">Opcion 3</th>
+                                <th class="col-sm-2 row-3 align-middle">Acciones</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             <tr class="text-center">
-                                <td class="col-sm-2">{{ Pregunta.trivia }}</td>
-                                <td class="col-sm-2">{{ Pregunta.pregunta }}</td>
-                                <td class="col-sm-2">{{ Pregunta.opcionCorrecta }}</td>
-                                <td class="col-sm-2">{{ Pregunta.opcion2 }}</td>
-                                <td class="col-sm-2">{{ Pregunta.opcion3 }}</td>
-                                <td class="col-sm-2">{{ Pregunta.opcion4 }}</td>
+                                <td class="align-middle" scope="row">{{ Pregunta.trivia }}</td>
+                                <td class="col-sm-2 align-middle">{{ Pregunta.pregunta }}</td>
+
+                                {% if Pregunta.archivo.name|lower|slice:'-3:' == 'png' or Pregunta.archivo.name|lower|slice:'-3:' == 'jpg' or Pregunta.archivo.name|lower|slice:'-3:' == 'gif' or Pregunta.archivo.name|lower|slice:'-4:' == 'jpeg' or Pregunta.archivo.name|lower|slice:'-3:' == 'svg' or Pregunta.archivo.name|lower|slice:'-4:' == 'webp' %}
+                                <td class="col-sm-1 align-middle"> Imagen </td>
+                                {% elif Pregunta.archivo.name|lower|slice:'-3:' == 'mp3' or Pregunta.archivo.name|lower|slice:'-3:' == 'wav' %}
+                                <td class="col-sm-1 align-middle"> Audio </td>
+                                {% elif Pregunta.archivo.name|lower|slice:'-3:' == 'mp4' or Pregunta.archivo.name|lower|slice:'-4:' == 'webm' or Pregunta.archivo.name|lower|slice:'-3:' == 'ogg' %}
+                                <td class="col-sm-1 align-middle"> Video </td>
+                                {% else %}
+                                <td class="col-sm-1 align-middle"> -- </td>
+                                {% endif %}
+
+
+                                <td class="col-sm-2 align-middle">{{ Pregunta.opcionCorrecta }}</td>
+                                <td class="col-sm-2 align-middle">{{ Pregunta.opcion2 }}</td>
+                                <td class="col-sm-2 align-middle">{{ Pregunta.opcion3 }}</td>
+                                <td class="col-sm-2 align-middle">{{ Pregunta.opcion4 }}</td>
                                 
-                                <td> <a name="" id="" class="btn btn-info col-sm" href="{% url 'EditarPregunta' Pregunta.id %}" role="button">Editar</a> <a name="" id="" class="btn btn-danger col-sm" href="{% url 'EliminarPregunta' Pregunta.id %}" role="button">Borrar</a></td>                               
+                                <td> <a class="btn btn-info col-sm" href="{% url 'EditarPregunta' Pregunta.id %}" role="button">Editar</a> <a class="btn btn-danger col-sm" href="{% url 'EliminarPregunta' Pregunta.id %}" role="button">Borrar</a></td>                               
 
                             </tr>
 
@@ -75,4 +92,10 @@
 
 {% endif %}
 
+{% else %}
+<h1>No tienes permiso para acceder </h1>
+{% endif %}
+
 {% endblock %}
+
+

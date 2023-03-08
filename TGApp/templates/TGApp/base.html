@@ -25,12 +25,32 @@
           <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
+
+            {% if user.is_authenticated and user.is_staff %}
+
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{% url 'jugar' %}">Jugar</a>
               <a class="nav-item nav-link" href="{% url 'crear' %}">Crear</a>
               <a class="nav-item nav-link" href="{% url 'preguntas' %}">Mis preguntas</a>
               <a class="nav-item nav-link" href="{% url 'puntuaciones' %}">Puntuaciones</a>
             </div>
+
+            {% elif user.is_authenticated and not user.is_staff%}
+
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="{% url 'acceso' %}">Jugar</a>
+              <a class="nav-item nav-link" href="{% url 'puntuaciones' %}">Puntuaciones</a>
+            </div>           
+
+            {% elif not user.is_authenticated%}
+
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="{% url 'login' %}">Jugar</a>
+              <a class="nav-item nav-link" href="{% url 'login' %}">Puntuaciones</a>
+            </div>
+
+            {% endif %}
+
             <!-- Navbar Right Side -->
             {% if user.is_authenticated %}
               <div class="navbar-nav">
@@ -41,6 +61,8 @@
               <div class="navbar-nav">
                 <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                 <a class="nav-item nav-link" href="{% url 'registrar' %}">Registrarse</a>
+                <a class="nav-item nav-link" href="{% url 'registrar_user' %}">Registrarse User</a>
+                
               </div>
             {% endif %}
           </div>

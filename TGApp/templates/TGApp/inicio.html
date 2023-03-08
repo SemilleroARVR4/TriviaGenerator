@@ -4,18 +4,25 @@
 
 {% block contenido %}
 
-
 <div class="container mt-3">
 
   <div class="mt-4 p-5 text-body rounded bg-background">
     <h1 class="h1">Trivia Generator</h1> 
     <p>Aplicacion web que permite jugar y/o crear una trivia, para jugar/crear una trivia debes registrarte e ingresar con tu cuenta</p>
 
-    {% if user.is_authenticated %}
+
+    
+            
+    {% if user.is_authenticated and user.is_staff %}
         <a class="btn btn-outline-success btn-lg" href="{% url 'crear' %}">Empezar</a>
-      {% else %}
-        <a class="btn btn-outline-success btn-lg" href="{% url 'login' %}">Empezar</a>
-      {% endif %}
+
+    {% elif user.is_authenticated and not user.is_staff %}
+
+      <a class="btn btn-outline-success btn-lg" href="{% url 'acceso' %}">Empezar</a>
+
+    {% else %}
+      <a class="btn btn-outline-success btn-lg" href="{% url 'login' %}">Empezar</a>
+    {% endif %}
 
   </div>
 </div>

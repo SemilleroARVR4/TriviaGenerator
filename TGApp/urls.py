@@ -22,5 +22,18 @@ urlpatterns = [
 
     path('test', views.list, name='test'),
     path('test2', views.show_items, name='test2'),
+    path('preguntass', views.preguntasTest, name='preguntasTest'),
+
+    path('jugarUser', views.acceso_trivia, name='acceso'),
+
+    path('jugarUserr', views.acceso_trivia_test, name='acceso_test'),
+
+
+    path('jugar/trivia/<int:Trivia_id>/user', views.jugarTriviaUsuario, name='jugarTriviaUsuario'),
+    
+
+
+
+    
    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

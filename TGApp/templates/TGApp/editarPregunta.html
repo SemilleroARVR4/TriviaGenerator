@@ -6,8 +6,8 @@
 
 {% block contenido %}
 
-
-<h1> Edita tu pregunta </h1>
+{% if user.is_staff %}
+    <h1> Edita tu pregunta </h1>
     
     <div class="container">
         <form method="POST" enctype="multipart/form-data">
@@ -21,5 +21,9 @@
           
         </form>
     </div>
+
+{% else %}
+    <h1>No tienes permiso para acceder </h1>
+{% endif %}
 
 {% endblock %}
