@@ -1,7 +1,33 @@
 {% extends "TGApp/base.html" %}
 
 {% block contenido %}
+{{x}}
+{{trivia_lista}}
 
+{% for trivial in trivia_lista %}
+{% for trivia in trivias %}
+{% if trivia.id == trivial %}
+   {{trivia.nombre}}
+   {% endif %}
+
+{% endfor %}
+{% endfor %}
+
+
+{% for x in X %}
+   {{x}}
+   {% for trivia in trivias %}
+
+         {% if trivia.id == x %}            
+            <div class="container">
+               <a name="" id="" class="btn btn-outline-warning" href="{% url 'jugarTriviaUsuario' x %}" role="button">Jugar {{trivia.nombre}}</a>
+            </div>
+
+         {% endif %}
+
+   {% endfor %}   
+
+{% endfor %} 
 
 {% for trivial in trivia_lista %}
 

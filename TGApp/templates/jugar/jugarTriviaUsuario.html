@@ -7,7 +7,12 @@
 
 
 <div class="container">
-{% if trivia_lista in request.path %}
+
+    {% for trivial in trivia_lista %}
+        {{trivial}} {{request.path}}
+{% if trivial in request.path %}
+
+
 
 
 
@@ -122,7 +127,7 @@
     <h1>No puedes acceder a esta trivia</h1>
 
 {% endif %}
-
+{% endfor %}
 {% endblock %}
 
 

@@ -1,0 +1,18 @@
+{% extends "TGApp/base.html" %}
+
+{% block titulo %} Jugar {% endblock %}
+
+{% block contenido %}
+
+{% if match_found %}
+<p>La URL contiene unicamente "1" al principio o al final.</p>
+{% else %}
+<p>La URL no contiene unicamente "1" al principio o al final.</p>
+{% endif %}
+
+
+{{url}}
+
+{{trivias}}
+
+{% endblock %}
