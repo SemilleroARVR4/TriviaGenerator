@@ -1,28 +1,21 @@
 {% extends "TGApp/base.html" %}
 
-{% block titulo %} Mis preguntas {% endblock %}
+{% block titulo %} Jugar {% endblock %}
 
 {% block contenido %}
 
-<form method="POST">
-    {% csrf_token %}
-  {% for Trivia in trivias %}  
+{% for trivial in trivia_lista %}
+         
+    {% if trivial in request.path %}                     
 
-    <div class="form-check">
-      <input type="checkbox" class="form-check-input" id="{{ Trivia.Tipo }}" name="trivia_seleccionada" value="{{ Trivia.id }}">
-      <label for="{{ Trivia.Tipo }}" class="form-check-label"> 
-        {{ Trivia.Tipo }}
-      </label>
-    </div>
+      {{request.path}}
+
+    {% else %}
+
+    <h1>No tienes acceso</h1>
+    
+    {% endif %}
 
 
-  {% endfor %}
-
-<button type="submit" class="btn btn-success btn-block">Enviar</button>
-
-</form>
-
+{% endfor %} 
 {% endblock %}
-
-
-
