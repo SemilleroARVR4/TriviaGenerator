@@ -1,13 +1,57 @@
 {% extends "TGApp/base.html" %}
 
-{% load crispy_forms_tags %}
 
 {% block titulo %} Agregar nueva pregunta {% endblock %}
 
 {% block contenido %}
-{{trivias.id}}
+
+{{trivias}}
+<br>
+{{trivia_lista}}
+
+{% if trivias in request.path %}
+
+        {% if trivias in trivia_lista %}
+            <h1>{{request.path}}</h1>
+            {{trivias.id}}
+
+            {% else %}
+            <h1>No tienes acceso</h1>
+        {% endif %}
+
+{% else %}
+    <h1>No tienes acceso</h1>
+{% endif %}
+
+<br>
+    {{trivias.id}}
+        <br>
+{% for valor in valores %}
+{{valor}}
+
+        
+
+            {% if trivias in request.path %}
+                <h1>{{request.path}}</h1>
+
+                {{trivias.id}}
+            {% else %}
+                <h1>Falso</h1>
+            {% endif %}
 
 
+            {% if trivial in request.path %}
+
+
+            {% for usuario in usuarios %}   
+                {% if usuario.usuario == request.user %}
+            {% if trivia_lista in usuario.trivia_acceso %}
+        {% endif %}
+        {% endif %}
+            {% endfor %}
+            {% endif %}
+
+{% endfor %}
 
 
 {% endblock %}
