@@ -1,56 +1,39 @@
 {% extends "TGApp/base.html" %}
 
 {% block contenido %}
-{{x}}
-{{trivia_lista}}
 
-{% for trivial in trivia_lista %}
-{% for trivia in trivias %}
-{% if trivia.id == trivial %}
-   {{trivia.nombre}}
-   {% endif %}
+<div class="container">
+   <div class="mt-4 p-3 bg-background text-body rounded">
+      <h2>Seleccione una trivia para empezar a jugar</h2>
+       
+      {% for Trivia in trivias %}  
+       
+         {% for valor in valores %}
+           
+               {% if  Trivia.id == valor %}
 
-{% endfor %}
-{% endfor %}
+                  <div class="container mt-2">
+                     <a name="" id="" class="btn btn-outline-warning" href="{% url 'crearPregunta' Trivia.id %}" role="button">Jugar {{Trivia.nombre}}</a>
+                  </div>
 
-
-{% for x in X %}
-   {{x}} xxx
-   {% for trivia in trivias %}
-
-         {% if trivia.id == x %}            
-            <div class="container">
-               <a name="" id="" class="btn btn-outline-warning" href="{% url 'jugarTriviaUsuario' x %}" role="button">Jugar {{trivia.nombre}}</a>
-            </div>
-
-         {% endif %}
-
-   {% endfor %}   
-
-{% endfor %} 
-
-{% for trivial in trivia_lista %}
-
-   {% for trivia in trivias %}
-
-         {% if trivia.id == trivial %}            
-            <div class="container">
-               <a name="" id="" class="btn btn-outline-warning" href="{% url 'jugarTriviaUsuario' trivial %}" role="button">Jugar {{trivia.nombre}}</a>
-            </div>
-
-         {% endif %}
-
-   {% endfor %}   
-
-{% endfor %} 
+               {% endif %}
+     
+         {% endfor %} 
+      {% endfor %}     
 
 
-<div class="container mt-2">
-   <a class="btn btn-outline-primary" href="">configuraciones</a>
+      <div class="container mt-2">
+         <a class="btn btn-outline-primary" href="">configuraciones</a>
+      </div>
+         
+      <div class="container mt-2">
+         <a class="btn btn-outline-danger" href="{% url 'logout' %}">Salir</a>
+      </div>
+      
+   </div>
+
 </div>
-   
-<div class="container mt-2">
-   <a class="btn btn-outline-danger" href="{% url 'logout' %}">Salir</a>
-</div>
+
+
 
 {% endblock%}

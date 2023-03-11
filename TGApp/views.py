@@ -327,79 +327,24 @@ def preguntasTest(request):
     return render(request, "TGApp/404.html", context)
 
 
-
-
-
-
-
-# def acceso_trivia(request):
-
-#     # trivias = Trivia.objects.filter(autor=request.user)
-#     trivias = Trivia.objects.all()
-    
-#     # usuarios, created = user_acceso.objects.get_or_create(usuario=request.user,)#, acceso=True)
-#     usuarios = user_inicio.objects.filter(usuario=request.user)
-
-#     for usuario in usuarios:
-#         trivia_lista = usuario.trivia_acceso
-
-#     trivia_lista = trivia_lista.split(',')
-
-#     trivia_lista = [int(trivia) for trivia in trivia_lista]
-
-
-#     context = {
-#         'trivias': trivias,
-#         'usuarios':usuarios,
-#         'trivia_lista':trivia_lista,
-#     }
-
-#     return render(request, "TGApp/inicioJugar.html", context)
-
 def acceso_trivia(request):
 
-    # trivias = Trivia.objects.filter(autor=request.user)
     trivias = Trivia.objects.all()
-    
-    # usuarios, created = user_acceso.objects.get_or_create(usuario=request.user,)#, acceso=True)
     usuarios = user_inicio.objects.filter(usuario=request.user)
 
     for usuario in usuarios:
         trivia_lista = usuario.trivia_acceso
-    print("Esta es la trivia lista:")
-    print(trivia_lista)
-    print(type(trivia_lista))
     
     trivia_lista = trivia_lista.split(",")
-    print("Estos son los valores:")
     valores = trivia_lista
-    print(valores)
-    print(type(valores))
-    for valor in valores:
-        print(valor)
-    # trivia_lista.pop()
 
-    # for trivia in trivia_lista:
-        # trivia_lista += int(trivia)
-
-    X = []
-    print(valores)
-
-    for valor in valores:
-        numero = int(valor)
-        X.append(numero)
-
-    print(X)
-    # trivia_lista = [int(trivia) for trivia in trivia_lista]
-
+    valores = [int(valor) for valor in valores]
 
     context = {
         'trivias': trivias,
-        'usuarios':usuarios,
-        'trivia_lista':trivia_lista,
-        'X':X
+        'valores':valores
     }
-
+    
     return render(request, "TGApp/inicioJugar.html", context)
 
 
@@ -792,20 +737,6 @@ def jugarTriviaUsuario(request, Trivia_id):
         return render(request, 'TGApp/404.html', context)
     
 
-# def my_view(request):
-#     url = request.get_full_path()
-#     lista = [1]
-#     pattern = r'^(\/1|.*\/1\/?)$'
-#     match = re.match(pattern, url)
-#     context = {'match_found': match is not None}
-#     return render(request, 'TGApp/my_template.html', context=context)
-
-# def my_view(request):
-#     url = request.get_full_path()
-#     pattern = r'^\/(' + '|'.join(map(str, [1,2,3])) + ')\/?$'
-#     match = re.match(pattern, url)
-#     context = {'match_found': match is not None}
-#     return render(request, 'TGApp/my_template.html', context=context)
 
 def my_view(request, Trivia_id):
     url = request.get_full_path()
@@ -852,51 +783,21 @@ def crearPregunta(request, Trivia_id):
 
     trivias = Trivia.objects.get(id=Trivia_id)
     trivias = str(trivias.id)
-    #trivias = Trivia.objects.all()
 
-    # for trivia in trivias:
-    #     print(trivia.id)
-
-    # trivias = str(trivias)
-
-    # for trivia in trivias:
-    #     print(trivia.id)
 
     usuarios = user_inicio.objects.filter(usuario=request.user)
-    print(usuarios)
+
 
     for usuario in usuarios:
         trivia_lista = usuario.trivia_acceso
-    print(trivia_lista)
     
     trivia_lista = trivia_lista.split(",")
-    print(type(trivias))
-
-    print(trivia_lista)
-    if trivias in trivia_lista:
-        print("Funciona")
-    # valores = trivia_lista
-    # valores = [int(valor) for valor in valores]
-    # print(valores)
-
-    
-    #print(trivias) # = 1
-    
-
-    print(trivia_lista)
-
-
-    triviass = ['1','2','11']
-    print("Prueba condicional")
-    if '11' in triviass:
-        print("True")
 
     context = {
         'trivias': trivias, 
         'preguntas':preguntas,
-        # 'valores':valores,
         'trivia_lista':trivia_lista
     }
 
-    return render(request, "TGApp/acceder_trivia.html", context) 
+    return render(request, "TGApp/404.html", context) 
 

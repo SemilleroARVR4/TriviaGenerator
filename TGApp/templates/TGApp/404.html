@@ -4,8 +4,21 @@
 
 {% block contenido %}
 
+{{trivias}}
+<br>
+{{trivia_lista}}
 
-  {{x}}
+{% if trivias in request.path %}
+
+        {% if trivias in trivia_lista %}
+            <h1>{{request.path}} xdd ahh</h1>
+            {{trivias}}
+
+            {% else %}
+            <h1>No tienes acceso</h1>
+        {% endif %}
+
+{% endif %}
 
 
 {% endblock %}
