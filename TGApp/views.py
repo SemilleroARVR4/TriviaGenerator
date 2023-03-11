@@ -692,6 +692,45 @@ def jugarTriviaUsuario(request, Trivia_id):
         return render(request, 'TGApp/resultados.html', context)
 
     else:
+        
+
+        trivias = Trivia.objects.all()
+    
+    # usuarios, created = user_acceso.objects.get_or_create(usuario=request.user,)#, acceso=True)
+    usuarios = user_inicio.objects.filter(usuario=request.user)
+
+    for usuario in usuarios:
+        trivia_lista = usuario.trivia_acceso
+    print("Esta es la trivia lista:")
+    print(trivia_lista)
+    print(type(trivia_lista))
+    
+    trivia_lista = trivia_lista.split(",")
+    print("Estos son los valores:")
+    valores = trivia_lista
+    print(valores)
+    print(type(valores))
+    for valor in valores:
+        print(valor)
+    # trivia_lista.pop()
+
+    # for trivia in trivia_lista:
+        # trivia_lista += int(trivia)
+
+        X = []
+        print(valores)
+
+        for valor in valores:
+            numero = int(valor)
+            X.append(numero)
+
+
+
+
+
+
+
+
 
         trivia = Trivia.objects.get(id=Trivia_id)
         preguntas = Pregunta.objects.filter(trivia=trivia).order_by('?')
@@ -706,21 +745,21 @@ def jugarTriviaUsuario(request, Trivia_id):
         preguntas_options = []
 
 
-        trivia_lista=""
-        for trivia_acceso in trivias_acceso:
-            trivias_str = trivia.id
-            print(trivias_str)
-            triviass = str(trivia.id)
-            trivia_lista = trivia_lista + "" + triviass
-        print(trivia_lista)
+        # trivia_lista=""
+        # for trivia_acceso in trivias_acceso:
+        #     trivias_str = trivia.id
+        #     print(trivias_str)
+        #     triviass = str(trivia.id)
+        #     trivia_lista = trivia_lista + "" + triviass
+        # print(trivia_lista)
 
         
-        for usuario in usuarios:
-            if usuario.usuario == request.user:
-                print(usuario.trivia_acceso)
-                trivia_lista = usuario.trivia_acceso
-        print(trivia_lista)
-
+        # for usuario in usuarios:
+        #     if usuario.usuario == request.user:
+        #         print(usuario.trivia_acceso)
+        #         trivia_lista = usuario.trivia_acceso
+        # print(trivia_lista)
+        print(X)
 
         for pregunta in preguntas:
             options = [pregunta.opcionCorrecta, pregunta.opcion2, pregunta.opcion3, pregunta.opcion4]#, pregunta.archivo]
@@ -730,19 +769,6 @@ def jugarTriviaUsuario(request, Trivia_id):
             # print(type(pregunta_options))
             # print(pregunta_options)
             preguntas_options.append(pregunta_options)
-        
-        item_1= "1"
-        item_2 = "2"
-        trivia_listass = [1,11]
-        trivia_lista = ["1","2","11"]
-        
-        
-        
-        # for trivia in trivia_lista:
-        #     if trivia in url:
-        #         url = request.get_full_path()
-        #     else:
-        #         url = "f"
 
         context = {
             'preguntas_options': preguntas_options,
@@ -751,9 +777,10 @@ def jugarTriviaUsuario(request, Trivia_id):
             'trivias_acceso': trivias_acceso,
             'usuarios':usuarios,
             'trivia_lista':trivia_lista,
-            'trivias_str':trivias_str,
+            # 'trivias_str':trivias_str,
+            'X':X,
 
-            'trivia_listass':trivia_listass,
+            # 'trivia_listass':trivia_listass,
             # 'trivia_listas':trivia_listas,
             # 'url':url
             'trivia':trivia

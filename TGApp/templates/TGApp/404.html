@@ -4,70 +4,8 @@
 
 {% block contenido %}
 
-{% for trivia in trivias %}
-  {{trivia}}
-{% endfor %}
 
-<h1>{{trivias}}</h1>
-<div class="container border border-primary">
-  {{trivia_lista}}
-</div>
-
-<div class="container border border-danger">
-  {% if trivia_lista in request.path %}
-    {{request.path}}
-  {% endif %}
-</div>
-
-<div class="container border">
-  {% if trivia_lista in request.get_full_path %}
-    {{request.path}}
-  {% endif %}
-
-</div>
-
-
-
-{% if trivia_lista in request.path %}
-
-  
-
-  {% for usuario in usuarios %}   
-    {% if usuario.usuario == request.user %}
-    
-
-            {% if trivia_lista in usuario.trivia_acceso %}
-            {{ request.path }}
-            {% endif %}
-
-
-    {% endif %}
-  {% endfor %}
-
-
-
-{% else %}
-
-No tienes acceso 
-{% endif %}
-
-
-{% for trivia_lista in trivia_listas%}
-
-  {% for trivia_listas in trivia_listass %}
-
-    {% if trivia_lista == trivia_listas%}
-      <h1>Trivias iguales </h1>
-      <h2>{{request.path}}</h2>
-
-    {%else%}
-    <h2>No tienes acceso</h2>
-    {% endif %}
-
-
-
-  {% endfor %}
-{% endfor %}
+  {{x}}
 
 
 {% endblock %}

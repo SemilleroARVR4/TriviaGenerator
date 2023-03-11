@@ -15,8 +15,9 @@
             {% for Trivia in trivias %}  
             
             {% for valor in valores %}
-            
+                
                     {% if  Trivia.id == valor %}
+                    {{Trivia.id}}
                     <div class="container">
                         <a name="" id="" class="btn btn-outline-warning" href="{% url 'crearPregunta' Trivia.id %}" role="button">Jugar {{Trivia.nombre}}</a>
                     </div>
