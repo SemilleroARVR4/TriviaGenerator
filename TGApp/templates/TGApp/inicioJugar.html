@@ -2,23 +2,47 @@
 
 {% block contenido %}
 
+
+
+{% for valor in valores %}
+
+{% if valor == 0 %}
 <div class="container">
    <div class="mt-4 p-3 bg-background text-body rounded">
-      <h2>Seleccione una trivia para empezar a jugar</h2>
-       
+      <h2>Espera a que te asignen una trivia</h2>
+
+      <div class="container mt-2">
+         <a class="btn btn-outline-primary disabled" href="">configuraciones</a>
+      </div>
+         
+      <div class="container mt-2">
+         <a class="btn btn-outline-danger" href="{% url 'logout' %}">Salir</a>
+      </div>
+
+   </div>
+</div>
+
+{% else %}
+
+<div class="container">
+   <div class="mt-4 p-3 bg-background text-body rounded">
+      <h2>
+         Para empezar a jugar selecciona una trivia.
+         Se mostraran todas las preguntas relacionadas, cada pregunta tiene una opcion correcta, selecciona la 
+         opcion correcta para sumar puntos.   
+     </h2>
+      
       {% for Trivia in trivias %}  
-       
-         {% for valor in valores %}
-           
+
                {% if  Trivia.id == valor %}
 
                   <div class="container mt-2">
-                     <a name="" id="" class="btn btn-outline-warning" href="{% url 'crearPregunta' Trivia.id %}" role="button">Jugar {{Trivia.nombre}}</a>
+                     <a name="" id="" class="btn btn-outline-warning" href="{% url 'jugarTriviaUsuario' Trivia.id %}" role="button">Jugar {{Trivia.nombre}}</a>
                   </div>
 
                {% endif %}
      
-         {% endfor %} 
+         
       {% endfor %}     
 
 
@@ -34,6 +58,8 @@
 
 </div>
 
+{% endif %}
 
+{% endfor %} 
 
 {% endblock%}

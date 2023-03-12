@@ -24,9 +24,9 @@
                 <div class="dropdown-menu  mt-2" aria-labelledby="triggerId">
             
                     {% for Trivia in trivias %}  
-                        {% if Trivia.autor == user %}
+                        
                             <a class="dropdown-item" href="{% url 'jugarTrivia' Trivia.id %}">{{ Trivia.Tipo }}</a>
-                        {% endif %}
+                        
             
                     {% endfor %}     
             

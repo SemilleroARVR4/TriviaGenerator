@@ -3,131 +3,112 @@
 {% block titulo %} Jugar {% endblock %}
 
 {% block contenido %}
-    
 
 
-<div class="container">
+{% if trivias in request.path %}
 
-    {% for trivial in trivia_lista %}
-        {{trivial}} {{request.path}}
-{% if trivial in request.path %}
+        {% if trivias in trivia_lista %}
 
+            {% if contar_user == 0 %}
 
-
-
-
-
-
-
-
-{% for usuario in usuarios %}   
-    {% if usuario.usuario == request.user %}
-{% if trivia_lista in usuario.trivia_acceso %}
-
-<h1>Grupo: administradores</h1>
-
-    {% if contar_user == 0 %}
-        <div class="container text-center">
-            <div class="mt-2 p-3 bg-background text-body rounded">
-                <h2>
-                    Aun no hay preguntas registradas para esta trivia.				
-                </h2>  
-            </div>
-        </div>
-
-    {% else %}
-
-  <div class="mt-4 p-3 bg-background text-body rounded">
-  
-    {% for pregunta_options in preguntas_options %}
-        <form method="POST">
-
-            {% csrf_token %}
-
-            <div class="container">
-                <h4>
-                    <span class="">{{forloop.counter}}.</span> {{ pregunta_options.pregunta.pregunta }}
-                    
-                </h4>                 
-                <div class="container">
-                    {% if pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'png' or pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'jpg' or pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'gif' or pregunta_options.pregunta.archivo.name|lower|slice:'-4:' == 'jpeg' or pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'svg' or pregunta_options.pregunta.archivo.name|lower|slice:'-4:' == 'webp' %}
-
-                    <img src="{{ pregunta_options.pregunta.archivo.url }}" alt="" class="" height="250">
-                     <!-- class="" width="280" height="100" -->
-
-                        <!-- <h6>La aplicación no soporta este archivo</h6>       -->
-            
-                    {% elif pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'mp3' or pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'wav' %}
-
-                        <audio controls>
-                            <source src="{{ pregunta_options.pregunta.archivo.url }}" type="audio/ogg">
-                            <source src="{{ pregunta_options.pregunta.archivo.url }}" type="audio/mpeg">
-                            <h6>La aplicación no soporta este archivo</h6> 
-                        </audio>
-
-                         
-
-                    {% elif pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'mp4' or pregunta_options.pregunta.archivo.name|lower|slice:'-4:' == 'webm' or pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'ogg' %}
-
-                    <video width="280" height="100" controls>
-                        <source src="{{ pregunta_options.pregunta.archivo.url }}" type="video/mp4">
-                        <source src="{{ pregunta_options.pregunta.archivo.url }}" type="video/ogg">
-                        <h6>La aplicación no soporta este archivo</h6> 
-                      </video> 
-
-                    {% endif %}
-                    </div>
-
-                
-                <div class="container mb-3">
-                {% for option in pregunta_options.options %}
-                
-                    <div class="form-check">
-                        <input type="radio" class="form-check-input" name="{{ pregunta_options.pregunta.pk }}" value="{{ option }}" id="{{ option }}">
-                            <label class="form-check-label" for="{{ option }}">
-                                {{ option }}
-                            </label>
-                    </div>                                        
-
-                {% endfor %}
-            </div>
-            </div>
-            
-
-
-
-    {% endfor %}
-
-</div>
-
-        <p>
-            
-            <div class="d-grid">
-                <button type="submit" class="btn btn-success btn-block">Enviar</button>
+              <div class="container text-center">
+                  <div class="mt-2 p-3 bg-background text-body rounded">
+                      <h2>
+                          Aun no hay preguntas registradas para esta trivia.				
+                      </h2>  
+                  </div>
               </div>
+
+            {% else %}
+
+            <div class="mt-4 p-3 bg-background text-body rounded">
+  
+                {% for pregunta_options in preguntas_options %}
+                    <form method="POST">
             
-        </p>        
+                        {% csrf_token %}
+            
+                        <div class="container">
+                            <h4>
+                                <span class="">{{forloop.counter}}.</span> {{ pregunta_options.pregunta.pregunta }}
+                                
+                            </h4>                 
+                            <div class="container">
+                                {% if pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'png' or pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'jpg' or pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'gif' or pregunta_options.pregunta.archivo.name|lower|slice:'-4:' == 'jpeg' or pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'svg' or pregunta_options.pregunta.archivo.name|lower|slice:'-4:' == 'webp' %}
+            
+                                <img src="{{ pregunta_options.pregunta.archivo.url }}" alt="" class="" height="250">
+                                 <!-- class="" width="280" height="100" -->
+            
+                                    <!-- <h6>La aplicación no soporta este archivo</h6>       -->
+                        
+                                {% elif pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'mp3' or pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'wav' %}
+            
+                                    <audio controls>
+                                        <source src="{{ pregunta_options.pregunta.archivo.url }}" type="audio/ogg">
+                                        <source src="{{ pregunta_options.pregunta.archivo.url }}" type="audio/mpeg">
+                                        <h6>La aplicación no soporta este archivo</h6> 
+                                    </audio>
+            
+                                     
+            
+                                {% elif pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'mp4' or pregunta_options.pregunta.archivo.name|lower|slice:'-4:' == 'webm' or pregunta_options.pregunta.archivo.name|lower|slice:'-3:' == 'ogg' %}
+            
+                                    <video width="280" height="100" controls>
+                                        <source src="{{ pregunta_options.pregunta.archivo.url }}" type="video/mp4">
+                                        <source src="{{ pregunta_options.pregunta.archivo.url }}" type="video/ogg">
+                                        <h6>La aplicación no soporta este archivo</h6> 
+                                    </video> 
+            
+                                {% endif %}
+                            </div>
+            
+                            
+                            <div class="container mb-3">
+                                {% for option in pregunta_options.options %}
+                                
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" name="{{ pregunta_options.pregunta.pk }}" value="{{ option }}" id="{{ option }}">
+                                            <label class="form-check-label" for="{{ option }}">
+                                                {{ option }}
+                                            </label>
+                                    </div>                                        
+                
+                                {% endfor %}
+                            </div>
+                        </div>                        
+            
+            
+                {% endfor %}
+            
+            </div>
+            
+                    <p>                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-block">Enviar</button>
+                        </div>                        
+                    </p>        
+            
+                    </form>    
+            
+                </div>
+            
+            {% endif %}
 
-        </form>    
+            {% else %}
 
-    </div>
+            <div class="container text-center">
+                <div class="mt-2 p-3 bg-background text-body rounded">
+                    <h2>
+                        No tienes acceso a esta trivia.				
+                    </h2>  
+                </div>
+            </div>
+            
+        {% endif %}
 
 {% endif %}
 
-{% else %}
 
-<h1>F</h1>
-
-{% endif %}
-{% endif %}
-{% endfor %}
-
-{% else %}
-
-    <h1>No puedes acceder a esta trivia</h1>
-
-{% endif %}
-{% endfor %}
 {% endblock %}
 
 

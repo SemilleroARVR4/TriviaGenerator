@@ -11,8 +11,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from django.core.exceptions import ObjectDoesNotExist
 from random import shuffle
-from django.contrib.auth.models import User
-import re
+
 
 
 def inicio(request):
@@ -144,9 +143,6 @@ def jugarTrivia(request, Trivia_id):
         trivia = Trivia.objects.get(id=Trivia_id)
         QuizUsuario, created = UsuarioTrivia.objects.get_or_create(usuario=request.user, trivia=trivia)
 
-        user_groups = request.user.groups.all()
-        print(user_groups)
-
         preguntas = Pregunta.objects.filter(trivia=trivia).order_by('?')
         usuarios = UsuarioTrivia.objects.filter(trivia=trivia)        
 
@@ -202,7 +198,6 @@ def jugarTrivia(request, Trivia_id):
             'count':count,
             'percent':percent,
             'puntajeUsuario':puntajeUsuario,
-            'user_groups': user_groups,
         }
         
         return render(request, 'TGApp/resultados.html', context)
@@ -215,8 +210,7 @@ def jugarTrivia(request, Trivia_id):
         trivias_acceso = Trivia.objects.filter(autor=request.user)
         usuarios = user_inicio.objects.all()
 
-        user_groups = request.user.groups.all()
-        print(user_groups)
+
         contador = preguntas.count()
         # print(preguntas)
         preguntas_options = []
@@ -250,7 +244,6 @@ def jugarTrivia(request, Trivia_id):
         context = {
             'preguntas_options': preguntas_options,
             'contar_user':contador,
-            'user_groups': user_groups,
             'trivias_acceso': trivias_acceso,
             'usuarios':usuarios,
             'trivia_lista':trivia_lista,
@@ -260,7 +253,6 @@ def jugarTrivia(request, Trivia_id):
  
         return render(request, 'jugar/jugarTrivia.html', context)
     
-
 
 
 
@@ -331,9 +323,12 @@ def acceso_trivia(request):
 
     trivias = Trivia.objects.all()
     usuarios = user_inicio.objects.filter(usuario=request.user)
-
+    
     for usuario in usuarios:
-        trivia_lista = usuario.trivia_acceso
+        if usuario.trivia_acceso == "":
+            trivia_lista = '0'
+        else:
+            trivia_lista = usuario.trivia_acceso
     
     trivia_lista = trivia_lista.split(",")
     valores = trivia_lista
@@ -363,7 +358,7 @@ def acceso_trivia_test(request):
         return HttpResponse("No tienes permiso para acceder a esta página")
 
     trivia_seleccionadas = []
-#Primero obtener el usuario, despues poner asignar la trivia
+    #Primero obtener el usuario, despues poner asignar la trivia
     if request.method == 'POST':
         if usuario_actual == request.user:
 
@@ -396,174 +391,6 @@ def acceso_trivia_test(request):
     return render(request, "TGApp/acceso_trivia.html", context)
 
 
-# def acceso_trivia_test(request):
-#     trivias = Trivia.objects.filter(autor=request.user)
-    
-#     # Usuario actual
-#     usuario_actual = request.user
-
-#     # Usuarios de acceso, todos los usuarios "sin staff"
-#     usuarios_acceso =  user_inicio.objects.all()
-
-#     # Verificar si el usuario actual tiene permisos de acceso
-#     if not request.user.is_staff :
-#         return HttpResponse("No tienes permiso para acceder a esta página")
-
-#     trivia_lista = ""
-
-#     if request.method == 'POST':
-#         if usuario_actual == request.user:
-
-#             for trivia in trivias:
-#                 # Obtener el usuario al que se le otorgará acceso
-#                 usuario_id = request.POST.get('usuario_id')              
-                
-#                 # Obtener las preguntas seleccionadas                
-#                 trivia_seleccionada = request.POST.get(str(trivia.pk))
-#                 #FUNCIONAL
-#                 print(trivia_seleccionada)
-#                 if not trivia_seleccionada:
-#                     trivia_seleccionada = 0
-#                 else:
-#                     # trivia_lista = ','.join(trivia_lista)
-#                     trivia_lista = trivia_lista +  trivia_seleccionada + ","
-
-
-#             user_inicio.objects.update(trivia=trivia_seleccionada)
-#             # Obtener el usuario de acceso del usuario seleccionado
-#             usuario_acceso_seleccionado = user_inicio.objects.get(usuario_id=usuario_id)
-#             usuario_acceso_seleccionado.trivia_acceso = trivia_lista
-#             usuario_acceso_seleccionado.save()   
-
-#     context = {
-#         'trivias': trivias,
-#         'usuarios_acceso': usuarios_acceso,
-#         'trivia_lista':trivia_lista
-#     }
-
-#     return render(request, "TGApp/acceso_trivia.html", context)
-
-
-
-
-
-# @login_required
-# def jugarTriviaUsuario(request, Trivia_id):
-    
-#     if request.method == 'POST':
-#         trivia = Trivia.objects.get(id=Trivia_id)
-#         QuizUsuario, created = UsuarioTrivia.objects.get_or_create(usuario=request.user, trivia=trivia)
-
-#         user_groups = request.user.groups.all()
-#         print(user_groups)
-
-#         preguntas = Pregunta.objects.filter(trivia=trivia).order_by('?')
-#         usuarios = UsuarioTrivia.objects.filter(trivia=trivia)        
-
-#         for usuario in usuarios:
-#             puntajeUsuario = int(usuario.puntajeTotal)
-     
-            
-#         preguntas_options = []
-#         for pregunta in preguntas:
-#             options = [pregunta.opcionCorrecta, pregunta.opcion2, pregunta.opcion3, pregunta.opcion4]
-#             shuffle(options)
-#             pregunta_options = {'pregunta': pregunta, 'options': options}
-#             preguntas_options.append(pregunta_options)
-
-        
-#         puntaje = 0
-#         incorrecta = 0
-#         correcta = 0
-#         total = 0
-#         count = 0
-#         puntajeUsuario = 0
-#         QuizUsuario.puntajeTotal =0
-#         QuizUsuario.save()
-        
-#         for pregunta_options in preguntas_options:
- 
-#             opcion_seleccionada = request.POST.get(str(pregunta_options['pregunta'].id))
-#             total += 1
-
-#             if opcion_seleccionada == pregunta_options['pregunta'].opcionCorrecta:
-#                 puntajeUsuario += 10
-#                 puntaje += 10
-#                 correcta +=1
-
-#             else:
-#                 incorrecta +=1
-                
-#         percent = puntaje/(total*10) *100 
-#         percent = round(percent, 2)
-
-#         QuizUsuario.puntajeTotal += puntajeUsuario
-#         QuizUsuario.save()
-                   
-
-#         context = {
-#             'preguntas':preguntas,
-#             'preguntas_options': preguntas_options,
-#             'trivia':trivia,
-#             'puntaje':puntaje,
-#             'incorrecta':incorrecta,
-#             'correcta':correcta,
-#             'total':total,
-#             'count':count,
-#             'percent':percent,
-#             'puntajeUsuario':puntajeUsuario,
-#             'user_groups': user_groups,
-#         }
-        
-#         return render(request, 'TGApp/resultados.html', context)
-
-#     else:
-
-#         # trivias = Trivia.objects.filter(autor=request.user)
-#         trivias = Trivia.objects.all()
-    
-#         # usuarios, created = user_acceso.objects.get_or_create(usuario=request.user,)#, acceso=True)
-#         usuarios = user_inicio.objects.filter(usuario=request.user)
-
-       
-#         for usuario in usuarios:
-#             trivia_lista = usuario.trivia_acceso
-
-#         trivia_lista = trivia_lista.split(',')
-
-#         trivia = Trivia.objects.get(id=Trivia_id)
-#         preguntas = Pregunta.objects.filter(trivia=trivia).order_by('?')
-
-#         trivias_acceso = Trivia.objects.filter(autor=request.user)
-#         usuarios = user_inicio.objects.all()
-
-#         user_groups = request.user.groups.all()
-#         # print(user_groups)
-#         contador = preguntas.count()
-#         # print(preguntas)
-#         preguntas_options = []
-
-#         for pregunta in preguntas:
-#             options = [pregunta.opcionCorrecta, pregunta.opcion2, pregunta.opcion3, pregunta.opcion4]
-
-#             shuffle(options)
-#             pregunta_options = {'pregunta': pregunta, 'options': options}
-
-#             preguntas_options.append(pregunta_options)
-        
-#         context = {
-#             'trivias':trivias,
-#             'preguntas_options': preguntas_options,
-#             'contar_user':contador,
-#             'user_groups': user_groups,
-#             'trivias_acceso': trivias_acceso,
-#             'usuarios':usuarios,
-#             'trivia_lista':trivia_lista,
-#             'test':'1'
-            
-#         }
- 
-#         return render(request, 'TGApp/404.html', context)
 
 
 @login_required
@@ -573,8 +400,6 @@ def jugarTriviaUsuario(request, Trivia_id):
         trivia = Trivia.objects.get(id=Trivia_id)
         QuizUsuario, created = UsuarioTrivia.objects.get_or_create(usuario=request.user, trivia=trivia)
 
-        user_groups = request.user.groups.all()
-        print(user_groups)
 
         preguntas = Pregunta.objects.filter(trivia=trivia).order_by('?')
         usuarios = UsuarioTrivia.objects.filter(trivia=trivia)        
@@ -621,7 +446,6 @@ def jugarTriviaUsuario(request, Trivia_id):
                    
 
         context = {
-            'preguntas':preguntas,
             'preguntas_options': preguntas_options,
             'trivia':trivia,
             'puntaje':puntaje,
@@ -631,173 +455,36 @@ def jugarTriviaUsuario(request, Trivia_id):
             'count':count,
             'percent':percent,
             'puntajeUsuario':puntajeUsuario,
-            'user_groups': user_groups,
         }
         
         return render(request, 'TGApp/resultados.html', context)
 
     else:
+
+        trivias = Trivia.objects.get(id=Trivia_id)
+        preguntas = Pregunta.objects.filter(trivia=trivias).order_by('?')
+        trivias = str(trivias.id)
+        usuarios = user_inicio.objects.filter(usuario=request.user)
+        for usuario in usuarios:
+            trivia_lista = usuario.trivia_acceso
         
-
-        trivias = Trivia.objects.all()
-    
-    # usuarios, created = user_acceso.objects.get_or_create(usuario=request.user,)#, acceso=True)
-    usuarios = user_inicio.objects.filter(usuario=request.user)
-
-    for usuario in usuarios:
-        trivia_lista = usuario.trivia_acceso
-    print("Esta es la trivia lista:")
-    print(trivia_lista)
-    print(type(trivia_lista))
-    
-    trivia_lista = trivia_lista.split(",")
-    print("Estos son los valores:")
-    valores = trivia_lista
-    print(valores)
-    print(type(valores))
-    for valor in valores:
-        print(valor)
-    # trivia_lista.pop()
-
-    # for trivia in trivia_lista:
-        # trivia_lista += int(trivia)
-
-        X = []
-        print(valores)
-
-        for valor in valores:
-            numero = int(valor)
-            X.append(numero)
-
-
-
-
-
-
-
-
-
-        trivia = Trivia.objects.get(id=Trivia_id)
-        preguntas = Pregunta.objects.filter(trivia=trivia).order_by('?')
-
-        trivias_acceso = Trivia.objects.filter(autor=request.user)
-        usuarios = user_inicio.objects.all()
-
-        user_groups = request.user.groups.all()
-        print(user_groups)
+        trivia_lista = trivia_lista.split(",")
         contador = preguntas.count()
-        # print(preguntas)
         preguntas_options = []
 
-
-        # trivia_lista=""
-        # for trivia_acceso in trivias_acceso:
-        #     trivias_str = trivia.id
-        #     print(trivias_str)
-        #     triviass = str(trivia.id)
-        #     trivia_lista = trivia_lista + "" + triviass
-        # print(trivia_lista)
-
-        
-        # for usuario in usuarios:
-        #     if usuario.usuario == request.user:
-        #         print(usuario.trivia_acceso)
-        #         trivia_lista = usuario.trivia_acceso
-        # print(trivia_lista)
-        print(X)
-
         for pregunta in preguntas:
-            options = [pregunta.opcionCorrecta, pregunta.opcion2, pregunta.opcion3, pregunta.opcion4]#, pregunta.archivo]
-            # print(options)
+            options = [pregunta.opcionCorrecta, pregunta.opcion2, pregunta.opcion3, pregunta.opcion4]
+            print(options)
             shuffle(options)
             pregunta_options = {'pregunta': pregunta, 'options': options}
-            # print(type(pregunta_options))
-            # print(pregunta_options)
             preguntas_options.append(pregunta_options)
 
         context = {
+            'trivias':trivias,
             'preguntas_options': preguntas_options,
             'contar_user':contador,
-            'user_groups': user_groups,
-            'trivias_acceso': trivias_acceso,
             'usuarios':usuarios,
-            'trivia_lista':trivia_lista,
-            # 'trivias_str':trivias_str,
-            'X':X,
-
-            # 'trivia_listass':trivia_listass,
-            # 'trivia_listas':trivia_listas,
-            # 'url':url
-            'trivia':trivia
-            
-            
+            'trivia_lista':trivia_lista,     
         }
- 
-        # return render(request, 'jugar/jugarTriviaUsuario.html', context)
-        return render(request, 'TGApp/404.html', context)
-    
 
-
-def my_view(request, Trivia_id):
-    url = request.get_full_path()
-    trivias = Trivia.objects.get(id=Trivia_id)
-
-
-    # lista = 
-    # pattern = r'^\/(' + '|'.join(map(str, [1,2,3])) + ')\/?$'
-    # match = re.match(pattern, url)
-    # context = {'match_found': match is not None}
-    
-    context = {'url': url,
-               'trivias':trivias}
-    return render(request, 'TGApp/my_template.html', context)
-
-
-
-def acceder_trivia_test(request):
-    trivias = Trivia.objects.all()
-
-    usuarios = user_inicio.objects.filter(usuario=request.user)
-
-    for usuario in usuarios:
-        trivia_lista = usuario.trivia_acceso
-    
-    trivia_lista = trivia_lista.split(",")
-
-    valores = trivia_lista
-
-    valores = [int(valor) for valor in valores]
-    print(valores)
-
-
-    context = {
-        'trivias': trivias,
-        'valores':valores
-    }
-    
-    return render(request, "TGApp/acceder_trivia_test.html", context)
-
-
-@login_required
-def crearPregunta(request, Trivia_id):
-
-    trivias = Trivia.objects.get(id=Trivia_id)
-    trivias = str(trivias.id)
-
-
-    usuarios = user_inicio.objects.filter(usuario=request.user)
-
-
-    for usuario in usuarios:
-        trivia_lista = usuario.trivia_acceso
-    
-    trivia_lista = trivia_lista.split(",")
-
-    context = {
-        'trivias': trivias, 
-        'preguntas':preguntas,
-        'trivia_lista':trivia_lista
-    }
-
-    return render(request, "TGApp/404.html", context) 
-
+        return render(request, 'jugar/jugarTriviaUsuario.html', context)

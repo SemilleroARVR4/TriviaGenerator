@@ -31,18 +31,6 @@ urlpatterns = [
 
     path('jugar/trivia/<int:Trivia_id>/user', views.jugarTriviaUsuario, name='jugarTriviaUsuario'),
 
-
-    path('test/<int:Trivia_id>', views.my_view, name='testvista'),
-
-
-
-    path('crear/test', views.acceder_trivia_test, name='crearXD'),
-    path('crear/test/<int:Trivia_id>/', views.crearPregunta, name='crearPregunta'),  
-    
-    
-
-
-
-    
+ 
    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
