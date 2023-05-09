@@ -8,8 +8,10 @@
 
 {% if user.is_staff %}
     <h1> Edita tu pregunta </h1>
+
     
     <div class="container">
+        <h5>Trivia: {{ object.trivia }}</h5>
         <form method="POST" enctype="multipart/form-data">
           <fieldset>
                 {% csrf_token %}

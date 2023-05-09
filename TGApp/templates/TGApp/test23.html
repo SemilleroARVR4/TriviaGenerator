@@ -1,16 +1,9 @@
 {% extends "TGApp/base.html" %}
-{% load static %}
 
 {% block titulo %} Jugar {% endblock %}
 
 {% block contenido %}
 
-ABCDEF
-<div class="container">
-    <h2>Lista de preguntas</h2>
-    <button id="boton-opciones-2" class="btn btn-primary">2 opciones</button>
-    <button id="boton-opciones-3" class="btn btn-primary">3 opciones</button>
-</div>
 
 {% if trivias in request.path %}
 
@@ -27,19 +20,17 @@ ABCDEF
               </div>
 
             {% else %}
-
-            <div class="mt-4 p-3 bg-background text-body rounded">
-                {{ contador_preguntas }}
-                {{ pregunta_options }}
-                <BR></BR>
-                PREGUNTAS DISPONIBLES <BR></BR> {{ preguntas_options }}
+            
+            <div class="">
+                <!-- mt-4 p-3 bg-background text-body rounded -->
+                
                 {% for pregunta_options in preguntas_options %}
                     <form method="POST">
             
                         {% csrf_token %}
             
 
-                        <div class="container">
+                        <div class="container bg-background rounded my-2 p-2">
                             <h4>
                                 <span class="">{{forloop.counter}}.</span> {{ pregunta_options.pregunta.pregunta }}
                                 
@@ -83,18 +74,34 @@ ABCDEF
                                                 {{ option }}
                                             </label>
                                     </div>    
-                
+                                    
                                 {% endfor %}
+                                <div class="container">
+                                    {{ pregunta_options.pregunta.pista }}
+                                </div>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#demo">Pista</button>
+                                <div id="demo" class="collapse">
+                                    {{ pregunta_options.pregunta.pista }}
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header">
+                                      <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseTwo">
+                                      Pista
+                                    </a>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
+                                      <div class="card-body">
+                                        {{ pregunta_options.pregunta.pista }}   
+                                      </div>
+                                    </div>
+                                  </div>
                             </div>
                         </div>                        
                         
-
+                        
             
                 {% endfor %}
-
-            
-            </div>
-            
                     <p>                        
                         <div class="d-grid">
                             <button type="submit" class="btn btn-success btn-block">Enviar</button>
@@ -106,6 +113,8 @@ ABCDEF
                 </div>
             
             {% endif %}
+
+            
 
             {% else %}
 
@@ -121,76 +130,47 @@ ABCDEF
 
 {% endif %}
 
-<script>
+<h4>
+    {{ pregunta_options.pregunta.pregunta }}
+    <!-- <br>
+    {{ pregunta_options.pregunta.archivo }}
+    <br>
+    {{ pregunta_options.pregunta.pista }} -->
+</h4>
+    <!-- <div class="container">
+        A. {{ pregunta_options.pregunta.opcionCorrecta }}
+    </div> 
+    <div class="container">
+        B. {{ pregunta_options.pregunta.opcion2 }}
+    </div> 
+    <div class="container">
+        C. {{ pregunta_options.pregunta.opcion3 }}
+    </div> 
+    <div class="container">
+        D. {{ pregunta_options.pregunta.opcion4 }}
+    </div>  -->
 
-    a = "{{ pregunta_options.pregunta.opcionCorrecta }}"
-    b = "{{ pregunta_options.pregunta.opcion2 }}"
-    c = "{{ pregunta_options.pregunta.opcion3 }}"
-    d = "{{ pregunta_options.pregunta.opcion4 }}"
-    const options = [a,b,c,d];
-    var boton_opciones = document.getElementById("boton-opciones-3");
-    var a = "{{ pregunta_options.options }}"
-    console.log(a)
-    console.log("Opciones")
-    console.log(options.length)
-
-    options.forEach(opcion => {
-        if (opcion.value === "{{ pregunta_options.pregunta.opcion2 }}") {
-          opcion.parentNode.style.display = "none";
-        }
-    });
-    function ocultarOpcion() {
-      var opciones = document.querySelectorAll('{{ opcionts }}');
-      opciones.forEach(opcion => {
-        if (opcion.value === "{{ pregunta_options.pregunta.opcion2 }}") {
-          opcion.parentNode.style.display = "none";
-        }
-      });
-    }
     
-    boton_opciones.addEventListener("click", ocultarOpcion);
-</script>
+        {% for option in pregunta_options.options %}
+        <div class="form-check">
+            <input type="radio" class="form-check-input" name="{{ pregunta_options.pregunta.pk }}" value="{{ option }}" id="{{ option }}">
+                <label class="form-check-label" for="{{ option }}">
+                    {{ forloop.counter }}. {{ option }}
+                    {% if pregunta_options.pregunta.opcion2 in option %}
+                        <h1>Eureka</h1>
+                    {% endif %}
+                </label>
+        </div>
 
-<script>
-    var boton_opciones = document.getElementById("boton-opciones");
-    var preguntas = document.getElementsByClassName("container");
-    var opciones = document.getElementsByClassName("form-check-label");
-    var a = "{{ pregunta_options }}"
-    
-    boton_opciones.addEventListener("click", function() {
-        for (var i=0; i<preguntas.length; i++) {
-            var opciones_pregunta = preguntas[i].getElementsByClassName("form-check-label");
-            console.log(a)
-            for (var j=0; j<opciones_pregunta.length; j++) {
-                if (j < 3) {
-                    a.style.display = "block";
-                } else {
-                    a.style.display = "none";
-                }
-            }
-        }
-    });
-</script>
+        
+        <!-- <input type="submit" value="{{ option }}"> -->
+        {% endfor %}
 
-<script>
-    var boton_opciones = document.getElementById("boton-opciones-2");
-    var preguntas = document.getElementsByClassName("container");
-    var opciones = document.getElementsByClassName("form-check-label");
+        {{ pregunta_options.pregunta.opcion2 }}
 
-    boton_opciones.addEventListener("click", function() {
-        for (var i=0; i<preguntas.length; i++) {
-            var opciones_pregunta = preguntas[i].getElementsByClassName("form-check-label");
-            for (var j=0; j<opciones_pregunta.length; j++) {
-                if (j < 2) {
-                    opciones_pregunta[j].style.display = "block";
-                } else {
-                    opciones_pregunta[j].style.display = "none";
-                }
-            }
-        }
-    });
-</script>
 
+        {{ pregunta_options }}
+        {{ preguntas_options }}
 
 {% endblock %}
 

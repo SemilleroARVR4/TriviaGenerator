@@ -20,16 +20,27 @@ urlpatterns = [
     path('tablero/<int:trivia_id>', views.tablero, name='tablero'),
     path('puntuaciones', views.puntuaciones, name='puntuaciones'),
 
-    path('test', views.list, name='test'),
+    path('test/<int:Trivia_id>', views.list, name='test'),
     path('test2', views.show_items, name='test2'),
-    path('preguntass', views.preguntasTest, name='preguntasTest'),
 
     path('jugarUser', views.acceso_trivia, name='acceso'),
 
     path('jugarUserr', views.acceso_trivia_test, name='acceso_test'),
+    path('configuraciones', views.configuraciones, name='configuraciones'),
 
 
     path('jugar/trivia/<int:Trivia_id>/user', views.jugarTriviaUsuario, name='jugarTriviaUsuario'),
+    path('test23/<int:Trivia_id>', views.funcion, name='o'),
+
+    path('trivia/<int:Trivia_id>/pregunta/<int:pregunta_num>/', views.pregunta, name='pregunta'),
+    path('compiler', views.compiler, name='compiler'),
+    path('model', views.asdfghj, name='asdfghj'),
+    path('nuevo', views.nuevo_test, name='nuevo'),
+    path('runcode', views.runcode, name='runcode'),
+    path('game', views.start_game, name='start_game'),
+    path('resultado', views.resultado, name='resultado'),
+
+    
 
  
    

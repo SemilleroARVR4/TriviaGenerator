@@ -10,8 +10,8 @@ class PreguntaForm(forms.ModelForm):
 class formPregunta(forms.ModelForm):
     class Meta:
         model = Pregunta
-        fields = ["autor", "trivia", "pregunta", "archivo", "opcionCorrecta", "opcion2", "opcion3", "opcion4",]
-        labels = {'autor' : "Creador", 'trivia': "Tipo Trivia", 'pregunta': "Pregunta", 'archivo': 'Archivo opcional (imagenes, audios y videos solamente)', 'opcionCorrecta': "Opcion correcta",'opcion2': "Opcion 2",'opcion3': "Opcion 3",'opcion4': "Opcion 4",}        
+        fields = ["autor", "trivia", "pregunta", "archivo", "opcionCorrecta", "opcion2", "opcion3", "opcion4", "pista"]
+        labels = {'autor' : "Creador", 'trivia': "Tipo Trivia", 'pregunta': "Pregunta", 'archivo': 'Archivo opcional (imagenes, audios y videos solamente)', 'opcionCorrecta': "Opcion correcta",'opcion2': "Opcion 2",'opcion3': "Opcion 3",'opcion4': "Opcion 4", 'pista':"Pista de la pregunta",}        
         
         widgets = {
             
@@ -21,7 +21,8 @@ class formPregunta(forms.ModelForm):
             'opcionCorrecta': forms.Textarea(attrs={'placeholder':'Opcion correcta'}), 
             'opcion2': forms.Textarea(attrs={'placeholder':'Opcion incorrecta 1'}), 
             'opcion3': forms.Textarea(attrs={'placeholder':'Opcion incorrecta 2'}), 
-            'opcion4': forms.Textarea(attrs={'placeholder':'Opcion incorrecta 3'}), 
+            'opcion4': forms.Textarea(attrs={'placeholder':'Opcion incorrecta 3'}),
+            'pista': forms.Textarea(attrs={'placeholder':'Pista de la pregunta'}),  
         }
 
 class test_form(forms.Form):

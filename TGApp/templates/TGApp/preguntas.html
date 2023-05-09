@@ -7,6 +7,8 @@
 
 {% if user.is_staff %}
 
+
+
 {% if contar_user == 0 %}
 <div class="card mb-2">
     <div class="card-header">
@@ -14,34 +16,81 @@
         
     </div>
     <div class="card-body">
+
         <div class="container">
-            
-            <h3>Registra tus preguntas para que aparezcan aqui.</h3>
-            <a name="" id="" class="btn btn-primary mt-2" href="{% url 'crear' %}" role="button">Crear</a>
-            
+
+                <h2>
+                    Crea una trivia o agrega preguntas a una para que se muestren aqui.   
+                </h2>   
+        
+                <div class="dropdown">
+                    
+                    <button class="btn btn-secondary dropdown-toggle mt-3" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                                Seleccionar trivia
+                    </button>
+                            
+                    <div class="dropdown-menu  mt-2" aria-labelledby="triggerId">
+                        <a class="dropdown-item" href="{% url 'crearNuevaTrivia' %}">Nueva trivia</a>
+                
+                        {% for Trivia in trivias %}  
+                
+                            {% if Trivia.autor == user %} 
+                                <a class="dropdown-item" href="{% url 'crearPregunta' Trivia.id %}">{{ Trivia.Tipo }}</a>
+                            {% endif %}
+                
+                        {% endfor %}     
+                
+                    </div>                      
+                </div>
+
+        
         </div>
         
     </div>
     </div>
 
+    
+
 {% else %}
+
 
 <div class="card mb-2">
     <div class="card-header">
         <h2 class="card-title">Mis preguntas <a class="btn btn-dark ml-2" href="{% url 'acceso_test' %}" role="button">Compartir preguntas</a></h2>
-        
 
-    
     <div class="card-body">
+            
+                <h2>
+                    Seleccione una trivia para agregar una nueva pregunta.   
+                </h2>   
         
-        {% for Pregunta in preguntas %}  
-            {% if Pregunta.autor == user %}     
+                <div class="dropdown">
+                    
+                    <button class="btn btn-secondary dropdown-toggle mb-2" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                                Seleccionar trivia
+                    </button>
+                            
+                    <div class="dropdown-menu  mt-2" aria-labelledby="triggerId">
+                        <a class="dropdown-item" href="{% url 'crearNuevaTrivia' %}">Nueva trivia</a>
+                
+                        {% for Trivia in trivias %}  
+                
+                            {% if Trivia.autor == user %} 
+                                <a class="dropdown-item" href="{% url 'crearPregunta' Trivia.id %}">{{ Trivia.Tipo }}</a>
+                            {% endif %}
+                
+                        {% endfor %}     
+                
+                    </div>                               
+                </div>
+                
                 <div class="table-responsive">
                     <table class="table table-bordered">
-
+                        {{ Pregunta.trivia }}
                         <thead>
                             <tr class="text-center">
-                                <th class="col-sm-1 row-3 align-middle" >Trivia</th>
                                 <th class="align-middle">Enunciado</th>
                                 <th class="align-middle" scope="col">Archivo</th>
                                 <th class="col-sm-2 row-3 align-middle">Opcion correcta</th>
@@ -53,8 +102,10 @@
                         </thead>
 
                         <tbody>
+                            {% for Pregunta in preguntas %}  
+                                {% if Pregunta.autor == user %} 
                             <tr class="text-center">
-                                <td class="align-middle" scope="row">{{ Pregunta.trivia }}</td>
+                                
                                 <td class="col-sm-2 align-middle">{{ Pregunta.pregunta }}</td>
 
                                 {% if Pregunta.archivo.name|lower|slice:'-3:' == 'png' or Pregunta.archivo.name|lower|slice:'-3:' == 'jpg' or Pregunta.archivo.name|lower|slice:'-3:' == 'gif' or Pregunta.archivo.name|lower|slice:'-4:' == 'jpeg' or Pregunta.archivo.name|lower|slice:'-3:' == 'svg' or Pregunta.archivo.name|lower|slice:'-4:' == 'webp' %}
@@ -73,22 +124,23 @@
                                 <td class="col-sm-2 align-middle">{{ Pregunta.opcion3 }}</td>
                                 <td class="col-sm-2 align-middle">{{ Pregunta.opcion4 }}</td>
                                 
-                                <td> <a class="btn btn-info col-sm" href="{% url 'EditarPregunta' Pregunta.id %}" role="button">Editar</a> <a class="btn btn-danger col-sm" href="{% url 'EliminarPregunta' Pregunta.id %}" role="button">Borrar</a></td>                               
+                                <td> <a class="btn btn-outline-info col-sm" href="{% url 'EditarPregunta' Pregunta.id %}" role="button">Editar</a> <a class="btn btn-outline-danger col-sm" href="{% url 'EliminarPregunta' Pregunta.id %}" role="button">Borrar</a></td>                               
 
                             </tr>
+                            {% endif %}
 
+                            {% endfor %}
                         </tbody>
 
                     </table>
                 </div>
-            {% endif %}
-
-        {% endfor %}
+            
         
     </div>
     
 
 </div>
+
 
 {% endif %}
 

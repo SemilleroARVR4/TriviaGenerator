@@ -10,9 +10,9 @@
 
 {% for usuario in usuarios %}   
     {% if usuario.usuario == request.user %}
-{% if user.is_staff or trivia_lista in usuario.trivia_acceso %}
+{% if user.is_staff %}
 
-<h1>Grupo: administradores</h1>
+
 
     {% if contar_user == 0 %}
         <div class="container text-center">
@@ -87,13 +87,10 @@
     {% endfor %}
 
 </div>
-
-        <p>
-            
+        <p>            
             <div class="d-grid">
                 <button type="submit" class="btn btn-success btn-block">Enviar</button>
-              </div>
-            
+              </div>            
         </p>        
 
         </form>    
@@ -102,11 +99,10 @@
 
 {% endif %}
 
-{% else %}
+    {% else %}
+        <h1>No tienes permiso para acceder </h1>
+    {% endif %}
 
-<h1>F</h1>
-
-{% endif %}
 {% endif %}
 {% endfor %}
 

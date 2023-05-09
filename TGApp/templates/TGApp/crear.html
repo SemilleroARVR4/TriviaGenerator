@@ -5,8 +5,14 @@
 {% block titulo %} Agregar nueva pregunta {% endblock %}
 
 {% block contenido %}
-{{trivias.id}}
+
 {% if user.is_staff %}
+
+
+Quieres llenar este campo automaticamente, prueba este compilador
+
+<a name="" id="" class="btn btn-primary" href="{% url 'compiler' %}" role="button">Compilador</a>
+    
 
   <div class="container">
       <h1 class="mt-2">Trivia: {{ trivias }} </h1>
@@ -16,6 +22,7 @@
           {% csrf_token %}
 
             {{ formulario|crispy }}
+            
 
             <button type="submit" class="btn btn-success mb-2">Crear</button>
 

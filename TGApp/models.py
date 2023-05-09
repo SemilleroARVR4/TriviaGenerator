@@ -4,6 +4,7 @@ from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils import timezone
 
 # Create your models here.
 
@@ -17,7 +18,7 @@ class Trivia(models.Model):
         return self.Tipo
 
     def get_absolute_url(self):
-        return reverse('crear')
+        return reverse('preguntas')
 
 class Pregunta(models.Model):
 
@@ -30,7 +31,8 @@ class Pregunta(models.Model):
     opcion3 = models.CharField(max_length=350, verbose_name='Opcion falsa de la pregunta', null=True)
     opcion4 = models.CharField(max_length=350, verbose_name='Opcion falsa de la pregunta', null=True)
     puntaje = models.DecimalField(verbose_name='Puntaje obtenido', default=0, decimal_places=2, max_digits=10)   
-    archivo = models.FileField(upload_to='archivos', verbose_name="Archivo opcional (imagenes, audios y videos solamente)", blank=True) 
+    archivo = models.FileField(upload_to='archivos', verbose_name="Archivo opcional (imagenes, audios y videos solamente)", blank=True)
+    pista =  models.CharField(max_length=350, verbose_name='Pista de la pregunta', blank=True)
 
     def __str__(self):
         return f"{self.trivia} - {self.pregunta}"
@@ -48,6 +50,7 @@ class UsuarioTrivia(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     puntajeTotal = models.DecimalField(verbose_name='Puntaje Total', default=0, decimal_places=0, max_digits=10)
     trivia = models.ForeignKey(Trivia, on_delete=models.CASCADE, null=False)
+    fecha = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return str(self.puntajeTotal)
@@ -71,6 +74,25 @@ class user_inicio(models.Model):
 
     def __str__(self):
         return str(self.usuario)
+    
+class testChoices(models.Model):
+    facil = "fa"
+    medio = "me"
+    dificil = "di"
+    Dificultad = [
+        (facil, "facil"),
+        (medio, "medio"),
+        (dificil, "dificil"),
+    ]
+    year_in_school = models.CharField(
+        max_length=2,
+        choices=Dificultad,
+        default=facil,
+    )
+
+class preguntaChoice(models.Model):
+    pregunta = models.CharField(verbose_name='Texto', max_length=100)
+    difi = models.ForeignKey(testChoices, on_delete=models.CASCADE)
 
 
 # Tutorial

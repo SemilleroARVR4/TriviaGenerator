@@ -1,0 +1,37 @@
+{% extends "TGApp/base.html" %}
+
+{% block titulo %} nosotros {% endblock %}
+
+{% block contenido %}
+    {% for post in posts %}
+
+    {{post}}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ post.author }}</a>
+              <small class="text-muted">{{ post.date_posted }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+          </div>
+        </article>
+    {% endfor %}
+
+    {% for quest in quests %}
+    <h1> {{ quest.question }}</h1>
+    <h1> {{ quest.correct_answer }}</h1>    
+    <h1> {{ quest.incorrect_answers }}</h1>
+        
+    {% endfor %}
+
+    {% for pregunta in preguntaMs %}
+    <h1> {{ pregunta.pregunta }}</h1>
+    <h1> {{ pregunta.respuesta }}</h1>    
+    <h1> {{ pregunta.opcion_1 }}</h1>
+    <h1> {{ pregunta.opcion_2 }}</h1>
+    <h1> {{ pregunta.opcion_3 }}</h1>
+        
+    {% endfor %}
+
+{% endblock %}

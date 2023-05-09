@@ -9,6 +9,9 @@
         <P>
             Puntaje: {{puntaje}}
         </P>
+
+        <p class="card-text">Tiempo: {{ time }} segundos</p>
+
         
         <P>
             Porcentaje acierto: {{ percent }}
@@ -24,8 +27,12 @@
         
         <P>
         Preguntas totales: {{ total }}
-        </P>    
-        
+        </P>
+
+        <P>
+            Preguntas totales: {{ js }}
+        </P> 
+
         <a name="" id="" class="btn btn-info" href="{% url 'tablero' trivia.id %}" role="button">Ver tabla de puntuaciones</a>
     </div>
 </div>
