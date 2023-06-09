@@ -6,11 +6,11 @@
 {% block contenido %}
 
 
-<button onclick="myFunction()">Click me!</button>
+<!-- <button onclick="myFunction()">Click me!</button> -->
 
-<div  id="displaytimer">
+<!-- <div  id="displaytimer">
     <b>Este es mi timer: 0 segundos</b>
-</div>
+</div> -->
 
 {% if trivias in request.path %}
 
@@ -83,7 +83,7 @@
                                     </div>    
                                     
                                 {% endfor %}
-                                <div id="accordion">
+                                <!-- <div id="accordion">
                                     <div class="card">
                                         <div class="card-header">
                                         <a class="collapsed btn" data-bs-toggle="collapse" href="#collapse">
@@ -97,7 +97,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                   
+                                    -->
                                 
                             </div>
                         </div>                        
@@ -109,9 +109,9 @@
             
             </div>
             
-            <div id="jscript" name="js">
+            <!-- <div id="jscript" name="js">
                 <p> null </p>
-            </div>
+            </div> -->
             
 
 
@@ -146,7 +146,7 @@
 
 
 {% block script %}
-<script>
+<!-- <script>
 
     let prueba;
 
@@ -172,7 +172,7 @@
     //     timer.innerHTML ="<b>Timer: " +t+" seconds</b>"
     //     inputtag.value = t
     // },1000)
-</script>
+</script> -->
 
 {% endblock script %}
 

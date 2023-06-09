@@ -1,0 +1,37 @@
+{% extends 'TGApp/base.html' %}
+
+{% block titulo %} PyCompiler {% endblock %}
+
+{% block contenido %}
+
+
+Selecciona la trivia a la que le quieras pasar datos 
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+    
+
+    <div class="mb-3">
+        <label for="codearea" class="form-label">Code Area</label>
+        <textarea class="form-control" type="text" name="source_code" id="codearea" cols="30" rows="8" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}">{{ code }}</textarea>
+        <small> escribe codigo python</small>
+      </div>
+  
+      <div class="mb-3">
+          <label for="output" class="form-label">Ejemplo</label>
+          <textarea class="form-control" type="text" name="output" id="output" cols="20" rows="8" disabled>Copia el codigo que se encuentra entre los asteriscos:
+
+
+{{ output }}
+          </textarea>  
+    </div>
+
+    <button type="submit" class="btn btn-primary">Compilar</button>
+    
+</form>
+
+
+
+
+{% endblock %}

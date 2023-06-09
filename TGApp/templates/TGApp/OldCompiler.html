@@ -21,15 +21,21 @@ Selecciona la trivia a la que le quieras pasar datos
 
     <div class="mb-3">
         <label for="codearea" class="form-label">Code Area</label>
-        <textarea class="form-control" type="text" name="codearea" id="codearea" cols="30" rows="10" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}">{{ code }}</textarea>
+        <textarea class="form-control" type="text" name="codearea" id="codearea" cols="30" rows="8" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}">{{ code }}</textarea>
         <small> escribe codigo python</small>
       </div>
   
       <div class="mb-3">
           <label for="output" class="form-label">Ejemplo</label>
-          <textarea class="form-control" type="text" name="output" id="output" cols="5" disabled>Copia el codigo que se encuentra entre los asteriscos:
+          <textarea class="form-control" type="text" name="output" id="output" cols="20" rows="8" disabled>Copia el codigo que se encuentra entre los asteriscos:
 ****************
-x = (27 + 10 + 5 * 3)/8
+import random
+
+rta = (27 + 10 + 5 * 3)/8
+lista_valores = [random.uniform(rta, 20) for i in range(3)]
+
+print(rta)
+print(lista_valores)
 ****************
           </textarea>  
     </div>

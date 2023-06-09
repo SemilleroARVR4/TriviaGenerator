@@ -1,6 +1,6 @@
 from cProfile import label
 from django import forms
-from .models import Pregunta, Trivia, PreguntaQuiz, ElegirRespuesta, PreguntaQuiz
+from .models import Pregunta, Trivia, PreguntaQuiz, ElegirRespuesta, PreguntaQuiz, CodeSnippet
 
 class PreguntaForm(forms.ModelForm):
     class Meta:
@@ -52,6 +52,12 @@ class formTrivia(forms.ModelForm):
     class Meta:
         model = Pregunta
         fields = ["pregunta", "opcionCorrecta", "opcion2", "opcion3", "opcion4"]
+
+class codigo(forms.ModelForm):
+    class Meta:
+        model = CodeSnippet
+        fields = ["codigo", "salida"]
+        labels = {"codigo" : "Codigo", "salida" : "Salida"}
 
 
 #VIDEO

@@ -9,10 +9,12 @@
 {% if user.is_staff %}
 
 
-Quieres llenar este campo automaticamente, prueba este compilador
+Quieres generar valores automaticamente, prueba este compilador
 
-<a name="" id="" class="btn btn-primary" href="{% url 'compiler' %}" role="button">Compilador</a>
+<a name="" id="" class="btn btn-primary" href="{% url 'Compilador' %}" role="button">Compilador</a>
     
+
+{{ kwargs }}
 
   <div class="container">
       <h1 class="mt-2">Trivia: {{ trivias }} </h1>

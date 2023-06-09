@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import CrearNuevaTrivia, EditarPregunta, EliminarPregunta
+from .views import CrearNuevaTrivia, EditarPregunta, EliminarPregunta, EditarTrivia, EliminarTrivia
 from django.contrib.auth.decorators import login_required, permission_required
 from django.conf import settings
 from django.contrib.staticfiles.urls import static 
@@ -15,6 +15,10 @@ urlpatterns = [
     path('preguntas', views.preguntas, name='preguntas'),
     path('pregunta/<int:pk>/editar/', login_required(EditarPregunta.as_view()), name='EditarPregunta'),
     path('pregunta/<int:pk>/eliminar/', login_required(EliminarPregunta.as_view()), name='EliminarPregunta'),
+
+    path('trivia/<int:pk>/editar/', login_required(EditarTrivia.as_view()), name='EditarTrivia'),
+    path('trivia/<int:pk>/eliminar/', login_required(EliminarTrivia.as_view()), name='EliminarTrivia'),
+
     path('jugar', views.jugar, name='jugar'), 
     path('jugar/trivia/<int:Trivia_id>', views.jugarTrivia, name='jugarTrivia'),
     path('tablero/<int:trivia_id>', views.tablero, name='tablero'),
@@ -41,7 +45,8 @@ urlpatterns = [
     path('resultado', views.resultado, name='resultado'),
 
     
-
+    path('compilador', views.compile_view, name="Compilador"),
+    path('salidaCompilador', views.execute_code, name="SalidaCompilador"),
  
    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,53 @@
+{% extends 'TGApp/base.html' %}
+
+{% block titulo %} Compilador python {% endblock %}
+
+{% block contenido %}
+
+
+
+
+<div class="container mb-5">
+    
+<form action="" method="POST">
+
+    {% csrf_token %}
+
+    <div class="container mb-5">
+        <h3>Selecciona la trivia a la que le quieras pasar datos: </h3>
+        {% for Trivia in trivias %}  
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="{{ Trivia.Tipo }}" name="trivia" value="{{ Trivia.pk }}">
+                <label for="{{ Trivia.Tipo }}" class="form-check-label"> 
+                    {{ Trivia.Tipo }}
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="mb-3">
+        <label for="codearea" class="form-label">Área de código </label>
+        <textarea class="form-control" type="text" name="source_code" id="codearea" cols="30" rows="8" placeholder="Escribe código python" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}">{{ code }}</textarea>
+        
+      </div>
+  
+      <div class="mb-3">
+          <label for="output" class="form-label">Ejemplo: Copia y compila el siguiente código</label>
+          <textarea class="form-control" type="text" name="output" id="output" cols="20" rows="8" disabled>
+import random
+
+rta = (27 + 10 + 5 * 3)/8
+lista_valores = [int(random.uniform(rta, 20)) for i in range(3)]
+
+print("Opción correcta: ", rta)
+print("Opciones incorrectas: ", lista_valores)
+          </textarea>  
+    </div>
+
+    <button type="submit" class="btn btn-primary">Compilar</button>
+    
+</form>
+
+</div>
+
+
+{% endblock %}

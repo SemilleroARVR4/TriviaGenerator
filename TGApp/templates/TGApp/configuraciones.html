@@ -4,10 +4,208 @@
 
 {% block contenido %}
 
-<div class="container">
-    <h2>Seleccionar numero de opciones de respuesta </h2>
-    <button type="button" class="btn btn-primary">2 respuestas</button>
-    <button type="button" class="btn btn-primary">3 respuestas</button>
-</div>
+{% for trivia in trivias %}
+    {% if trivia.autor == user%}
+    
+            <table>
+                <tr>
+                <th colspan="3">    {{ trivia }}    </th>
+                </tr>
+                <tr>
+                <td>Enunciado</td>
+                <td>Opcion correcta</td>
+                <td>Opcion 1</td>
+                <td>Opcion 2</td>
+                <td>Opcion 3</td>
+                </tr>
+                <tr>
+                    {% for pregunta in preguntas %}
+        {% if pregunta.trivia == trivia%}
+                <td>{{pregunta.pregunta}}</td>
+                <td>{{pregunta.opcionCorrecta}}</td>
+                <td>{{pregunta.opcion2}}</td>
+                <td>{{pregunta.opcion3}}</td>
+                <td>{{pregunta.opcion4}}</td>
+                </tr>
+
+            </table>
+            <br>
+        {% endif %}
+    {% endfor %}
+    {% endif %}
+
+  {% endfor %}
+
+-----------------------------------------------
+
+
+  {% for pregunta in preguntas %}
+  {% if pregunta.autor == user%}
+  
+          <table>
+              <tr>
+              <th colspan="3">    {{ pregunta.trivia }}    </th>
+              </tr>
+              <tr>
+              <td>Enunciado</td>
+              <td>Opcion correcta</td>
+              <td>Opcion 1</td>
+              <td>Opcion 2</td>
+              <td>Opcion 3</td>
+              </tr>
+              <tr>
+                  {% for trivia in trivias %}
+      {% if pregunta.trivia == trivia %}
+              <td>{{pregunta.pregunta}}</td>
+              <td>{{pregunta.opcionCorrecta}}</td>
+              <td>{{pregunta.opcion2}}</td>
+              <td>{{pregunta.opcion3}}</td>
+              <td>{{pregunta.opcion4}}</td>
+              </tr>
+
+          </table>
+          <br>
+      {% endif %}
+  {% endfor %}
+  {% endif %}
+
+{% endfor %}
+
+_______________________________________________________________
+
+<table>
+    {% for trivia in trivias %}
+      {% if trivia.autor == user %}
+        <tr>
+          <th colspan="3">{{ trivia }}</th>
+        </tr>
+        <tr>
+          <th>Enunciado</th>
+          <th>Opción correcta</th>
+          <th>Opción 1</th>
+          <th>Opción 2</th>
+          <th>Opción 3</th>
+        </tr>
+        {% for pregunta in preguntas %}
+          {% if pregunta.autor == user and pregunta.trivia == trivia %}
+            <tr>
+              <td>{{ pregunta.pregunta }}</td>
+              <td>{{ pregunta.opcionCorrecta }}</td>
+              <td>{{ pregunta.opcion2 }}</td>
+              <td>{{ pregunta.opcion3 }}</td>
+              <td>{{ pregunta.opcion4 }}</td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+  </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+
+    
+    
+    {% for trivia in trivias %}
+    <br>
+        <strong>{{trivia}}</strong>
+    {% for pregunta in preguntas %}
+        {% if pregunta.trivia == trivia %} 
+
+
+            <br>
+            {{pregunta.pregunta}}
+            {% endif %}
+
+    {% endfor %}
+    {% endfor %}
+
+____________________________________________________-
+________________________________________________________________
+_____________________________________________
+    {{ pregunta_lista }}
+
+    {% for pregunta in pregunta_lista %}
+        {{ pregunta }}
+        <br>
+    {% endfor %}
+    <table>
+      {% for pregunta in pregunta_lista %}
+        
+          <tr>
+            <th colspan="3">{{ pregunta }}</th>
+            <br>
+          </tr>
+          <tr>
+            <th>Enunciado</th>
+            <th>Opción correcta</th>
+            <th>Opción 1</th>
+            <th>Opción 2</th>
+            <th>Opción 3</th>
+          </tr>
+          
+            {% if pregunta.autor == user and pregunta.trivia == trivia %}
+              <tr>
+                <td>{{ pregunta.pregunta }}</td>
+                <td>{{ pregunta.opcionCorrecta }}</td>
+                <td>{{ pregunta.opcion2 }}</td>
+                <td>{{ pregunta.opcion3 }}</td>
+                <td>{{ pregunta.opcion4 }}</td>
+              </tr>
+            {% endif %}
+          
+        
+      {% endfor %}
+    </table>
+
+
+EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+    <table>
+      {% for pregunta in preguntas %}
+        {% for trivia in trivias %}
+
+        {% if pregunta.trivia == trivia %}
+          <tr>
+            <th colspan="3">{{ pregunta.trivia }}</th>
+            <br>
+          </tr>
+          <tr>
+            <th>Enunciado</th>
+            <th>Opción correcta</th>
+            <th>Opción 1</th>
+            <th>Opción 2</th>
+            <th>Opción 3</th>
+          </tr>
+          
+            
+              <tr>
+                <td>{{ pregunta.pregunta }}</td>
+                <td>{{ pregunta.opcionCorrecta }}</td>
+                <td>{{ pregunta.opcion2 }}</td>
+                <td>{{ pregunta.opcion3 }}</td>
+                <td>{{ pregunta.opcion4 }}</td>
+              </tr>
+            {% endif %}
+        {% endfor %}
+        
+      {% endfor %}
+    </table>
+
 
 {% endblock %}

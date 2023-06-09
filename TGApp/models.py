@@ -15,7 +15,7 @@ class Trivia(models.Model):
     Tipo = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.Tipo
+        return self.nombre
 
     def get_absolute_url(self):
         return reverse('preguntas')
@@ -94,6 +94,9 @@ class preguntaChoice(models.Model):
     pregunta = models.CharField(verbose_name='Texto', max_length=100)
     difi = models.ForeignKey(testChoices, on_delete=models.CASCADE)
 
+class CodeSnippet(models.Model):
+    codigo = models.CharField(verbose_name='Codigo', max_length=1000)
+    salida = models.CharField(verbose_name='Salida', max_length=1000)
 
 # Tutorial
 class PreguntaQuiz(models.Model):
