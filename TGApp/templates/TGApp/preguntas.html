@@ -54,41 +54,39 @@
 
 
 <div class="card mb-2">
-    <div class="card-header">
-        <h2 class="card-title">Mis preguntas <a class="btn btn-dark ml-2" href="{% url 'acceso_test' %}" role="button">Compartir preguntas</a></h2>
-
-    <div class="card-body">
-            
-                <h2>
-                    Seleccione una trivia para agregar una nueva pregunta.   
-                </h2>   
-        
-                <div class="dropdown">
+    <div class="card-header ">
+        <h2 >Mis preguntas <a class="btn btn-info" href="{% url 'acceso_test' %}" role="button">Compartir preguntas</a></h2>
+        <h2>Seleccione una trivia para agregar una nueva pregunta.   </h2>
+        <div class="dropdown">
                     
-                    <button class="btn btn-secondary dropdown-toggle mb-2" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                                Seleccionar trivia
-                    </button>
-                            
-                    <div class="dropdown-menu  mt-2" aria-labelledby="triggerId">
-                        <a class="dropdown-item" href="{% url 'crearNuevaTrivia' %}"> <strong>Nueva trivia</strong> </a>
+            <button class="btn btn-secondary dropdown-toggle mb-2" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                        Seleccionar trivia
+            </button>
+                    
+            <div class="dropdown-menu  mt-2" aria-labelledby="triggerId">
+                <a class="dropdown-item" href="{% url 'crearNuevaTrivia' %}"> <strong>Nueva trivia</strong> </a>
+        
+                {% for Trivia in trivias %}  
+        
+                    {% if Trivia.autor == user %} 
+                        <a class="dropdown-item" href="{% url 'crearPregunta' Trivia.id %}">{{ Trivia.Tipo }}</a>
+                    {% endif %}
+        
+                {% endfor %}     
+        
+            </div>                               
+        </div>
+    </div>
+    <div class="card-body">
+
                 
-                        {% for Trivia in trivias %}  
-                
-                            {% if Trivia.autor == user %} 
-                                <a class="dropdown-item" href="{% url 'crearPregunta' Trivia.id %}">{{ Trivia.Tipo }}</a>
-                            {% endif %}
-                
-                        {% endfor %}     
-                
-                    </div>                               
-                </div>
                 
 
                 {% for trivia in trivias %}
                     {% if trivia.autor == user%}
                     
-                <div class="table-responsive pt-5">
+                <div class="table-responsive">
                     <table class="table table-bordered">
 
                         <thead>
