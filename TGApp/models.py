@@ -38,7 +38,7 @@ class Pregunta(models.Model):
         return f"{self.trivia} - {self.pregunta}"
 
     def get_absolute_url(self):
-        return reverse('crear')
+        return reverse('preguntas')
 
 
     def delete(self, using=None, keep_parents=False):

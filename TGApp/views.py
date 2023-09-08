@@ -27,16 +27,6 @@ def inicio(request):
 
 def nosotros(request):
     return render(request, "TGApp/nosotros.html")
-
-@login_required
-def crear(request):
-    
-    context = {
-        'trivias': Trivia.objects.all(),
-        'preguntas': Pregunta.objects.all(),
-    }
-    
-    return render(request, "TGApp/index.html", context)
     
 
 class CrearNuevaTrivia(SuccessMessageMixin, CreateView):
@@ -895,7 +885,7 @@ def crearPregunta(request, Trivia_id):
         if formulario.is_valid():
             formulario.save()
             messages.success(request, f'¡Tu pregunta ha sido registrada!' )
-            return redirect("/crear")
+            return redirect("/preguntas")
     else:
         formulario = formPregunta(initial=initial_data)
 
