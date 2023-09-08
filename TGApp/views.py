@@ -274,6 +274,19 @@ def tablero(request, trivia_id):
     }
     return render(request, 'jugar/tablero.html', context)
 
+def tableroUsers(request, trivia_id):
+
+    trivia = Trivia.objects.get(id=trivia_id)
+    total_usuarios_quiz = UsuarioTrivia.objects.filter(trivia=trivia).order_by('-puntajeTotal', '-fecha')
+    contador = total_usuarios_quiz.count()
+
+    context = {
+        'trivia':trivia,
+        'usuario_quiz':total_usuarios_quiz,
+        'contar_user':contador
+    }
+    return render(request, 'jugar/tableroUsuarios.html', context)
+
 
 def puntuaciones(request):
 
@@ -283,6 +296,8 @@ def puntuaciones(request):
     }
 
     return render(request, 'TGApp/puntuaciones.html', context)
+
+    
 
 
 

@@ -2,6 +2,7 @@
 
 {% block contenido %}
 
+
 {% if contar_user == 0 %}
 	<div class="container">
 		<div class="mt-2 p-3 bg-background text-body rounded">
@@ -39,11 +40,10 @@
 				{% endfor %}
 			</tbody>
 		</table>
-		<a name="" id="" class="btn btn-outline-info" href="{% url 'tableroUsers'  trivia.id %}" role="button">Ver todas las puntuaciones</a>
+
 	</div>
 
 
-	
 
 {% endif %}
 

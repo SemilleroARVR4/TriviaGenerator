@@ -22,6 +22,7 @@ urlpatterns = [
     path('jugar', views.jugar, name='jugar'), 
     path('jugar/trivia/<int:Trivia_id>', views.jugarTrivia, name='jugarTrivia'),
     path('tablero/<int:trivia_id>', views.tablero, name='tablero'),
+    path('tableroUsers/<int:trivia_id>', views.tableroUsers, name='tableroUsers'),
     path('puntuaciones', views.puntuaciones, name='puntuaciones'),
 
     path('test/<int:Trivia_id>', views.list, name='test'),
